@@ -1,0 +1,130 @@
+--- a/dynamic_gripper.hpp
++++ b/dynamic_gripper.hpp
+@@ -21,12 +21,13 @@
+   planning_scene_monitor::PlanningSceneMonitorPtr monitor;
+   SweepDistanceCertificate certificate;
+ public:
+-  // Geometry gets 5 ms more headroom than v271. The adapter additionally caps
+-  // the WHOLE callback at 42 ms, leaving 8 ms in its unchanged 50 ms cycle.
+-  // Neither the original feedback deadline nor permit age is extended.
++  // A local geometry budget also obeys the absolute whole-callback deadline.
++  // This changes computation time, not the integration step or feedback age.
+   static constexpr double maximum_budget_ms=35.;
++  const int geometry_budget_ms;
+   bool enabled=false;
+-  DynamicGripper(const rclcpp::Node::SharedPtr& node, planning_scene_monitor::PlanningSceneMonitorPtr m):monitor(m),certificate(m->getRobotModel(),node->get_parameter("moveit_servo.move_group_name").as_string(),true,true) {
++  DynamicGripper(const rclcpp::Node::SharedPtr& node, planning_scene_monitor::PlanningSceneMonitorPtr m,int budget_ms=35):monitor(m),certificate(m->getRobotModel(),node->get_parameter("moveit_servo.move_group_name").as_string(),true,true),geometry_budget_ms(budget_ms) {
++    if(budget_ms<=0 || budget_ms>=100)throw std::runtime_error("Invalid geometry budget");
+     enabled=node->has_parameter("e6_gripper_joint_names");
+     if(!enabled)return;
+     names=node->get_parameter("e6_gripper_joint_names").as_string_array();
+@@ -79,7 +80,7 @@
+                           const SweepDistanceCertificate::AnchorDistanceSource& anchor_distances={}) {
+     GripperSweepResult out;out.enabled=enabled;if(!enabled)return out;
+     auto started=std::chrono::steady_clock::now();
+-    const auto deadline=std::min(callback_deadline,started+std::chrono::milliseconds(35));
++    const auto deadline=std::min(callback_deadline,started+std::chrono::milliseconds(geometry_budget_ms));
+     out.budget_ms=std::max(0.,std::chrono::duration<double,std::milli>(deadline-started).count());
+     auto expired=[&]() {
+       if(std::chrono::steady_clock::now()>=deadline){out.budget_exhausted=true;return true;}
+--- a/servo_cpp_adapter.cpp
++++ b/servo_cpp_adapter.cpp
+@@ -46,6 +46,7 @@
+ #include "dynamic_gripper.hpp"
+ #include "collision_retreat.hpp"
+ #include "orientation_assist.hpp"
++#include "solver_timing.hpp"
+ 
+ using namespace moveit_servo;
+ using Clock=std::chrono::steady_clock;
+@@ -71,6 +72,15 @@
+   auto node=std::make_shared<rclcpp::Node>("e6_cpp_adapter",rclcpp::NodeOptions().automatically_declare_parameters_from_overrides(true));
+   auto listener=std::make_shared<const servo::ParamListener>(node,"moveit_servo");
+   const auto params=listener->get_params();
++  const auto integer_parameter=[&](const char* name,int64_t fallback) {
++    return node->has_parameter(name)?node->get_parameter(name).as_int():fallback;
++  };
++  const auto timing=SolverTiming::select(
++    integer_parameter("e6_callback_budget_ms",42),
++    integer_parameter("e6_request_timeout_ms",50),
++    integer_parameter("e6_retreat_budget_ms",37),
++    integer_parameter("e6_geometry_budget_ms",35),
++    params.publish_period,node->get_parameter("update_period").as_double());
+   auto monitor=createPlanningSceneMonitor(node,params);
+   std::unique_ptr<Servo> servo;
+   auto publisher=node->create_publisher<sensor_msgs::msg::JointState>(params.joint_topic,1);
+@@ -83,7 +93,7 @@
+   auto actual=std::make_shared<moveit::core::RobotState>(model);
+   state->setToDefaultValues();actual->setToDefaultValues();
+   auto group=model->getJointModelGroup(params.move_group_name);
+-  DynamicGripper gripper(node,monitor);
++  DynamicGripper gripper(node,monitor,timing.geometry_ms);
+   CollisionRetreatPolicy retreat(model,params.move_group_name,params.self_collision_proximity_threshold);
+   OrientationAssist assist;
+   Eigen::VectorXd assist_lower(6),assist_upper(6);
+@@ -92,7 +102,7 @@
+     assist_lower[i]=b.min_position_+params.joint_limit_margins.front();
+     assist_upper[i]=b.max_position_-params.joint_limit_margins.front();
+   }
+-  if(gripper.enabled)RCLCPP_INFO(node->get_logger(),"Retreat budget %d ms; gripper geometry budget %.0f ms; callback deadline 42 ms; cycle 50 ms; feedback/permit deadlines unchanged",CollisionRetreatPolicy::compute_budget_ms,DynamicGripper::maximum_budget_ms);
++  if(gripper.enabled)RCLCPP_INFO(node->get_logger(),"Retreat budget %d ms; geometry budget %d ms; callback %d ms; request %d ms; integration 50 ms",timing.retreat_ms,timing.geometry_ms,timing.callback_ms,timing.request_ms);
+   const std::string control_frame=node->has_parameter("e6_control_frame")?
+     node->get_parameter("e6_control_frame").as_string():"controller_flange";
+   if(!model->getLinkModel(control_frame))throw std::runtime_error("Unknown TCP link");
+@@ -168,7 +178,7 @@
+           ((grip_hold==1 && (observed_idle||held)) || frozen_contact ||
+            (grip_hold<0 && grip_inflight<0 && (observed_idle||held)));
+         const auto hold_excursion=grip_hold>=0?gripper.holdExcursion(grip_raw,grip_sent,grip_inflight):std::map<std::string,double>{};
+-        const auto retreat_deadline=started+std::chrono::milliseconds(CollisionRetreatPolicy::compute_budget_ms);
++        const auto retreat_deadline=started+std::chrono::milliseconds(timing.retreat_ms);
+         servo->setCollisionScaleSelector([&](double baseline,const Eigen::VectorXd& smoothed){
+           retreat.result.baseline_scale=retreat.result.selected_scale=baseline;
+           if(!retreat_eligible){retreat.result.reason="gripper_not_stationary";return baseline;}
+@@ -237,9 +247,9 @@
+       }else was_active=false;
+       const auto grip_arm_target=target.positions;
+       auto grip_check=gripper.check(*actual,target.positions,group,grip_raw,grip_sent,grip_inflight,grip_requested,
+-                                    started+std::chrono::milliseconds(42),
++                                    started+std::chrono::milliseconds(timing.callback_ms),
+                                     [&](const auto& scene,const auto& anchor,const auto& acm){return retreat.anchorSeparations(scene,anchor,acm);});
+-      if(active && Clock::now()>=started+std::chrono::milliseconds(42)){
++      if(active && Clock::now()>=started+std::chrono::milliseconds(timing.callback_ms)){
+         grip_check.arm_safe=false;grip_check.allowed=false;grip_check.budget_exhausted=true;
+         grip_check.arm_reason="callback_deadline";
+       }
+@@ -298,6 +308,7 @@
+           <<",\"scene_collision\":"<<(sample.scene_collision?"true":"false")<<",\"self_distance_m\":";
+         scalarJson(sample.self_distance);std::cout<<",\"scene_distance_m\":";scalarJson(sample.scene_distance);std::cout<<"}";
+       }
++      std::cout<<",\"solver_timing\":";timing.json(std::cout);
+       std::cout<<"}"<<std::endl;
+     }
+   }catch(const std::exception& e){std::cerr<<e.what()<<'\n';result=2;}
+--- /dev/null
++++ b/solver_timing.hpp
+@@ -0,0 +1,25 @@
++// Timing contract only. This adapter never owns device IO.
++#pragma once
++#include <cstdint>
++#include <ostream>
++#include <stdexcept>
++
++struct SolverTiming {
++  int callback_ms, request_ms, retreat_ms, geometry_ms;
++  static constexpr int version=1, period_ms=50;
++
++  static SolverTiming select(int64_t callback,int64_t request,int64_t retreat,
++                             int64_t geometry,double publish_period,double update_period) {
++    if(publish_period!=.05 || update_period!=.05)
++      throw std::runtime_error("Solver timing requires the 50 ms integration step");
++    if(!(0<geometry && geometry<retreat && retreat<callback && callback<request && request<=100))
++      throw std::runtime_error("Invalid solver timing order or source lifetime");
++    return {int(callback),int(request),int(retreat),int(geometry)};
++  }
++
++  void json(std::ostream& out) const {
++    out<<"{\"version\":"<<version<<",\"period_ms\":"<<period_ms
++       <<",\"callback_budget_ms\":"<<callback_ms<<",\"request_timeout_ms\":"<<request_ms
++       <<",\"retreat_budget_ms\":"<<retreat_ms<<",\"geometry_budget_ms\":"<<geometry_ms<<"}";
++  }
++};

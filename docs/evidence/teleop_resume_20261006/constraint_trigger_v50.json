@@ -1,0 +1,202 @@
+{
+  "dt_s": 0.018122939,
+  "input": {
+    "source": "gamepad",
+    "identity": "synthetic standard gamepad",
+    "frame": "base",
+    "mode": "translation",
+    "connected": true,
+    "focused": true,
+    "deadman": true,
+    "fine": false,
+    "stop": false,
+    "neutral": false,
+    "twist": [
+      -0.0005571466546119424,
+      -0.0005571466546119424,
+      -0.0005263157894736842,
+      0,
+      0,
+      0
+    ],
+    "gripper_rate": 0,
+    "seq": 4540,
+    "raw": {
+      "axes": [
+        -0.3,
+        0.3,
+        0,
+        0.3
+      ],
+      "buttons": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "browser_timestamp_ms": 0,
+      "browser_index": 0,
+      "test_only": true,
+      "fixture_source_sha256": "c26be73c74fdbb17a83da9a61d895914feb9ec502bfa3d99e8bfc09f6a400125",
+      "pc_harness_sampled_monotonic_ns": 1567470307700,
+      "fixture_timestamp_semantics": "fixed synthetic reference, not acquisition time"
+    },
+    "pc_input_monotonic_ns": 1567470621700,
+    "gateway_received_ns": 1568098600626,
+    "gateway_processed_ns": 1568098817667
+  },
+  "requested_target": {
+    "position_m": [
+      -0.0013724211488756889,
+      -0.18738646412239404,
+      0.39464868298350386
+    ],
+    "quaternion_xyzw": [
+      -0.08955593034770726,
+      0.9194290573504262,
+      -0.34985663379856835,
+      0.1556607838422946
+    ],
+    "controller_pose_mm_deg": [
+      -1.3724211488756888,
+      -187.38646412239405,
+      394.6486829835039,
+      -136.47671508789062,
+      12.919075012207031,
+      -163.69776916503906
+    ],
+    "input_seq": 4540
+  },
+  "ik_result": {
+    "position_m": 2.496067801921739e-10,
+    "rotation_rad": 1.1505957258618629e-09,
+    "accepted": false,
+    "joint_velocity_rad_s": [
+      -0.001020188374247034,
+      0.002425801877250986,
+      -0.00274232970851472,
+      -0.00016348845883650093,
+      0.00044239935945644904,
+      -0.000991621750632294
+    ],
+    "joint_acceleration_rad_s2": [
+      -0.05629265618821726,
+      0.13385256537314316,
+      -0.1513181558749781,
+      -0.009021078691292893,
+      0.024411016306816958,
+      -0.05471638737140228
+    ],
+    "query_duration_ms": 10.715839,
+    "reason": "\u5173\u8282\u901f\u5ea6\u6216\u52a0\u901f\u5ea6\u7ea6\u675f"
+  },
+  "pre_action_robot": {
+    "source": "E6:30004 guardian",
+    "seq": 29426,
+    "x5_receive_monotonic_ns": 1568101368950,
+    "raw_base64": "oAUAAAAAAAAAAAAAAAAAAAAAAAAAAAAABQAAAAAAAADx9qsPoQEAAC4GAAAAAAAA782riWdFIwEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEhAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA4MqbUMAAAAAAyA5OwAAAAIBcR1pAAAAAYA+IVsAAAABgjI5XQAAAAMAlXyxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgBMKYT8AAACgWG7ZPwAAACAbOLy/AAAA4LAe8j8AAAAAi82YPwAAACD5BIO/AAAAwObjmj8AAADgEREUQAAAAGBFRPa/AAAAwOso+D8AAAAAi82YPwAAACD5BHO/AAAA4MqbUMAAAABgxw5OwAAAAMBcR1pAAAAAgP+HVsAAAABAko5XQAAAAACiXyxAAAAAoOaBeb8AAADgiGaYPwAAAKCaY5k/AAAAADDX9j8AAAAAgOffvwAAAABAkfA/exSuR+F6lD/ZzvdT46XbPzvfT42XbsK/WmQ730+N9T/pJjEIrByqP0oMAiuHFrm/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIBn79b8AAACAXGxnwAAAAABuqnhAAAAAoDUPYcAAAACAZ9YpQAAAAIBddmTAAAAAQDf36r8AAACgviHYPwAAAAAfWwhAAAAAQOEg8r8AAAAg5OrsvwAAAACQb/G/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA4Of79b8AAADAYWxnwAAAAGBlqnhAAAAAYDwPYcAAAAAA4NUpQAAAAKBbdmTAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAATkAAAAAAAABOQAAAAAAAAEFAAAAAAAAAQ0AAAAAAAABKQAAAAAAAgEdAAAAAAAAAIEAAAAAAAAAgQAAAAAAAACBAAAAAAAAAIEAAAAAAAAAgQAAAAAAAACBAAAAAAAAASEAAAAAAAABIQAAAAAAAAEhAAAAAAAAASEAAAAAAAIBHQAAAAAAAgEdA/wH/AAAAAAAAAAAAAAAAAAAAAQAAAACWAQEBAQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAIC+n8Y/AAAAAFSDFUAAAACgGq/8vwAAAEAIrPw/AAAAgL6fqj8AAADAdJOovwAAAAAAAOg/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgROzDPwAAAODl7La/AAAAgPVr7T8AAACgLmTWvwAAAGCI7MM/AAAAwHrstr8AAACA72vtPwAAAIBFZNa/AAAAAH8AAAAAAAAAAAAAAAAAAAAAAAAA",
+    "decoded": {
+      "joints_rad": [
+        -1.1594965296205686,
+        -1.0492126986144334,
+        1.8346034717398567,
+        -1.5729774557276714,
+        1.644583199537177,
+        0.24760607076957214
+      ],
+      "q_actual_deg": [
+        -66.43425750732422,
+        -60.11545944213867,
+        105.11503601074219,
+        -90.12496948242188,
+        94.22767639160156,
+        14.186782836914062
+      ],
+      "controller_position_m": [
+        -0.0013738032579421998,
+        -0.18738629150390626,
+        0.39465185546875
+      ],
+      "controller_quaternion_xyzw": [
+        -0.08954586907721583,
+        0.9194257605351396,
+        -0.3498700498414346,
+        0.15565589105311273
+      ],
+      "controller_pose_raw_mm_deg": [
+        -1.3738032579421997,
+        -187.38629150390625,
+        394.65185546875,
+        -136.4752960205078,
+        12.918758392333984,
+        -163.69891357421875
+      ],
+      "robot_mode": 5,
+      "controller_timestamp_raw": 1791264290545,
+      "controller_runtime_raw": 1582,
+      "user_index": 0,
+      "tool_index": 0,
+      "enable_status": 1,
+      "error_status": 0,
+      "payload_parameter_kg": 0.75,
+      "center_parameter_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "tool_configuration_raw_mm_deg": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "layout_source_commit": "82bce656c6e1a1c71599901baa93ed45bb50963d",
+      "pose_reference": "controller active User/Tool; not a measured finger TCP",
+      "q_target_deg": [
+        -66.43425750732422,
+        -60.115478515625,
+        105.11502075195312,
+        -90.12593841552734,
+        94.2273178100586,
+        14.185834884643555
+      ],
+      "q_velocity_deg_s": [
+        -0.006227398756891489,
+        0.023828638717532158,
+        0.024794021621346474,
+        1.4275360107421875,
+        -0.498504638671875,
+        1.03546142578125
+      ],
+      "user_configuration_raw_mm_deg": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "run_queued_command": 0,
+      "pause_command_flag": 0,
+      "collision_state": 0,
+      "current_command_id": 2
+    }
+  },
+  "origin": "docs\\evidence\\teleop_local_integration_20261005\\shadow_managed_exit_v50_medium_ready_600s\\frames.jsonl",
+  "tick_id": 4826
+}

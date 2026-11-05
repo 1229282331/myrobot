@@ -1,0 +1,263 @@
+--- a/dashboard/src/components/custom/LogsStream.tsx
++++ b/dashboard/src/components/custom/LogsStream.tsx
+@@ -1,135 +1,125 @@
+ import { CopyButton } from "@/components/common/copy-button";
+ import { Button } from "@/components/ui/button";
+ import { Card } from "@/components/ui/card";
+-import { Loader2, TerminalSquare, XCircle } from "lucide-react";
+-import { useEffect, useRef, useState } from "react";
++import { Loader2, TerminalSquare, XCircle, Pause, Play, Download, Eraser } from "lucide-react";
++import { useEffect, useRef, useState, type ReactNode } from "react";
++import { boundedLog } from "@/e6/logText";
+ 
+ interface LogStreamProps {
+   logFile: string | null;
+   isLoading: boolean;
+   onClose?: () => void;
++  // Old training callers retain their endpoint.
++  streamUrl?: string;
++  downloadUrl?: string;
++  title?: string;
++  tools?: ReactNode;
+ }
+ 
+-export const LogStream = ({ logFile, isLoading, onClose }: LogStreamProps) => {
+-  const [logs, setLogs] = useState<string>("");
+-  const [connected, setConnected] = useState<boolean>(false);
++export const LogStream = ({ logFile, isLoading, onClose, streamUrl, downloadUrl,
++  title="Training Logs", tools }: LogStreamProps) => {
++  const [logs, setLogs] = useState("");
++  const [connected, setConnected] = useState(false);
+   const [error, setError] = useState<string | null>(null);
+-  const logContainerRef = useRef<HTMLDivElement>(null);
+-  const abortControllerRef = useRef<AbortController | null>(null);
++  const [following,setFollowing]=useState(true);
++  const logContainerRef=useRef<HTMLDivElement>(null);
++  const abortControllerRef=useRef<AbortController|null>(null);
+ 
+-  useEffect(() => {
+-    if (!logFile) return;
++  useEffect(()=>{
++    if(!logFile&&!streamUrl)return;
++    const controller=new AbortController();abortControllerRef.current=controller;
++    const signal=controller.signal;
++    let timer:ReturnType<typeof setTimeout>|undefined;
++    let wake:(()=>void)|undefined;
++    const sleep=(ms:number)=>new Promise<void>(resolve=>{wake=resolve;timer=setTimeout(resolve,ms);});
++    let cursor="";
++    let decoder=new TextDecoder();
++    setLogs("");setError(null);setConnected(false);
++    const read=async()=>{
++      do {
++        const request=new AbortController();let timedOut=false;
++        const cancel=()=>request.abort();signal.addEventListener('abort',cancel,{once:true});
++        // Native logs are finite polls. Bound headers AND body; a stalled read
++        // must not prevent the next cursor retry. Training streams stay open.
++        const deadline=streamUrl?setTimeout(()=>{timedOut=true;request.abort();},5000):undefined;
++        try {
++          const url=streamUrl?streamUrl+'?cursor='+encodeURIComponent(cursor):'/training/logs/'+logFile;
++          const response=await fetch(url,{signal:request.signal,headers:{Accept:"text/plain"}});
++          if(!response.ok)throw new Error('Log source unavailable ('+response.status+')');
++          if(signal.aborted)return;
++          setConnected(true);setError(null);
++          const reset=streamUrl&&response.headers.get('X-Log-Reset')==='1';
++          const reader=response.body?.getReader();
++          if(!reader)throw new Error("Stream reader not available");
++          // Finite polls commit atomically: reconnect resumes its previous
++          // cursor without duplicating partially received responses.
++          let chunks:Uint8Array[]=[];let size=0;
++          try {
++            while(!signal.aborted){
++              const {done,value}=await reader.read();if(done)break;
++              if(streamUrl){
++                size+=value.byteLength;
++                if(size>65536)throw new Error('Log chunk exceeds budget');
++                chunks.push(value);
++              } else {
++                const text=decoder.decode(value,{stream:true});
++                setLogs(previous=>boundedLog(previous+text));
++              }
++            }
++          } finally {await reader.cancel().catch(()=>{});reader.releaseLock();}
++          if(signal.aborted)return;
++          if(streamUrl){
++            const next=response.headers.get('X-Log-Cursor');
++            if(!next)throw new Error('Log cursor missing');
++            if(reset){decoder=new TextDecoder();setLogs("");}
++            for(const chunk of chunks){
++              const text=decoder.decode(chunk,{stream:true});
++              setLogs(previous=>boundedLog(previous+text));
++            }
++            chunks=[];cursor=next;
++          } else {
++            const text=decoder.decode();setLogs(previous=>boundedLog(previous+text));
++          }
++        } catch(err) {
++          if(signal.aborted)return;
++          setConnected(false);setError(timedOut?'Log read timed out':err instanceof Error?err.message:'Log disconnected');
++        } finally {
++          clearTimeout(deadline);signal.removeEventListener('abort',cancel);
++        }
++        if(!streamUrl)break;
++        await sleep(500);
++      } while(!signal.aborted);
++      if(!signal.aborted)setConnected(false);
++    };
++    void read();
++    return ()=>{controller.abort();clearTimeout(timer);wake?.();};
++  },[logFile,streamUrl]);
+ 
+-    const fetchLogs = async () => {
+-      try {
+-        // Create a new AbortController for this request
+-        abortControllerRef.current = new AbortController();
+-        const signal = abortControllerRef.current.signal;
+-
+-        setConnected(true);
+-        setError(null);
+-
+-        const response = await fetch(`/training/logs/${logFile}`, {
+-          signal,
+-          headers: {
+-            Accept: "text/plain",
+-          },
+-        });
+-
+-        if (!response.ok) {
+-          throw new Error(`Failed to fetch logs: ${response.statusText}`);
+-        }
+-
+-        // Get the reader from the response body stream
+-        const reader = response.body?.getReader();
+-        if (!reader) {
+-          throw new Error("Stream reader not available");
+-        }
+-
+-        // Read the stream
+-        const decoder = new TextDecoder();
+-        let accumulatedLogs = "";
+-
+-        while (true) {
+-          const { done, value } = await reader.read();
+-          if (done) break;
+-
+-          // Decode and append the new chunk
+-          const chunk = decoder.decode(value, { stream: true });
+-          accumulatedLogs += chunk;
+-          setLogs(accumulatedLogs);
+-
+-          // Scroll to bottom
+-          if (logContainerRef.current) {
+-            logContainerRef.current.scrollTop =
+-              logContainerRef.current.scrollHeight;
+-          }
+-        }
+-      } catch (err) {
+-        setError(err instanceof Error ? err.message : "Error fetching logs");
+-        console.error("Error streaming logs:", err);
+-      } finally {
+-        setConnected(false);
+-      }
+-    };
+-
+-    fetchLogs();
+-
+-    // Cleanup function
+-    return () => {
+-      if (abortControllerRef.current) {
+-        abortControllerRef.current.abort();
+-      }
+-    };
+-  }, [logFile]);
+-
+-  // Auto-scroll to bottom when logs update
+-  useEffect(() => {
+-    if (logContainerRef.current) {
+-      logContainerRef.current.scrollTop = logContainerRef.current.scrollHeight;
+-    }
+-  }, [logs]);
+-
+-  const handleClose = () => {
+-    if (abortControllerRef.current) {
+-      abortControllerRef.current.abort();
+-    }
+-    if (onClose) onClose();
+-  };
+-
+-  if (!logFile && !isLoading) return null;
+-
+-  return (
+-    <Card className="mt-4 p-4">
+-      <div className="flex justify-between items-center mb-2">
+-        <div className="flex items-center">
+-          <TerminalSquare className="size-4 mr-2" />
+-          <span className="font-medium">Training Logs</span>
+-          {connected && (
+-            <Loader2 className="size-4 ml-2 animate-spin text-blue-500" />
+-          )}
+-        </div>
+-        <div className="flex gap-2">
+-          {logs && <CopyButton text={logs} hint="Copy logs" variant="ghost" />}
+-          <Button variant="ghost" size="sm" onClick={handleClose}>
+-            <XCircle className="size-4" />
+-          </Button>
+-        </div>
++  useEffect(()=>{
++    if(following&&logContainerRef.current)logContainerRef.current.scrollTop=logContainerRef.current.scrollHeight;
++  },[logs,following]);
++  if(!logFile&&!streamUrl&&!isLoading)return null;
++  return <Card className="p-4 min-w-0 gap-2" data-testid="native-log-stream" data-e6-input-isolation>
++    <div className="flex flex-wrap justify-between items-center gap-2">
++      <div className="flex items-center gap-2"><TerminalSquare className="size-4"/>
++        <span className="font-medium">{title}</span>
++        {isLoading&&<Loader2 className="size-4 animate-spin"/>}
+       </div>
+-
+-      <div
+-        ref={logContainerRef}
+-        className="bg-black text-green-400 p-3 rounded font-mono text-sm overflow-y-auto h-64 whitespace-pre-wrap"
+-      >
+-        {isLoading && !logs && (
+-          <div className="flex items-center justify-center h-full">
+-            <Loader2 className="size-6 animate-spin mr-2" />
+-            Starting training process...
+-          </div>
+-        )}
+-        {error && <div className="text-red-400">Error: {error}</div>}
+-        {logs || "Waiting for logs..."}
++      <div className="flex flex-wrap gap-1 items-center">
++        {tools}
++        <Button size="sm" variant="ghost" aria-pressed={!following} onClick={()=>setFollowing(value=>!value)}>
++          {following?<Pause className="size-4"/>:<Play className="size-4"/>}{following?'Pause follow':'Follow'}</Button>
++        <CopyButton text={logs} hint="Copy logs" variant="ghost"/>
++        <Button size="sm" variant="ghost" onClick={()=>setLogs('')} aria-label="Clear display"><Eraser className="size-4"/></Button>
++        {downloadUrl&&<Button asChild size="sm" variant="ghost"><a href={downloadUrl} download aria-label="Download log"><Download className="size-4"/></a></Button>}
++        {onClose&&<Button size="sm" variant="ghost" aria-label="Close logs" onClick={()=>{abortControllerRef.current?.abort();onClose();}}><XCircle className="size-4"/></Button>}
+       </div>
+-    </Card>
+-  );
++    </div>
++    <p className="h-5 text-xs text-muted-foreground truncate" role="status">{error||(connected?'Connected':'Waiting for logs…')}</p>
++    <div ref={logContainerRef} tabIndex={0} aria-label="Program output"
++      className="bg-black text-green-400 p-3 rounded font-mono text-xs overflow-y-auto h-64 whitespace-pre-wrap break-all select-text"
++      onScroll={()=>{const el=logContainerRef.current;if(el&&el.scrollHeight-el.scrollTop-el.clientHeight>24)setFollowing(false);}}>
++      {logs||'Waiting for logs…'}
++    </div>
++  </Card>;
+ };
+--- a/dashboard/src/pages/control/ControlPage.tsx
++++ b/dashboard/src/pages/control/ControlPage.tsx
+@@ -1,4 +1,5 @@
+ import {RecordingRecovery, useRecordingRecovery} from '@/e6/RecordingRecovery';
++import {LogConsole} from '@/e6/LogConsole';
+ import { Recorder } from "@/components/common/recorder";
+ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+ import {
+@@ -146,6 +147,7 @@
+           <VRControl />
+         </TabsContent>
+       </Tabs>
++      {e6&&<LogConsole/>}
+     </div>
+   );
+ }

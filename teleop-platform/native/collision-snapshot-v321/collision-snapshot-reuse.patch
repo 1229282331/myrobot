@@ -1,0 +1,52 @@
+--- before/collision_retreat.hpp
++++ after/collision_retreat.hpp
+@@ -1,7 +1,8 @@
+ // SPDX-License-Identifier: BSD-3-Clause
+ // Candidate-local proximity escape. No device IO and no persistent permission.
+ #pragma once
+-#include "arm_proximity.hpp"
++#include <moveit_servo/arm_proximity.hpp>
++#include <moveit_servo/collision_monitor.hpp>
+ #include "sweep_distance.hpp"
+ #include <chrono>
+ #include <sstream>
+@@ -87,6 +88,29 @@
+   CollisionRetreatPolicy(const moveit::core::RobotModelConstPtr& model,const std::string& group,double threshold):
+       model_(model),arm_(model->getJointModelGroup(group)),proximity_(model,group),certificate_(model,group,true,true),threshold_(threshold) {}
+   void reset(){result=CollisionRetreatResult{};actual_distances_.clear();cache_positions_.clear();cache_matrix_.clear();cache_hold_excursion_.clear();actual_collision_checked_=false;verified_target_.resize(0);}
++  bool reuseCheckedAnchor(const planning_scene::PlanningScene& scene,
++      const moveit::core::RobotState& actual,const moveit_servo::CollisionSample& sample) {
++    // Must follow reset() in this callback. No result can cross request state,
++    // model, environment, aperture, matrix, attached-body or world changes.
++    if(actual_collision_checked_||!cache_positions_.empty()||!actual_distances_.empty())return false;
++    if(!sample.checked||sample.self_collision||sample.scene_collision||
++       sample.model.get()!=model_.get()||actual.getRobotModel().get()!=model_.get()||
++       sample.environment.get()!=scene.getCollisionEnvUnpadded().get())return false;
++    const std::vector<double> positions(actual.getVariablePositions(),actual.getVariablePositions()+model_->getVariableCount());
++    if(positions!=sample.positions)return false;
++    std::ostringstream matrix;scene.getAllowedCollisionMatrix().print(matrix);
++    if(matrix.str()!=sample.matrix)return false;
++    std::vector<const moveit::core::AttachedBody*> attached;actual.getAttachedBodies(attached);
++    if(!attached.empty()||scene.getWorld()->size()!=0)return false;
++    const auto& environment=scene.getCollisionEnvUnpadded();
++    for(const auto& entry:environment->getLinkScale())if(entry.second!=1.)return false;
++    for(const auto& entry:environment->getLinkPadding())if(entry.second!=0.)return false;
++    for(const auto& entry:sample.exact_self_distances)
++      if(!std::isfinite(entry.second)||entry.second<=0.)return false;
++    actual_distances_=sample.exact_self_distances;
++    cache_positions_=positions;cache_matrix_=matrix.str();actual_collision_checked_=true;
++    return true;
++  }
+   const SweepDistanceCertificate::DistanceCache* anchorSeparations(const planning_scene::PlanningScene& scene,
+       const moveit::core::RobotState& actual,const collision_detection::AllowedCollisionMatrix& acm)const {
+     // A certificate for a different feedback pose, aperture, model or matrix
+--- before/servo_cpp_adapter.cpp
++++ after/servo_cpp_adapter.cpp
+@@ -172,6 +172,7 @@
+           if(!retreat_eligible){retreat.result.reason="gripper_not_stationary";return baseline;}
+           retreat.result.attempted=true;
+           planning_scene_monitor::LockedPlanningSceneRO scene(monitor);
++          retreat.reuseCheckedAnchor(*scene.operator->(),*actual,servo->getCollisionSample());
+           if(retreat.assess(*scene.operator->(),*actual,smoothed,retreat_deadline,Clock::time_point::min(),hold_excursion)) {
+             retreat.result.boosted=true;retreat.result.verified=true;retreat.result.selected_scale=1.;return 1.;
+           }

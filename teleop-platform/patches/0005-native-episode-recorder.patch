@@ -1,0 +1,97 @@
+diff --git a/dashboard/src/components/common/recorder.tsx b/dashboard/src/components/common/recorder.tsx
+index 627167f..aedb2af 100644
+--- a/dashboard/src/components/common/recorder.tsx
++++ b/dashboard/src/components/common/recorder.tsx
+@@ -36,6 +36,8 @@ import { useEffect, useState } from "react";
+ import { useNavigate } from "react-router-dom";
+ import { toast } from "sonner";
+ import useSWR from "swr";
++import { useNativeRecording } from '@/e6/EpisodeBrowser';
++import { RecordingPanel } from '@/e6/RecordingPanel';
+ 
+ interface RecordingSettings {
+   dataset_name: string;
+@@ -50,6 +52,9 @@ export function Recorder({
+   setShowCamera: (showCamera: boolean) => void;
+ }) {
+   const navigate = useNavigate();
++  const native = useNativeRecording();
++  const nativeTask=()=>localSettings.task_instruction&&localSettings.task_instruction!=='None'
++    ?localSettings.task_instruction:'空载遥操作示教';
+   const leaderArmSerialIds = useGlobalStore(
+     (state) => state.leaderArmSerialIds,
+   );
+@@ -63,7 +68,7 @@ export function Recorder({
+   );
+ 
+   // Set the recording state based on server status
+-  const isRecording = serverStatus?.is_recording || false;
++  const isRecording = native.enabled ? native.active : serverStatus?.is_recording || false;
+   const [isPlaying, setIsPlaying] = useState(false);
+ 
+   // Recording settings state
+@@ -92,13 +97,17 @@ export function Recorder({
+ 
+   // Update local state when settings are fetched
+   useEffect(() => {
++    if(native.enabled) {
++      setLocalSettings(previous=>({...previous,task_instruction:localStorage.getItem('e6-recording-task')||''}));
++      return;
++    }
+     if (adminSettings) {
+       setLocalSettings({
+         dataset_name: adminSettings.dataset_name,
+         task_instruction: adminSettings.task_instruction,
+       });
+     }
+-  }, [adminSettings]);
++  }, [adminSettings,native.enabled]);
+ 
+   // Validation functions
+   const validateDatasetName = (value: string) => {
+@@ -133,6 +142,10 @@ export function Recorder({
+ 
+   // Handle form submission
+   const handleSaveSettings = async () => {
++    if (native.enabled) {
++      localStorage.setItem('e6-recording-task',nativeTask());
++      setIsPopoverOpen(false);return;
++    }
+     // Check if there are any validation errors
+     const datasetNameError = validateDatasetName(localSettings.dataset_name);
+     setValidationErrors({
+@@ -181,6 +194,7 @@ export function Recorder({
+   };
+ 
+   const handleRecordStart = async () => {
++    if (native.enabled) {native.request('record_start',undefined,nativeTask());return;}
+     if (!isRecording) {
+       const robot_serials_to_ignore = leaderArmSerialIds ?? null;
+       console.log(
+@@ -195,6 +209,7 @@ export function Recorder({
+   };
+ 
+   const handleRecordStop = async () => {
++    if (native.enabled) {native.request('record_finish','success');return;}
+     if (isPlaying) {
+       // TODO: If you press STOP while playing a recording, it should stop the playback
+       // For now, do nothing.
+@@ -213,6 +228,7 @@ export function Recorder({
+   };
+ 
+   const handleRecordDiscard = async () => {
++    if (native.enabled) {native.request('record_finish','failure');return;}
+     const data = await fetchWithBaseUrl(`/recording/stop`, "POST", {
+       save: false,
+     });
+@@ -247,6 +263,10 @@ export function Recorder({
+     navigate("/admin");
+   };
+ 
++  if(native.enabled)return <RecordingPanel native={native} task={localSettings.task_instruction}
++    onTask={value=>{setLocalSettings(previous=>({...previous,task_instruction:value}));localStorage.setItem('e6-recording-task',value);}}
++    onStart={handleRecordStart} onSuccess={handleRecordStop} onFailure={handleRecordDiscard}/>;
++
+   return (
+     <TooltipProvider>
+       <div className="flex flex-col items-center gap-2">

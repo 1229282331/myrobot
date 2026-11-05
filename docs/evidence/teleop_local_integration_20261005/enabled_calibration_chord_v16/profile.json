@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "dataset_kind": "controller_kinematics_calibration",
+  "robot_ip": "192.168.1.4",
+  "user": 0,
+  "tool": 0,
+  "layout_source_commit": "82bce656c6e1a1c71599901baa93ed45bb50963d",
+  "source_sha256": {
+    "local_kinematics.py": "178b9c630475d894660f3fae6d0db457f675c39f55f1df2aee8fcdba78f44744",
+    "kinematics_profile.py": "357a24b3a593d07064ba653859cdaf28c41e95ff135024bcdbe2b779b4127870",
+    "control_math.py": "e813af9a36269e1bc4ca660090e598ccaec15daed1881ca65161f2ee0f2ce09d"
+  },
+  "capture_file": "samples.json.gz",
+  "capture_sha256": "3334a7d57eea9ef01a23d910d5c15cffd9ee4f0864b687b83ded7d9ddc6db36d",
+  "physical_accuracy_verified": false
+}

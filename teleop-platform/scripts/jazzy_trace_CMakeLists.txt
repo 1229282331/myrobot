@@ -1,0 +1,22 @@
+cmake_minimum_required(VERSION 3.22)
+project(e6_jazzy_trace)
+find_package(ament_cmake REQUIRED)
+find_package(moveit_servo REQUIRED)
+find_package(parameter_traits REQUIRED)
+find_package(kdl_parser REQUIRED)
+find_package(orocos_kdl REQUIRED)
+set(dependencies control_msgs geometry_msgs moveit_core moveit_msgs moveit_ros_planning
+    moveit_ros_planning_interface pluginlib rclcpp rclcpp_components rclcpp_lifecycle
+    realtime_tools sensor_msgs std_msgs std_srvs tf2_eigen trajectory_msgs)
+foreach(dependency IN LISTS dependencies)
+  find_package(${dependency} REQUIRED)
+endforeach()
+add_executable(servo_e6_traced src/servo_node.cpp jazzy_trace_main.cpp)
+target_include_directories(servo_e6_traced BEFORE PRIVATE include)
+target_link_libraries(servo_e6_traced moveit_servo::moveit_servo_lib_cpp
+    moveit_servo::moveit_servo_lib_parameters parameter_traits::parameter_traits)
+ament_target_dependencies(servo_e6_traced ${dependencies})
+target_compile_features(servo_e6_traced PUBLIC cxx_std_17)
+add_executable(kdl_model_probe kdl_model_probe.cpp)
+ament_target_dependencies(kdl_model_probe kdl_parser orocos_kdl)
+target_compile_features(kdl_model_probe PUBLIC cxx_std_17)

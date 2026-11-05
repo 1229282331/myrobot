@@ -1,0 +1,29 @@
+--- upstream/src/collision_monitor.cpp
++++ arm-proximity/src/collision_monitor.cpp
+@@ -38,6 +38,7 @@
+  */
+ 
+ #include <moveit_servo/collision_monitor.hpp>
++#include <moveit_servo/arm_proximity.hpp>
+ #include <rclcpp/rclcpp.hpp>
+ #include <moveit/utils/logger.hpp>
+ 
+@@ -97,6 +98,7 @@
+   double self_collision_threshold_delta, scene_collision_threshold_delta;
+   double self_collision_scale, scene_collision_scale;
+   const double log_val = -log(0.001);
++  const ArmProximityPolicy proximity_policy(planning_scene_monitor_->getRobotModel(), servo_params_.move_group_name);
+ 
+   while (rclcpp::ok() && !stop_requested_)
+   {
+@@ -121,7 +123,9 @@
+ 
+       // Check robot self collision.
+       self_collision_result_.clear();
+-      locked_scene->getCollisionEnvUnpadded()->checkSelfCollision(
++      // Actual collisions retain the original ACM; only proximity distances
++      // invariant to this joint group's motion are excluded from slowdown.
++      proximity_policy.check(locked_scene->getCollisionEnvUnpadded(),
+           self_collision_request_, self_collision_result_, robot_state_, locked_scene->getAllowedCollisionMatrix());
+ 
+       // If collision detected scale velocity to 0, else start decelerating exponentially.

@@ -1,0 +1,14 @@
+diff --git a/phosphobot/phosphobot/endpoints/update.py b/phosphobot/phosphobot/endpoints/update.py
+index 3c5e8d8..e2d1b63 100644
+--- a/phosphobot/phosphobot/endpoints/update.py
++++ b/phosphobot/phosphobot/endpoints/update.py
+@@ -48,7 +48,8 @@ async def get_latest_available_version(run_quick: bool = False) -> dict:
+             return {"error": str(e)}
+     elif platform.system() == "Darwin" or platform.system() == "Windows":
+         # Check the brew package version in the repo homebrew-phosphobot
+-        version = fetch_latest_brew_version(fail_silently=True)
++        # Version checks must not block live teleoperation WebSockets.
++        version = await asyncio.to_thread(fetch_latest_brew_version, fail_silently=True)
+         if version != "unknown":
+             return {"version": version}
+         else:

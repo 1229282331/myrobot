@@ -1,0 +1,24 @@
+--- a/dashboard/src/pages/control/ControlPage.tsx
++++ b/dashboard/src/pages/control/ControlPage.tsx
+@@ -1,3 +1,4 @@
++import {RecordingRecovery, useRecordingRecovery} from '@/e6/RecordingRecovery';
+ import { Recorder } from "@/components/common/recorder";
+ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+ import {
+@@ -32,6 +33,8 @@
+   const setShowCamera = useGlobalStore((state) => state.setShowCamera);
+   const [activeTab, setActiveTab] = useLocalStorageState("control-active-tab", "keyboard");
+ 
++  const recovering=useRecordingRecovery();
++
+   // Read tab from URL on mount (URL takes priority over localStorage)
+   useEffect(() => {
+     const urlParams = new URLSearchParams(window.location.search);
+@@ -52,6 +55,7 @@
+   };
+ 
+   if(e6 && new URLSearchParams(window.location.search).get('panel')==='episodes')return <Navigate to='/browse' replace/>;
++  if(recovering)return <RecordingRecovery/>;
+ 
+   const controlOptions = [
+     {

@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>e6_servo_filter_patch</name>
+  <version>0.1.0</version>
+  <description>Isolated review of two reproduced numeric issues in the pinned MoveIt acceleration plugin.</description>
+  <maintainer email="noreply@example.invalid">E6 local project</maintainer>
+  <license>BSD-3-Clause</license>
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <depend>moveit_core</depend>
+  <depend>rclcpp_lifecycle</depend>
+  <depend>parameter_traits</depend>
+  <depend>osqp</depend>
+  <depend>pluginlib</depend>
+  <export><build_type>ament_cmake</build_type></export>
+</package>

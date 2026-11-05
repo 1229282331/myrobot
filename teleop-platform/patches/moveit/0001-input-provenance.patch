@@ -1,0 +1,28 @@
+--- a/src/servo_calcs.cpp
++++ b/src/servo_calcs.cpp
+@@ -398,6 +398,9 @@
+       resetLowPassFilters(original_joint_state_);
+       return;
+     }
++    // E6 adapter provenance only; retain the upstream immediate-start stamp.
++    joint_trajectory->header.frame_id = "e6_twist/" +
++        std::to_string(rclcpp::Time(twist_stamped_cmd_.header.stamp).nanoseconds());
+   }
+   else if (have_nonzero_joint_command_ && !joint_command_is_stale_)
+   {
+@@ -406,11 +409,15 @@
+       resetLowPassFilters(original_joint_state_);
+       return;
+     }
++    // E6 adapter provenance only; retain the upstream immediate-start stamp.
++    joint_trajectory->header.frame_id = "e6_joint/" +
++        std::to_string(rclcpp::Time(joint_servo_cmd_.header.stamp).nanoseconds());
+   }
+   else
+   {
+     // Joint trajectory is not populated with anything, so set it to the last positions and 0 velocity
+     *joint_trajectory = *last_sent_command_;
++    joint_trajectory->header.frame_id = "e6_halt";
+     for (auto& point : joint_trajectory->points)
+     {
+       point.velocities.assign(point.velocities.size(), 0);

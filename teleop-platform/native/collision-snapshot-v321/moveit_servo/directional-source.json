@@ -1,0 +1,7 @@
+{
+  "upstream": "https://github.com/moveit/moveit2",
+  "commit": "1ade0e9dcf50dbbbc3a984b995c786cf12736235",
+  "original_sha256": "35db0297387a7bb2bfac3077733a4d09f68ccd55b644353e8ef03b12028d7f0a",
+  "patched_sha256": "90523027b9bc288094cd8355bb5846d987f1fb418864e899149649922515826c",
+  "scope": "Only singularity direction/escape scaling; official IK/smoothing/collision/joint limits retained"
+}

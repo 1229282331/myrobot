@@ -1,0 +1,521 @@
+--- a/dashboard/src/components/common/mobile-menu.tsx
++++ b/dashboard/src/components/common/mobile-menu.tsx
+@@ -96,9 +96,9 @@
+               AI & Training
+             </h3>
+             <a
+-              href="/training"
++              href="/train"
+               className={`flex items-center gap-3 px-2 py-1.5 rounded-md ${
+-                currentPath === "/training" ? "bg-accent" : "hover:bg-accent/50"
++                currentPath === "/train" ? "bg-accent" : "hover:bg-accent/50"
+               }`}
+             >
+               <Dumbbell className="h-4 w-4" />
+--- a/dashboard/src/components/layout/footer.tsx
++++ b/dashboard/src/components/layout/footer.tsx
+@@ -1,3 +1,4 @@
++import {useWorkbenchMode} from '@/e6/WorkbenchChrome';
+ import { CodeSnippet } from "@/components/common/code-snippet";
+ import { Badge } from "@/components/ui/badge";
+ import { Button } from "@/components/ui/button";
+@@ -39,6 +40,7 @@
+ }
+ 
+ export function Footer() {
++  const e6=useWorkbenchMode();
+   const [isUpdating, setIsUpdating] = useState(false);
+ 
+   const { data: serverStatus } = useSWR<ServerStatus>(
+@@ -50,8 +52,8 @@
+   );
+ 
+   const { data: updateVersion } = useSWR<{ version?: string; error: string }>(
+-    ["/update/version"],
+-    ([url]) => fetcher(url, "POST"),
++    e6===false?["/update/version"]:null,
++    ([url]:string[]) => fetcher(url, "POST"),
+     {
+       refreshInterval: 60000,
+     },
+@@ -100,11 +102,11 @@
+         </Button>
+         <Badge variant="outline" className="text-xs">
+           {`${serverStatus?.version_id}`}{" "}
+-          {isLatest
++          {e6 ? '(E6)' : isLatest
+             ? "(latest)"
+             : `(update available: ${updateVersion?.version})`}
+         </Badge>
+-        {!isLatest && operatingSystem == "linux" && (
++        {e6===false && !isLatest && operatingSystem == "linux" && (
+           <Button
+             onClick={async () => {
+               // Sends a command to update the software. Disables the update button while updating.
+@@ -138,7 +140,7 @@
+             )}
+           </Button>
+         )}
+-        {!isLatest && operatingSystem == "macos" && (
++        {e6===false && !isLatest && operatingSystem == "macos" && (
+           // display a popover with instructions on how to update the software (code snippet)
+           <Popover>
+             <PopoverTrigger>
+@@ -170,7 +172,7 @@
+           </Popover>
+         )}
+         {/* Windows update instructions */}
+-        {!isLatest && operatingSystem == "windows" && (
++        {e6===false && !isLatest && operatingSystem == "windows" && (
+           <Popover>
+             <PopoverTrigger>
+               <Button
+--- a/dashboard/src/components/layout/layout.tsx
++++ b/dashboard/src/components/layout/layout.tsx
+@@ -4,6 +4,8 @@
+ import { TopBar } from "@/components/layout/topbar";
+ import { Toaster } from "@/components/ui/sonner";
+ import { Outlet } from "react-router-dom";
++
++import {E6RouteGuard} from '@/e6/PlatformPages';
+ 
+ export function Layout() {
+   return (
+@@ -13,7 +15,7 @@
+         <Sidebar />
+         <main className="flex-1 container mx-auto py-6 px-4 md:px-6 overflow-y-auto pt-[150px] md:pt-[100px] pb-[60px]">
+           <ErrorBoundary>
+-            <Outlet />
++            <E6RouteGuard><Outlet /></E6RouteGuard>
+           </ErrorBoundary>
+         </main>
+         <Toaster position="top-center" />
+--- a/dashboard/src/components/layout/topbar.tsx
++++ b/dashboard/src/components/layout/topbar.tsx
+@@ -230,7 +230,11 @@
+   );
+ }
+ 
++import {useWorkbenchMode} from '@/e6/WorkbenchChrome';
++import {DeviceConnectionBadge} from '@/e6/PlatformPages';
++
+ export function TopBar() {
++  const e6=useWorkbenchMode();
+   const currentPath = window.location.pathname;
+   const { session } = useAuth();
+   const navigate = useNavigate();
+@@ -260,9 +264,9 @@
+         {/* Back button on mobile */}
+         <MobileMenu />
+         <ServerIP />
+-        <AIControlStatus />
+-        <RecordingStatus />
+-        <RobotStatusDropdown />
++        {e6===false&&<AIControlStatus />}
++        {e6===false&&<RecordingStatus />}
++        {e6?<DeviceConnectionBadge/>:e6===false?<RobotStatusDropdown />:null}
+         <Button variant="outline" asChild>
+           <a
+             href="https://docs.phospho.ai/welcome"
+@@ -276,7 +280,7 @@
+         </Button>
+         <ThemeToggle />
+         <div className="flex items-center gap-2">
+-          {session ? (
++          {e6===false && (session ? (
+             <AccountTopBar />
+           ) : (
+             <div className="flex items-center gap-2">
+@@ -297,7 +301,7 @@
+                 Sign up
+               </Button>
+             </div>
+-          )}
++          ))}
+         </div>
+       </div>
+     </div>
+--- a/dashboard/src/pages/BrowsePage.tsx
++++ b/dashboard/src/pages/BrowsePage.tsx
+@@ -1,3 +1,5 @@
++import {useWorkbenchMode} from '@/e6/WorkbenchChrome';
++import {EpisodeLibrary} from '@/e6/EpisodeBrowser';
+ import { LoadingPage } from "@/components/common/loading";
+ import { Modal } from "@/components/common/modal";
+ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+@@ -291,7 +293,7 @@
+   );
+ };
+ 
+-export function BrowsePage() {
++function UpstreamBrowsePage() {
+   const params = useParams();
+   const [searchParams] = useSearchParams();
+   const path = params.path || searchParams.get("path") || "";
+@@ -1138,3 +1140,5 @@
+     </div>
+   );
+ }
++
++export function BrowsePage() {const e6=useWorkbenchMode();return e6===undefined?null:e6?<EpisodeLibrary/>:<UpstreamBrowsePage/>;}
+--- a/dashboard/src/pages/DashboardPage.tsx
++++ b/dashboard/src/pages/DashboardPage.tsx
+@@ -1,3 +1,5 @@
++import {useWorkbenchMode} from '@/e6/WorkbenchChrome';
++import {DeviceDashboard} from '@/e6/PlatformPages';
+ import { PhosphoProCallout } from "@/components/callout/phospho-pro";
+ import { AIControlDisclaimer } from "@/components/common/ai-control-disclaimer";
+ import { HuggingFaceKeyInput } from "@/components/common/huggingface-key";
+@@ -227,7 +229,7 @@
+   );
+ }
+ 
+-export function DashboardPage() {
++function UpstreamDashboardPage() {
+   const navigate = useNavigate();
+   const { proUser } = useAuth();
+   const { data: serverStatus, isLoading } = useSWR<ServerStatus>(
+@@ -354,3 +356,5 @@
+     </div>
+   );
+ }
++
++export function DashboardPage() {const e6=useWorkbenchMode();return e6===undefined?null:e6?<DeviceDashboard/>:<UpstreamDashboardPage/>;}
+--- a/dashboard/src/pages/ViewVideoPage.tsx
++++ b/dashboard/src/pages/ViewVideoPage.tsx
+@@ -1,3 +1,5 @@
++import {useWorkbenchMode} from '@/e6/WorkbenchChrome';
++import {CameraOverview} from '@/e6/PlatformPages';
+ import { AddZMQCameraModal } from "@/components/common/add-zmq-camera-modal";
+ import { CameraStreamCard } from "@/components/common/camera-stream-card";
+ import { Button } from "@/components/ui/button";
+@@ -8,7 +10,7 @@
+ import { useState } from "react";
+ import useSWR from "swr";
+ 
+-export function ViewVideoPage({ labelText }: { labelText?: string }) {
++function UpstreamViewVideoPage({ labelText }: { labelText?: string }) {
+   if (!labelText) labelText = "Camera Stream";
+   const [isRefreshing, setIsRefreshing] = useState(false);
+   const [isZMQModalOpen, setIsZMQModalOpen] = useState(false);
+@@ -99,3 +101,5 @@
+     </>
+   );
+ }
++
++export function ViewVideoPage(props:{labelText?:string}) { const e6=useWorkbenchMode();return e6===undefined?null:e6?<CameraOverview/>:<UpstreamViewVideoPage {...props}/>;}
+--- a/dashboard/src/pages/control/ControlPage.tsx
++++ b/dashboard/src/pages/control/ControlPage.tsx
+@@ -16,6 +16,7 @@
+   RectangleGoggles,
+ } from "lucide-react";
+ import { useEffect } from "react";
++import {Navigate} from 'react-router-dom';
+ 
+ import { GamepadControl } from "./GamepadControlPage";
+ import { KeyboardControl } from "./KeyboardControlPage";
+@@ -23,7 +24,10 @@
+ import { SingleArmReplay } from "./SingleArmReplayPage";
+ import { VRControl } from "./VRControlPage";
+ 
++import { useWorkbenchMode } from '@/e6/WorkbenchChrome';
++
+ export function ControlPage() {
++  const e6=useWorkbenchMode();
+   const showCamera = useGlobalStore((state) => state.showCamera);
+   const setShowCamera = useGlobalStore((state) => state.setShowCamera);
+   const [activeTab, setActiveTab] = useLocalStorageState("control-active-tab", "keyboard");
+@@ -46,6 +50,8 @@
+     url.searchParams.set('tab', newTab);
+     window.history.pushState({}, '', url.toString());
+   };
++
++  if(e6 && new URLSearchParams(window.location.search).get('panel')==='episodes')return <Navigate to='/browse' replace/>;
+ 
+   const controlOptions = [
+     {
+@@ -77,15 +83,15 @@
+ 
+   return (
+     <div>
+-      <Tabs value={activeTab} onValueChange={handleTabChange}>
+-        <div className="flex flex-col md:flex-row justify-between gap-2">
+-          <div className="flex items-center gap-2 bg-muted rounded-lg p-1 border-1">
++      <Tabs value={e6&&!(["keyboard","gamepad"].includes(activeTab))?"keyboard":activeTab} onValueChange={handleTabChange}>
++        <div className="flex flex-col xl:flex-row justify-between items-start gap-3">
++          <div className="flex items-center gap-2 bg-muted rounded-lg p-1 border">
+             <span className="text-sm font-medium text-muted-foreground px-2">
+               Control
+             </span>
+             <TabsList className="flex gap-1 border-0 bg-transparent p-0">
+               <TooltipProvider delayDuration={300}>
+-                {controlOptions.map((option) => {
++                {controlOptions.filter(option=>!e6||["keyboard","gamepad"].includes(option.value)).map((option) => {
+                   const Icon = option.icon;
+                   const isActive = activeTab === option.value;
+                   return (
+@@ -93,6 +99,7 @@
+                       <TooltipTrigger asChild>
+                         <TabsTrigger
+                           value={option.value}
++                          aria-label={option.label}
+                           className={`cursor-pointer transition-all ${
+                             isActive
+                               ? "px-3 py-1.5 bg-background shadow-sm"
+@@ -100,7 +107,7 @@
+                           }`}
+                         >
+                           <Icon className="size-4" />
+-                          {isActive && (
++                          {(isActive||e6) && (
+                             <span className="ml-2">{option.label}</span>
+                           )}
+                         </TabsTrigger>
+@@ -118,7 +125,7 @@
+           </div>
+           <Recorder showCamera={showCamera} setShowCamera={setShowCamera} />
+         </div>
+-        {showCamera && <ViewVideoPage />}
++        {showCamera && !e6 && <ViewVideoPage />}
+         <TabsContent value="keyboard">
+           <KeyboardControl />
+         </TabsContent>
+--- a/dashboard/src/pages/control/GamepadControlPage.tsx
++++ b/dashboard/src/pages/control/GamepadControlPage.tsx
+@@ -538,10 +538,10 @@
+   if (!serverStatus) return <LoadingPage />;
+ 
+   return (
+-    <div className={platform.enabled ? "e6-control-workspace" : "container mx-auto px-4 py-6"}>
+-      <div className={platform.enabled?"e6-operator-column e6-gamepad-column":"space-y-8"}>
++    <div className={platform.enabled?"container mx-auto px-4 py-6 grid gap-8 lg:grid-cols-2 items-start":"container mx-auto px-4 py-6"}>
++      <div className="min-w-0 space-y-6">
+         {serverError && <ServerStatusRecovery retry={retryStatus} pending={checkingStatus}/>}
+-      <Card className={platform.enabled?"e6-gamepad-configuration e6-prepare-card":""}>
++      <Card className="">
+         {!platform.enabled&&<CardHeader className="flex flex-col gap-y-2">
+           <div className="flex items-center justify-between">
+             <CardDescription>
+@@ -693,7 +693,7 @@
+                 className={`size-8 ${gamepadConnected ? "text-green-500" : "text-gray-400"}`}
+               />
+               <span className="text-lg font-semibold">
+-                {platform.enabled ? (platform.testPadState.selected ? (platform.testPadState.connected?'合成手柄 · 自动验收':'合成手柄已断开') : gamepadConnected?`已识别 ${availableGamepads.length} 个手柄`:'尚未识别手柄') : gamepadConnected
++                {platform.enabled ? (platform.testPadState.selected ? (platform.testPadState.connected?'合成手柄 · 自动验收':'合成手柄已断开') : gamepadConnected?`已识别 ${availableGamepads.length} 个手柄`:'No Gamepads Detected') : gamepadConnected
+                   ? `${availableGamepads.length} ${availableGamepads.length === 1 ? "Gamepad" : "Gamepads"} Connected`
+                   : "No Gamepads Detected"}
+               </span>
+@@ -701,23 +701,23 @@
+             {!gamepadConnected && !platform.testPadState.selected && (
+               <div className="text-center space-y-2">
+                 <p className="text-sm text-muted-foreground">
+-                  {platform.enabled?'将手柄接收器插入本 PC':'Connect a game controller to your computer'}
++                  {platform.enabled?'Connect a game controller to your computer':'Connect a game controller to your computer'}
+                 </p>
+                 <p className="text-lg font-medium text-primary animate-pulse">
+-                  {platform.enabled?'按一下手柄按键以激活浏览器识别':'Press any button on your controller to activate'}
++                  {platform.enabled?'Press any button to activate':'Press any button on your controller to activate'}
+                 </p>
+                 <p className="text-xs text-muted-foreground">
+-                  {platform.enabled?'保持网页有焦点，摇杆和扳机回中':'(Browser security requires a button press to detect gamepads)'}
++                  {platform.enabled?'':'(Browser security requires a button press to detect gamepads)'}
+                 </p>
+               </div>
+             )}
+           </div>
+ 
+-          <div className={platform.enabled?"e6-gamepad-actions":"flex flex-col md:flex-row justify-center gap-4"}>
++          <div className="flex flex-col md:flex-row justify-center gap-4">
+             <SpeedSelect
+               defaultValue={selectedSpeed}
+               onChange={(newSpeed) => setSelectedSpeed(newSpeed)}
+-              title={platform.enabled?"速度倍率":"Movement speed"}
++              title={platform.enabled?"Movement speed":"Movement speed"}
+               minSpeed={0.1}
+               maxSpeed={platform.enabled ? 1.0 : 2.0}
+               step={0.1}
+@@ -734,7 +734,7 @@
+               size="lg"
+             >
+               {!isMoving && <Play className="mr-2 h-4 w-4" />}
+-              {isMoving ? (platform.enabled?"已准备 · 等待输入":"Control Running") : platform.enabled ? "准备手柄控制" : "Start Control"}
++              {isMoving ? (platform.enabled?"Ready":"Control Running") : platform.enabled ? "Prepare Control" : "Start Control"}
+             </Button>
+             <Button
+               onClick={stopMoving}
+@@ -743,7 +743,7 @@
+               size="lg"
+             >
+               <Square className="mr-2 h-4 w-4" />
+-              {platform.enabled?"停止":"Stop Control"}
++              {platform.enabled?"Stop":"Stop Control"}
+             </Button>
+           </div>
+ 
+@@ -774,14 +774,14 @@
+               <AlertCircle className="h-4 w-4" />
+               <AlertTitle>{platform.enabled?'请选择手柄与设备':'Incomplete configuration'}</AlertTitle>
+               <AlertDescription>
+-                {platform.enabled?'展开下方「手柄与设备配对」，选择本次输入。':'Please complete the configuration below to start control.'}
++                {platform.enabled?'展开下方「Robot-Controller Pairs」，选择本次输入。':'Please complete the configuration below to start control.'}
+               </AlertDescription>
+             </Alert>
+           )}
+ 
+           {/* Configuration Section */}
+-          <ConfigurationContainer className={platform.enabled?'e6-gamepad-pairing':''}>
+-          {platform.enabled&&<summary>手柄与设备配对</summary>}
++          <ConfigurationContainer >
++          {platform.enabled&&<summary>Robot-Controller Pairs</summary>}
+           {configMode === "individual" ? (
+             <div>
+               <div className="flex justify-between items-center mb-4">
+@@ -1385,19 +1385,23 @@
+         </CardContent>
+       </Card>}
+ 
++      </div>
++      <div className="min-w-0 space-y-6">
++      {platform.enabled&&<ControlCamera control={platform}/>}
+       {/* Retain the upstream live visualizer while preparing E6 input. */}
+       {(isMoving || platform.enabled) && (
+         <Card>
+           <CardHeader>
+             <CardTitle className="flex items-center gap-x-2">
+               <Gamepad2 className="size-4" />
+-              {platform.enabled?"手柄输入状态":"Active Controller States"}
++              {platform.enabled?"Gamepad Input":"Active Controller States"}
+             </CardTitle>
+             <CardDescription>
+-              {platform.enabled?"当前配对手柄的实时按键与摇杆输入":"Real-time controller input visualization for active configurations"}
++              {platform.enabled?"":"Real-time controller input visualization for active configurations"}
+             </CardDescription>
+           </CardHeader>
+           <CardContent>
++            {platform.enabled&&!controllerArmPairs.some(pair=>pair.controller_index!==null&&pair.robot_name!==null)&&<p className="text-sm text-muted-foreground">Pair a controller to view input.</p>}
+             <Accordion type="multiple" className="w-full">
+               {configMode === "individual"
+                 ? controllerArmPairs
+@@ -1539,7 +1543,7 @@
+         </Card>
+       )}
+       </div>
+-      {platform.enabled&&<aside className="e6-scene-column"><ControlCamera control={platform}/></aside>}
++
+     </div>
+   );
+ }
+--- a/dashboard/src/pages/control/KeyboardControlPage.tsx
++++ b/dashboard/src/pages/control/KeyboardControlPage.tsx
+@@ -21,6 +21,8 @@
+   ArrowDown,
+   ArrowDownFromLine,
+   ArrowLeft,
++  ChevronsLeftRight,
++  ChevronsRightLeft,
+   ArrowRight,
+   ArrowUp,
+   ArrowUpFromLine,
+@@ -354,16 +356,19 @@
+     setActiveKey(null);
+   };
+ 
++  const axis = platform.mode==='rotation'?['Rx','Ry','Rz']:platform.mode==='joint'?[`J${platform.joint+1}`,'—','—']:['X','Y','Z'];
+   const controls = platform.enabled ? [
+-    {key:'a',description:'X− / Rx− / 关节−',icon:<ArrowLeft className="size-5"/>},
+-    {key:'d',description:'X+ / Rx+ / 关节+',icon:<ArrowRight className="size-5"/>},
+-    {key:'s',description:'Y− / Ry−',icon:<ArrowDown className="size-5"/>},
+-    {key:'w',description:'Y+ / Ry+',icon:<ArrowUp className="size-5"/>},
+-    {key:'q',description:'Z− / Rz−',icon:<ChevronDown className="size-5"/>},
+-    {key:'e',description:'Z+ / Rz+',icon:<ChevronUp className="size-5"/>},
+-    {key:'f',description:'逐渐张开',icon:<RotateCcw className="size-5"/>},
+-    {key:'r',description:'逐渐闭合',icon:<RotateCw className="size-5"/>},
+-    {key:' ',description:'按住允许动作；释放保持',icon:<Space className="size-5"/>},
++    {key:'a',description:`${axis[0]}−`,icon:<ArrowLeft className="size-5"/>},
++    {key:'d',description:`${axis[0]}+`,icon:<ArrowRight className="size-5"/>},
++    ...(platform.mode==='joint'?[]:[
++      {key:'s',description:`${axis[1]}−`,icon:<ArrowDown className="size-5"/>},
++      {key:'w',description:`${axis[1]}+`,icon:<ArrowUp className="size-5"/>},
++      {key:'q',description:`${axis[2]}−`,icon:<ChevronDown className="size-5"/>},
++      {key:'e',description:`${axis[2]}+`,icon:<ChevronUp className="size-5"/>},
++    ]),
++    {key:'f',description:'Open gripper',icon:<ChevronsLeftRight className="size-5"/>},
++    {key:'r',description:'Close gripper',icon:<ChevronsRightLeft className="size-5"/>},
++    {key:' ',description:'Hold to move',icon:<Space className="size-5"/>},
+   ] : [
+     {
+       key: "ArrowUp",
+@@ -427,14 +432,14 @@
+   if (!serverStatus) return <LoadingPage />;
+ 
+   return (
+-    <div className={platform.enabled?"e6-control-workspace":"container mx-auto px-4 py-6 lg:flex lg:flex-row lg:gap-8 space-y-8 lg:space-y-0"}>
+-      <div className={platform.enabled?"e6-operator-column":"md:w-1/2 space-y-6"}>
++    <div className="container mx-auto px-4 py-6 lg:flex lg:flex-row lg:gap-8 space-y-8 lg:space-y-0">
++      <div className="min-w-0 lg:w-1/2 space-y-6">
+         {serverError && <ServerStatusRecovery retry={retryStatus} pending={checkingStatus}/>}
+-        <Card className={platform.enabled?"e6-prepare-card":""}>
++        <Card className="">
+           <CardContent className="pt-6 flex flex-col items-center gap-2">
+-            <div className={platform.enabled?"e6-prepare-select":"flex flex-wrap items-end justify-center gap-2"}>
++            <div className="flex flex-wrap items-end justify-center gap-2">
+               <div className="flex flex-col gap-y-2">
+-                <Label htmlFor="follower-robot">{platform.enabled?"当前设备":"Select Robot to Control"}</Label>
++                <Label htmlFor="follower-robot">{platform.enabled?"Robot":"Select Robot to Control"}</Label>
+                 <Select
+                   value={selectedRobotName || ""}
+                   onValueChange={(value) => setSelectedRobotName(value)}
+@@ -463,20 +468,20 @@
+               <SpeedSelect
+                 defaultValue={selectedSpeed}
+                 onChange={(newSpeed) => setSelectedSpeed(newSpeed)}
+-                title={platform.enabled?"速度倍率":"Movement speed"}
++                title={platform.enabled?"Movement speed":"Movement speed"}
+                 minSpeed={0.1}
+                 maxSpeed={platform.enabled ? 1.0 : 2.0}
+                 step={0.1}
+               />
+             </div>
+-            <div className={platform.enabled?"e6-prepare-buttons":"flex justify-center items-center gap-2"}>
++            <div className="flex justify-center items-center gap-2">
+               <Button
+                 variant="default"
+                 onClick={startMoving}
+                 disabled={!selectedRobotName || isMoving || (platform.enabled && !!platform.prepareBlockedReason)}
+               >
+                 <Play className="mr-2 h-4 w-4" />
+-                {isMoving ? (platform.enabled?"已准备 · 等待输入":"Controlling...") : platform.enabled ? "准备键盘控制" : "Start Keyboard Control"}
++                {isMoving ? (platform.enabled?"Ready":"Controlling...") : platform.enabled ? "Prepare Control" : "Start Keyboard Control"}
+               </Button>
+               <Button
+                 variant="destructive"
+@@ -484,7 +489,7 @@
+                 disabled={!isMoving}
+               >
+                 <Square className="mr-2 h-4 w-4" />
+-                {platform.enabled?"停止":"Stop"}
++                {platform.enabled?"Stop":"Stop"}
+               </Button>
+             </div>
+             {!platform.enabled && <figure className="flex flex-col items-center">
+@@ -502,9 +507,9 @@
+         <ControlStatus control={platform}/>
+       </div>
+ 
+-      <div className={platform.enabled ? "e6-scene-column" : "md:w-1/2"}>
+-        <ControlCamera control={platform}/>
+-        <div className={platform.enabled?"e6-key-map":"grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3"} aria-label="键盘输入映射">
++      <div className="min-w-0 lg:w-1/2">
++        <div className="mb-6"><ControlCamera control={platform}/></div>
++        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3" aria-label="Keyboard Controls">
+           {controls.map((control) => (
+             <TooltipProvider key={control.key}>
+               <Tooltip>
+@@ -528,6 +533,7 @@
+                         ? "SPACE"
+                         : control.key.toUpperCase()}
+                     </span>
++                    {platform.enabled&&<span className="mt-1 text-xs">{control.description}</span>}
+                   </Card>
+                 </TooltipTrigger>
+                 <TooltipContent>

@@ -1,0 +1,1922 @@
+{
+  "version": 4,
+  "frame": "controller_base",
+  "tcp": {
+    "profile": "omnipicker-r4",
+    "frame": "grasp_tcp",
+    "label": "\u5939\u6307\u6293\u63e1\u4e2d\u5fc3",
+    "parent_frame": "controller_flange",
+    "translation_m": [
+      0.0,
+      0.0,
+      0.1514
+    ],
+    "quaternion_xyzw": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ],
+    "calibration": "nominal_cad_unmeasured",
+    "opening_policy": "fixed_reference_not_aperture_tracking",
+    "sha256": "f223c30da026220ae23aca8b98fc4ba969ecc12efac32401d79c20f78f6e7b4d"
+  },
+  "environment_modeled": false,
+  "calibration": "nominal_cad_unmeasured",
+  "gripper_pose": "feedback_driven_nominal_linkage",
+  "allowed_contacts": [
+    [
+      "r4_plate",
+      "Link6"
+    ],
+    [
+      "r4_plate",
+      "omnipicker"
+    ],
+    [
+      "r4_plate",
+      "gemini_e"
+    ],
+    [
+      "omnipicker",
+      "gemini_e"
+    ],
+    [
+      "omnipicker",
+      "op_hand_narrow1_Link"
+    ],
+    [
+      "op_hand_narrow1_Link",
+      "op_hand_narrow2_Link"
+    ],
+    [
+      "op_hand_narrow2_Link",
+      "op_hand_narrow3_Link"
+    ],
+    [
+      "op_hand_narrow3_Link",
+      "op_hand_narrow4_Link"
+    ],
+    [
+      "omnipicker",
+      "op_hand_narrow_loop_Link"
+    ],
+    [
+      "omnipicker",
+      "op_hand_wide1_Link"
+    ],
+    [
+      "op_hand_wide1_Link",
+      "op_hand_wide2_Link"
+    ],
+    [
+      "op_hand_wide2_Link",
+      "op_hand_wide3_Link"
+    ],
+    [
+      "op_hand_wide3_Link",
+      "op_hand_wide4_Link"
+    ],
+    [
+      "omnipicker",
+      "op_hand_wide_loop_Link"
+    ],
+    [
+      "op_unknown_sweep",
+      "omnipicker"
+    ],
+    [
+      "op_unknown_sweep",
+      "op_hand_narrow1_Link"
+    ],
+    [
+      "op_unknown_sweep",
+      "op_hand_narrow2_Link"
+    ],
+    [
+      "op_unknown_sweep",
+      "op_hand_narrow3_Link"
+    ],
+    [
+      "op_unknown_sweep",
+      "op_hand_narrow4_Link"
+    ],
+    [
+      "op_unknown_sweep",
+      "op_hand_narrow_loop_Link"
+    ],
+    [
+      "op_unknown_sweep",
+      "op_hand_wide1_Link"
+    ],
+    [
+      "op_unknown_sweep",
+      "op_hand_wide2_Link"
+    ],
+    [
+      "op_unknown_sweep",
+      "op_hand_wide3_Link"
+    ],
+    [
+      "op_unknown_sweep",
+      "op_hand_wide4_Link"
+    ],
+    [
+      "op_unknown_sweep",
+      "op_hand_wide_loop_Link"
+    ],
+    [
+      "op_unknown_sweep",
+      "r4_plate"
+    ],
+    [
+      "op_unknown_sweep",
+      "gemini_e"
+    ],
+    [
+      "op_hand_narrow_loop_Link",
+      "op_hand_narrow2_Link"
+    ],
+    [
+      "op_hand_narrow_loop_Link",
+      "op_hand_narrow3_Link"
+    ],
+    [
+      "op_hand_wide_loop_Link",
+      "op_hand_wide2_Link"
+    ],
+    [
+      "op_hand_wide_loop_Link",
+      "op_hand_wide3_Link"
+    ],
+    [
+      "op_hand_narrow3_Link",
+      "op_hand_wide3_Link"
+    ],
+    [
+      "omnipicker",
+      "op_hand_narrow2_Link"
+    ],
+    [
+      "op_hand_narrow1_Link",
+      "op_hand_narrow3_Link"
+    ],
+    [
+      "op_hand_narrow1_Link",
+      "op_hand_narrow_loop_Link"
+    ],
+    [
+      "omnipicker",
+      "op_hand_wide2_Link"
+    ],
+    [
+      "op_hand_wide1_Link",
+      "op_hand_wide3_Link"
+    ],
+    [
+      "op_hand_wide1_Link",
+      "op_hand_wide_loop_Link"
+    ],
+    [
+      "op_hand_narrow1_Link",
+      "op_hand_wide1_Link"
+    ],
+    [
+      "op_hand_narrow3_Link",
+      "op_hand_wide_loop_Link"
+    ],
+    [
+      "op_hand_narrow_loop_Link",
+      "op_hand_wide3_Link"
+    ],
+    [
+      "op_hand_narrow_loop_Link",
+      "op_hand_wide_loop_Link"
+    ],
+    [
+      "op_hand_narrow1_Link",
+      "op_hand_wide_loop_Link"
+    ],
+    [
+      "op_hand_narrow_loop_Link",
+      "op_hand_wide1_Link"
+    ]
+  ],
+  "sources": {
+    "teleop-platform\\config\\e6-controller-model\\e6.urdf": "cc7639d8e351b0e84db214b8fe9cf2ca003f219e7633ce39215ad01e414d6551",
+    "teleop-platform/upstream/dobot-ros2/dobot_rviz/meshes/me6/base_link.STL": "0f08154e7a7423536bb2457da772be222d687f1f553943bc7e85652a8a52059d",
+    "teleop-platform/upstream/dobot-ros2/dobot_rviz/meshes/me6/Link1.STL": "9778d3fdcd58b9fba2753c441e6ea9787db3f1af48e5d0d4c39776a655372a36",
+    "teleop-platform/upstream/dobot-ros2/dobot_rviz/meshes/me6/Link2.STL": "647e98aad0d533c13ac7d0bc9bfd1fca2b131fa4e8959b8d1af4efc63b1939e9",
+    "teleop-platform/upstream/dobot-ros2/dobot_rviz/meshes/me6/Link3.STL": "a50c83cf4bfcefe91cda0391e1840866348ce4960d98293b3f0e1fe978d00ac0",
+    "teleop-platform/upstream/dobot-ros2/dobot_rviz/meshes/me6/Link4.STL": "0115d78951a9e887265da27ac7d7d4b6c570f11ed6afd080ed08ae28ca16f2f9",
+    "teleop-platform/upstream/dobot-ros2/dobot_rviz/meshes/me6/Link5.STL": "21b0d7fe1f8da62144cfec7b185241d8cd96ab75d0f9fa5d3e77846d5713ca63",
+    "teleop-platform/upstream/dobot-ros2/dobot_rviz/meshes/me6/Link6.STL": "318b57a9cfc1f86099c98f836bda099dfd13026aeac193e7158173e9cf4a0626",
+    "research\\grippers\\e6_omnipicker_pd01_r4_2026-10-12\\PD-01_R4.step": "636759c854a3461960b079494006a0912df6c62e5cc449b127a62b3ce1d56e05",
+    "omnipicker\\assets\\official\\robot_description\\urdf\\robot_urdf.xacro": "0a4967aedf5b431dd333f0886659ada9e1f598bc97dee937da95bd52f78cbbba",
+    "omnipicker/assets/official/robot_description/meshes/base_link.STL": "4eb1c9baab9440c4726e99afb330633e66d541f8eb12ac3a0acf426d21b677cc",
+    "omnipicker/assets/official/robot_description/meshes/narrow1_Link.STL": "82a707fe539d02f571e075a06c59b6846567ce61d741285b0f86f2d934cabb99",
+    "omnipicker/assets/official/robot_description/meshes/narrow2_Link.STL": "e113852a3859903e3be17ecb4b27809a5c5da8d73002157844b132abe7e3a17f",
+    "omnipicker/assets/official/robot_description/meshes/narrow3_Link.STL": "0fb55604e97d18c9545567e082e071746a968f624a0aa31ece3a0cc4fc1217b0",
+    "omnipicker/assets/official/robot_description/meshes/narrow_loop_Link.STL": "63b895ff646b799c303c41c924ea4c77cf00f9c5d357e2fb4f6761c649237b17",
+    "omnipicker/assets/official/robot_description/meshes/wide1_Link.STL": "c858476345282813a6311bd0501787f15431f58daf638ce4381d241250c98075",
+    "omnipicker/assets/official/robot_description/meshes/wide2_Link.STL": "fd388efb484bb85ba2ce1cb9e3fd3a57953f3eb9bffe1e23ed0c6d53a71e014f",
+    "omnipicker/assets/official/robot_description/meshes/wide3_Link.STL": "a06d0c7e16ddd06e28a8e75c5a27c2e5fa025c00b79d973983f389cd08a380fb",
+    "omnipicker/assets/official/robot_description/meshes/wide_loop_Link.STL": "31aa42a993b3364e16efa657700ffe621eeaa5994d415bbe1b77f0687419b2b8",
+    "evidence\\workspace-v261\\omnipicker-dimensions-1.png": "15bb5187d7ef6906b52a7b95de24b8f7182aa5f5a300af598f0b4cc03316d7c5",
+    "evidence\\workspace-v261\\omnipicker-dimensions-2.png": "dbcc3dc3f107290dba9f59e3d6f0d584d2deeb838d7b7b49a5d647e7d962b52e",
+    "evidence\\workspace-v261\\omnipicker-dimensions-3.png": "de2bf93ca7be193f77e997c226e2719cbd7c6a83e502fa8761968012c85052ef",
+    "teleop-platform\\scripts\\build_workspace_assets.py": "e29407cd4953c1e95b4c4958abe0c75bfae7a009a0074bf045e6f0eb448d2ccb",
+    "teleop-platform\\scripts\\gripper_collision_geometry.py": "248a6c69067a1e6fd33aa862f6db89d54aecfabefa33ed7cdba13fbfb4820339",
+    "teleop-platform\\scripts\\box_collision_geometry.py": "70d75fd1d530bc3c1836456cf95879ec962fc57671ac38a3e666a826d3936a86",
+    "teleop-platform\\scripts\\prepare_collision_meshes.py": "5a56af0bee0ace0eb4c84469c08a0d1cc8262c93e8f5150bd1547d9d02288cf7",
+    "teleop-platform\\config\\e6-controller-model\\e6.srdf": "a63347ce8a6ad7f8da9649ca721302039f790cbf7efe4f705bf09932fe06d57a",
+    "teleop-platform\\scripts\\articulated_gripper_assets.py": "1e490dcc33ed0a67f4aa637d66549b6705ce5717f58d01eb4661d94d6432b575",
+    "teleop-platform/config/gripper_mount.json": "db94c104070defa9c186f60e662680560460304f43562aade0e3a1170741bb25",
+    "teleop-platform/scripts/apply_gripper_mount.py": "ea8e07c2afb580479cd6b0ecaea10e17440db744421cb5fa451b9ef5fb2fe254",
+    "teleop-platform/scripts/dynamic_gripper_fallback.py": "a37a60e9b6a894957e69a4d2409ade8e0cb6605233a7ef6dc27a36d693d3b06d",
+    "teleop-platform/scripts/articulated_gripper_assets.py": "e49f78a20c4bf0115629832b49b9418bd7b0703c98b889a68a2f7d5a89b4cb17",
+    "teleop-platform/scripts/build_workspace_assets.py": "16bba4e6c39a7d35ddef6ea67831a8d605b94817d2564a3b6261040a27d509a5",
+    "teleop-platform/scripts/refine_workspace_body.py": "092eb397595c25b947e81ba0230767a963712e0755fa3fd549dcba03e619ca19",
+    "teleop-platform/scripts/rigid_collision_geometry.py": "2443036fb10c2a20b0295bcac918fe9ec092d967881e9f8949ee0d2cddb1619e"
+  },
+  "rigid_collision": "source_hulls_component_boxes_and_source_triangle_decomposition",
+  "rigid_collision_proofs": {
+    "e6-base_link": {
+      "name": "base_link.STL",
+      "original_faces": 143072,
+      "hull_faces": 1278,
+      "max_outside_m": -0.00010000050486996115,
+      "source_sha256": "0f08154e7a7423536bb2457da772be222d687f1f553943bc7e85652a8a52059d",
+      "hull_sha256": "3a886665f0ab2047855caf145d1a68647227fe9d0e0d74b59d339ff01a00f6f6",
+      "source_file": "e6-base_link-cad.stl",
+      "file": "e6-base_link-collision.stl"
+    },
+    "e6-Link1": {
+      "name": "Link1.STL",
+      "original_faces": 28960,
+      "hull_faces": 3166,
+      "max_outside_m": -9.62904922988464e-05,
+      "source_sha256": "9778d3fdcd58b9fba2753c441e6ea9787db3f1af48e5d0d4c39776a655372a36",
+      "hull_sha256": "5b899625528ebf4752065177a2944f20e75becf18c2f8418d1961c4a1238e791",
+      "source_file": "e6-Link1-cad.stl",
+      "file": "e6-Link1-collision.stl"
+    },
+    "e6-Link2": {
+      "name": "Link2.STL",
+      "original_faces": 48690,
+      "hull_faces": 2998,
+      "max_outside_m": -9.989487525135355e-05,
+      "source_sha256": "647e98aad0d533c13ac7d0bc9bfd1fca2b131fa4e8959b8d1af4efc63b1939e9",
+      "hull_sha256": "0c2a33e62d589f76924ba6be665129e490ec77cd8da668438065d4e4f9aa7501",
+      "source_file": "e6-Link2-cad.stl",
+      "file": "e6-Link2-collision.stl"
+    },
+    "e6-Link3": {
+      "name": "Link3.STL",
+      "original_faces": 44194,
+      "hull_faces": 2840,
+      "max_outside_m": -9.578796936678818e-05,
+      "source_sha256": "a50c83cf4bfcefe91cda0391e1840866348ce4960d98293b3f0e1fe978d00ac0",
+      "hull_sha256": "47b7a9ecf30a5afa59350659eda73f2c54ccc71a654ca8ddf9a515773e419f85",
+      "source_file": "e6-Link3-cad.stl",
+      "file": "e6-Link3-collision.stl"
+    },
+    "e6-Link4": {
+      "name": "Link4.STL",
+      "original_faces": 28852,
+      "hull_faces": 3434,
+      "max_outside_m": -9.634113115074977e-05,
+      "source_sha256": "0115d78951a9e887265da27ac7d7d4b6c570f11ed6afd080ed08ae28ca16f2f9",
+      "hull_sha256": "63a6c63de56aa387c740fc6dda15ca7bf83b96a2c302ff398c197b155123233d",
+      "source_file": "e6-Link4-cad.stl",
+      "file": "e6-Link4-collision.stl"
+    },
+    "e6-Link5": {
+      "name": "Link5.STL",
+      "original_faces": 37528,
+      "hull_faces": 2742,
+      "max_outside_m": -9.865705914079842e-05,
+      "source_sha256": "21b0d7fe1f8da62144cfec7b185241d8cd96ab75d0f9fa5d3e77846d5713ca63",
+      "hull_sha256": "b2e7bc94a80c7970c08db0ffd94dc6967ff4921c600d5123fbb3fc2150dd8002",
+      "source_file": "e6-Link5-cad.stl",
+      "file": "e6-Link5-collision.stl"
+    },
+    "e6-Link6": {
+      "name": "Link6.STL",
+      "original_faces": 36836,
+      "hull_faces": 602,
+      "max_outside_m": -0.00010000037066638413,
+      "source_sha256": "318b57a9cfc1f86099c98f836bda099dfd13026aeac193e7158173e9cf4a0626",
+      "hull_sha256": "a78147a09dd32c5f2d43a15c422028ab6f6384e871155227cc04421e6b43fe9b",
+      "source_file": "e6-Link6-cad.stl",
+      "file": "e6-Link6-collision.stl"
+    }
+  },
+  "box_collision_proofs": {
+    "r4_plate": [
+      {
+        "name": "r4_plate_0",
+        "axis": 1,
+        "slab_m": [
+          null,
+          0.0325
+        ],
+        "source_bounds_m": [
+          [
+            -0.032494284364408814,
+            -0.03250000000000001,
+            -7.771561172376001e-19
+          ],
+          [
+            0.03249428436440851,
+            0.0325,
+            0.008
+          ]
+        ],
+        "bounds_m": [
+          [
+            -0.033494284364408815,
+            -0.03350000000000001,
+            -0.0010000000000000009
+          ],
+          [
+            0.03349428436440851,
+            0.0335,
+            0.009000000000000001
+          ]
+        ],
+        "reserve_m": 0.001
+      },
+      {
+        "name": "r4_plate_1",
+        "axis": 1,
+        "slab_m": [
+          0.0325,
+          null
+        ],
+        "source_bounds_m": [
+          [
+            -0.042,
+            0.0325,
+            -2.9420910152570002e-18
+          ],
+          [
+            0.042,
+            0.069,
+            0.008
+          ]
+        ],
+        "bounds_m": [
+          [
+            -0.043000000000000003,
+            0.0315,
+            -0.001000000000000003
+          ],
+          [
+            0.043000000000000003,
+            0.07,
+            0.009000000000000001
+          ]
+        ],
+        "reserve_m": 0.001
+      }
+    ],
+    "gripper_body": [
+      {
+        "name": "gripper_body_0",
+        "axis": 2,
+        "slab_m": [
+          null,
+          0.0285
+        ],
+        "source_bounds_m": [
+          [
+            -0.028559230268001556,
+            -0.028657060116529465,
+            6.538172225845074e-10
+          ],
+          [
+            0.02859870344400406,
+            0.028657108545303345,
+            0.0285
+          ]
+        ],
+        "bounds_m": [
+          [
+            -0.029559230268001557,
+            -0.029657060116529466,
+            -0.0009999993461827774
+          ],
+          [
+            0.02959870344400406,
+            0.029657108545303346,
+            0.029500000000000002
+          ]
+        ],
+        "reserve_m": 0.001
+      },
+      {
+        "name": "gripper_body_1",
+        "axis": 2,
+        "slab_m": [
+          0.0285,
+          0.0565
+        ],
+        "source_bounds_m": [
+          [
+            -0.028288536765264882,
+            -0.03967759758234024,
+            0.0285
+          ],
+          [
+            0.028288488336491002,
+            0.03967764228582382,
+            0.05650000274181366
+          ]
+        ],
+        "bounds_m": [
+          [
+            -0.029288536765264883,
+            -0.04067759758234024,
+            0.0275
+          ],
+          [
+            0.029288488336491003,
+            0.04067764228582382,
+            0.05750000274181366
+          ]
+        ],
+        "reserve_m": 0.001
+      },
+      {
+        "name": "gripper_body_2",
+        "axis": 2,
+        "slab_m": [
+          0.0565,
+          null
+        ],
+        "source_bounds_m": [
+          [
+            -0.01860002428293228,
+            -0.03575192427416102,
+            0.0565
+          ],
+          [
+            0.01860002987086773,
+            0.0357519689776446,
+            0.08350001275539398
+          ]
+        ],
+        "bounds_m": [
+          [
+            -0.019600024282932282,
+            -0.03675192427416102,
+            0.0555
+          ],
+          [
+            0.01960002987086773,
+            0.0367519689776446,
+            0.08450001275539398
+          ]
+        ],
+        "reserve_m": 0.001
+      }
+    ]
+  },
+  "gripper_collision": {
+    "method": "per_cad_link_nested_oriented_boxes",
+    "driver_range_deg": [
+      -50,
+      5
+    ],
+    "driver_step_max_deg": 0.25,
+    "passive_fingertip_deg": 0,
+    "supplier_dimensions_mm": [
+      60.5,
+      125,
+      153
+    ],
+    "reserve_m": 0.005,
+    "qualification": "nominal_free_open_close_not_measured_contact_deformation",
+    "pieces": [
+      {
+        "name": "finger_hand_narrow1_Link",
+        "side": "narrow",
+        "section": "root",
+        "source_link": "hand_narrow1_Link",
+        "box_to_link": [
+          [
+            0.9999188417742894,
+            -0.012169738264115434,
+            -0.00376926191010104,
+            -0.00013863474071030402
+          ],
+          [
+            -0.012722693394303002,
+            -0.9693055979359696,
+            -0.24552961304654636,
+            -0.03110629904250837
+          ],
+          [
+            -0.0006655355426817516,
+            0.2455576414623971,
+            -0.9693817626620931,
+            0.07008288813829876
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "size_m": [
+          0.046806328092014536,
+          0.06477780385649576,
+          0.05633841638077148
+        ],
+        "source_box_size_m": [
+          0.036806328092014534,
+          0.05477780385649576,
+          0.04633841638077148
+        ],
+        "parent_box_to_link": [
+          [
+            0.9999188417742894,
+            -0.012169738264115434,
+            -0.00376926191010104,
+            -9.093245085696055e-05
+          ],
+          [
+            -0.012722693394303002,
+            -0.9693055979359696,
+            -0.24552961304654636,
+            -0.02854844141920017
+          ],
+          [
+            -0.0006655355426817516,
+            0.2455576414623971,
+            -0.9693817626620931,
+            0.08018204947006985
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "parent_box_size_m": [
+          0.06100634957510558,
+          0.06477780385649576,
+          0.07717472119698006
+        ],
+        "xyz_m": [
+          -0.00013863474071030402,
+          -0.03110629904250837,
+          0.07008288813829876
+        ],
+        "rpy_rad": [
+          2.8934976922168296,
+          0.000665535591813704,
+          -0.01272303946776221
+        ],
+        "reserve_m": 0.005
+      },
+      {
+        "name": "finger_hand_narrow_loop_Link",
+        "side": "narrow",
+        "section": "root",
+        "source_link": "hand_narrow_loop_Link",
+        "box_to_link": [
+          [
+            0.9999188417742894,
+            -0.012169738264115434,
+            -0.00376926191010104,
+            -8.985348901825919e-05
+          ],
+          [
+            -0.012722693394303002,
+            -0.9693055979359696,
+            -0.24552961304654636,
+            -0.029123013837659893
+          ],
+          [
+            -0.0006655355426817516,
+            0.2455576414623971,
+            -0.9693817626620931,
+            0.09278691043836018
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "size_m": [
+          0.061006349575105596,
+          0.057473517733927275,
+          0.05301901746324004
+        ],
+        "source_box_size_m": [
+          0.051006349575105595,
+          0.04747351773392727,
+          0.043019017463240036
+        ],
+        "parent_box_to_link": [
+          [
+            0.9999188417742894,
+            -0.012169738264115434,
+            -0.00376926191010104,
+            -9.093245085696055e-05
+          ],
+          [
+            -0.012722693394303002,
+            -0.9693055979359696,
+            -0.24552961304654636,
+            -0.02854844141920017
+          ],
+          [
+            -0.0006655355426817516,
+            0.2455576414623971,
+            -0.9693817626620931,
+            0.08018204947006985
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "parent_box_size_m": [
+          0.06100634957510558,
+          0.06477780385649576,
+          0.07717472119698006
+        ],
+        "xyz_m": [
+          -8.985348901825919e-05,
+          -0.029123013837659893,
+          0.09278691043836018
+        ],
+        "rpy_rad": [
+          2.8934976922168296,
+          0.000665535591813704,
+          -0.01272303946776221
+        ],
+        "reserve_m": 0.005
+      },
+      {
+        "name": "finger_hand_narrow2_Link",
+        "side": "narrow",
+        "section": "tip",
+        "source_link": "hand_narrow2_Link",
+        "box_to_link": [
+          [
+            -0.9999135748795075,
+            0.012952955771043164,
+            0.0022502685344387347,
+            -0.00021946498615168543
+          ],
+          [
+            0.013146967653369073,
+            0.9852049265897073,
+            0.17087542206207032,
+            -0.0361843834827908
+          ],
+          [
+            -3.6338619505118018e-06,
+            0.17089023834076303,
+            -0.9852900722257543,
+            0.08318480634922319
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "size_m": [
+          0.02099999994039882,
+          0.06438721488953318,
+          0.06092296583166883
+        ],
+        "source_box_size_m": [
+          0.010999999940398818,
+          0.054387214889533186,
+          0.050922965831668825
+        ],
+        "parent_box_to_link": [
+          [
+            -0.9999135748795075,
+            0.012952955771043164,
+            0.0022502685344387347,
+            -7.485452321517827e-05
+          ],
+          [
+            0.013146967653369073,
+            0.9852049265897073,
+            0.17087542206207032,
+            -0.02517894223299796
+          ],
+          [
+            -3.6338619505118018e-06,
+            0.17089023834076303,
+            -0.9852900722257543,
+            0.10801105570999125
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "parent_box_size_m": [
+          0.03600000053644396,
+          0.09485789454299663,
+          0.10608331022137604
+        ],
+        "xyz_m": [
+          -0.00021946498615168543,
+          -0.0361843834827908,
+          0.08318480634922319
+        ],
+        "rpy_rad": [
+          2.9698595259314833,
+          3.633861950458339e-06,
+          3.128445307180518
+        ],
+        "reserve_m": 0.005
+      },
+      {
+        "name": "finger_hand_narrow3_Link",
+        "side": "narrow",
+        "section": "tip",
+        "source_link": "hand_narrow3_Link",
+        "box_to_link": [
+          [
+            -0.9999135748795075,
+            0.012952955771043164,
+            0.0022502685344387347,
+            -0.00010492216017117261
+          ],
+          [
+            0.013146967653369073,
+            0.9852049265897073,
+            0.17087542206207032,
+            -0.02746214536037321
+          ],
+          [
+            -3.6338619505118018e-06,
+            0.17089023834076303,
+            -0.9852900722257543,
+            0.1211763040946329
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "size_m": [
+          0.03600000053644397,
+          0.0948578945429966,
+          0.07935971124122683
+        ],
+        "source_box_size_m": [
+          0.026000000536443968,
+          0.08485789454299661,
+          0.06935971124122683
+        ],
+        "parent_box_to_link": [
+          [
+            -0.9999135748795075,
+            0.012952955771043164,
+            0.0022502685344387347,
+            -7.485452321517827e-05
+          ],
+          [
+            0.013146967653369073,
+            0.9852049265897073,
+            0.17087542206207032,
+            -0.02517894223299796
+          ],
+          [
+            -3.6338619505118018e-06,
+            0.17089023834076303,
+            -0.9852900722257543,
+            0.10801105570999125
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "parent_box_size_m": [
+          0.03600000053644396,
+          0.09485789454299663,
+          0.10608331022137604
+        ],
+        "xyz_m": [
+          -0.00010492216017117261,
+          -0.02746214536037321,
+          0.1211763040946329
+        ],
+        "rpy_rad": [
+          2.9698595259314833,
+          3.633861950458339e-06,
+          3.128445307180518
+        ],
+        "reserve_m": 0.005
+      },
+      {
+        "name": "finger_hand_wide1_Link",
+        "side": "wide",
+        "section": "root",
+        "source_link": "hand_wide1_Link",
+        "box_to_link": [
+          [
+            0.9999158451114318,
+            -0.012692962383662125,
+            0.002681678768655639,
+            0.00015741495472647733
+          ],
+          [
+            -0.012962949663569378,
+            -0.9693538669054687,
+            0.24532640023331104,
+            0.03110242982710626
+          ],
+          [
+            -0.0005144230856860174,
+            -0.24534051728432849,
+            -0.969436829271277,
+            0.07010746375301684
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "size_m": [
+          0.046804393439115216,
+          0.06477495594170422,
+          0.05629293161222603
+        ],
+        "source_box_size_m": [
+          0.036804393439115214,
+          0.05477495594170423,
+          0.04629293161222603
+        ],
+        "parent_box_to_link": [
+          [
+            0.9999158451114318,
+            -0.012692962383662125,
+            0.002681678768655639,
+            8.563029719108079e-05
+          ],
+          [
+            -0.012962949663569378,
+            -0.9693538669054687,
+            0.24532640023331104,
+            0.028547213289472413
+          ],
+          [
+            -0.0005144230856860174,
+            -0.24534051728432849,
+            -0.969436829271277,
+            0.0802069785780484
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "parent_box_size_m": [
+          0.06101477274579486,
+          0.06477495594170422,
+          0.07712872402731245
+        ],
+        "xyz_m": [
+          0.00015741495472647733,
+          0.03110242982710626,
+          0.07010746375301684
+        ],
+        "rpy_rad": [
+          -2.893721690543077,
+          0.0005144231083749062,
+          -0.012963314451196473
+        ],
+        "reserve_m": 0.005
+      },
+      {
+        "name": "finger_hand_wide_loop_Link",
+        "side": "wide",
+        "section": "root",
+        "source_link": "hand_wide_loop_Link",
+        "box_to_link": [
+          [
+            0.9999158451114318,
+            -0.012692962383662125,
+            0.002681678768655639,
+            9.95387747416688e-05
+          ],
+          [
+            -0.012962949663569378,
+            -0.9693538669054687,
+            0.24532640023331104,
+            0.029120902463479956
+          ],
+          [
+            -0.0005144230856860174,
+            -0.24534051728432849,
+            -0.969436829271277,
+            0.09278534719925083
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "size_m": [
+          0.061014772745794865,
+          0.057490420295449936,
+          0.0530224132361869
+        ],
+        "source_box_size_m": [
+          0.05101477274579486,
+          0.047490420295449934,
+          0.0430224132361869
+        ],
+        "parent_box_to_link": [
+          [
+            0.9999158451114318,
+            -0.012692962383662125,
+            0.002681678768655639,
+            8.563029719108079e-05
+          ],
+          [
+            -0.012962949663569378,
+            -0.9693538669054687,
+            0.24532640023331104,
+            0.028547213289472413
+          ],
+          [
+            -0.0005144230856860174,
+            -0.24534051728432849,
+            -0.969436829271277,
+            0.0802069785780484
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "parent_box_size_m": [
+          0.06101477274579486,
+          0.06477495594170422,
+          0.07712872402731245
+        ],
+        "xyz_m": [
+          9.95387747416688e-05,
+          0.029120902463479956,
+          0.09278534719925083
+        ],
+        "rpy_rad": [
+          -2.893721690543077,
+          0.0005144231083749062,
+          -0.012963314451196473
+        ],
+        "reserve_m": 0.005
+      },
+      {
+        "name": "finger_hand_wide2_Link",
+        "side": "wide",
+        "section": "tip",
+        "source_link": "hand_wide2_Link",
+        "box_to_link": [
+          [
+            0.9999135652381143,
+            -0.012954784992193678,
+            -0.0022440139503727458,
+            0.00021926332155533914
+          ],
+          [
+            -0.013147701117120289,
+            -0.9852047608805938,
+            -0.17087632104404282,
+            0.036184418192752206
+          ],
+          [
+            2.852771992937712e-06,
+            0.17089105501464363,
+            -0.9852899305827924,
+            0.08318478599741609
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "size_m": [
+          0.021000031130428233,
+          0.06438720452699846,
+          0.06092297657515975
+        ],
+        "source_box_size_m": [
+          0.011000031130428233,
+          0.05438720452699846,
+          0.05092297657515975
+        ],
+        "parent_box_to_link": [
+          [
+            0.9999135652381143,
+            -0.012954784992193678,
+            -0.0022440139503727458,
+            7.639750838627593e-05
+          ],
+          [
+            -0.013147701117120289,
+            -0.9852047608805938,
+            -0.17087632104404282,
+            0.02518204476594992
+          ],
+          [
+            2.852771992937712e-06,
+            0.17089105501464363,
+            -0.9852899305827924,
+            0.1079864400682378
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "parent_box_size_m": [
+          0.07037773770538173,
+          0.09484341563265841,
+          0.10603588523711148
+        ],
+        "xyz_m": [
+          0.00021926332155533914,
+          0.036184418192752206,
+          0.08318478599741609
+        ],
+        "rpy_rad": [
+          2.9698586970654173,
+          -2.852771993078207e-06,
+          -0.013148079936391666
+        ],
+        "reserve_m": 0.005
+      },
+      {
+        "name": "finger_hand_wide3_Link",
+        "side": "wide",
+        "section": "tip",
+        "source_link": "hand_wide3_Link",
+        "box_to_link": [
+          [
+            0.9999135652381143,
+            -0.012954784992193678,
+            -0.0022440139503727458,
+            0.00010647502103860597
+          ],
+          [
+            -0.013147701117120289,
+            -0.9852047608805938,
+            -0.17087632104404282,
+            0.02747237576292616
+          ],
+          [
+            2.852771992937712e-06,
+            0.17089105501464363,
+            -0.9852899305827924,
+            0.1211927173056831
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "size_m": [
+          0.07037773770538173,
+          0.09484341563265841,
+          0.07922899961384344
+        ],
+        "source_box_size_m": [
+          0.06037773770538174,
+          0.08484341563265842,
+          0.06922899961384345
+        ],
+        "parent_box_to_link": [
+          [
+            0.9999135652381143,
+            -0.012954784992193678,
+            -0.0022440139503727458,
+            7.639750838627593e-05
+          ],
+          [
+            -0.013147701117120289,
+            -0.9852047608805938,
+            -0.17087632104404282,
+            0.02518204476594992
+          ],
+          [
+            2.852771992937712e-06,
+            0.17089105501464363,
+            -0.9852899305827924,
+            0.1079864400682378
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "parent_box_size_m": [
+          0.07037773770538173,
+          0.09484341563265841,
+          0.10603588523711148
+        ],
+        "xyz_m": [
+          0.00010647502103860597,
+          0.02747237576292616,
+          0.1211927173056831
+        ],
+        "rpy_rad": [
+          2.9698586970654173,
+          -2.852771993078207e-06,
+          -0.013148079936391666
+        ],
+        "reserve_m": 0.005
+      }
+    ]
+  },
+  "joint_margin_deg": 5.0,
+  "voxel_m": 0.01,
+  "files": {
+    "attachments.urdf": "20b23a3f8807b8c97db0023c7a875e298e004a62d362979ac3ac9c09b5bbbe14",
+    "e6-base_link-cad.stl": "19bbd4ef5bece23606c53a71760e08104ae081b71ee3df0bce505c5b5ec2d0a2",
+    "e6-base_link-collision-0.stl": "30c9e8793419f5410d2cf9b9e66bff87c6667457afbfdb1dfa8e263fc13911ac",
+    "e6-base_link-collision-1.stl": "58a885eeac4c84bef32807a5d12312b7892d9156005ea135a3b498ff65a666e6",
+    "e6-base_link-collision-5.stl": "4270abef65c3ccda90c8147e55ea41287d7ecc446ffdd1bdf063862a6eb3dee2",
+    "e6-base_link-collision.stl": "3a886665f0ab2047855caf145d1a68647227fe9d0e0d74b59d339ff01a00f6f6",
+    "e6-base_link.stl": "19bbd4ef5bece23606c53a71760e08104ae081b71ee3df0bce505c5b5ec2d0a2",
+    "e6-Link1-cad.stl": "73689155471d567fd728cedd91328d23cbca49dfed9fd2110fd1b30103f884c9",
+    "e6-Link1-collision.stl": "5b899625528ebf4752065177a2944f20e75becf18c2f8418d1961c4a1238e791",
+    "e6-Link1.stl": "73689155471d567fd728cedd91328d23cbca49dfed9fd2110fd1b30103f884c9",
+    "e6-Link2-cad.stl": "a7761e882b84722b9491fbbf65871b3ad3f9bf338390c3e7a68aef8f07fed49e",
+    "e6-Link2-collision-0.stl": "0ae7a71519e9a159570ad0000f2465100fb41cdf78794de39639e8f60093be72",
+    "e6-Link2-collision-1.stl": "7825807d3047c9c746bf28ebd142f300c64b968f109c205d81df758a4223b690",
+    "e6-Link2-collision-2.stl": "c2060d43f72e5c1180f64c77b35068c5ca56836c5b07d8b75beccee3bd9a3ecd",
+    "e6-Link2-collision-3.stl": "6dae23fdeba3abef64ea85179b23988bec3103beef5a9a51428043b61be011eb",
+    "e6-Link2-collision-4.stl": "517f6f2b553c6dbc4742537c3afcb2eb6c5295d3c638e19e472604d45ce95556",
+    "e6-Link2-collision-5.stl": "7794504191989cc1ee7297f378b9c4b080f6e94010d45df5d45b1283818f9e88",
+    "e6-Link2-collision-6.stl": "b311b7ad58c55e147be951bd11bd376a7aea4f15ca21ae255afbdd376ba2db43",
+    "e6-Link2-collision-7.stl": "0cf3ef7fe9ac63cbff10a91f0d0a1121fcdd286b8bebf2f06ca5fb63fc448838",
+    "e6-Link2-collision.stl": "0c2a33e62d589f76924ba6be665129e490ec77cd8da668438065d4e4f9aa7501",
+    "e6-Link2.stl": "a7761e882b84722b9491fbbf65871b3ad3f9bf338390c3e7a68aef8f07fed49e",
+    "e6-Link3-cad.stl": "15de8d023e044cc0ce469670309d6cd98ba6b035b99d2a5408e32096749c43cd",
+    "e6-Link3-collision.stl": "47b7a9ecf30a5afa59350659eda73f2c54ccc71a654ca8ddf9a515773e419f85",
+    "e6-Link3.stl": "15de8d023e044cc0ce469670309d6cd98ba6b035b99d2a5408e32096749c43cd",
+    "e6-Link4-cad.stl": "c0fc74fa6b4e75a5f745059058804fb9d64f762281849112eb7943ba329ca8de",
+    "e6-Link4-collision.stl": "63a6c63de56aa387c740fc6dda15ca7bf83b96a2c302ff398c197b155123233d",
+    "e6-Link4.stl": "c0fc74fa6b4e75a5f745059058804fb9d64f762281849112eb7943ba329ca8de",
+    "e6-Link5-cad.stl": "3031735f29c441d6fefd45c6931494b645cb0d2bad39fe38de280a4eec7afb8a",
+    "e6-Link5-collision.stl": "b2e7bc94a80c7970c08db0ffd94dc6967ff4921c600d5123fbb3fc2150dd8002",
+    "e6-Link5.stl": "3031735f29c441d6fefd45c6931494b645cb0d2bad39fe38de280a4eec7afb8a",
+    "e6-Link6-cad.stl": "a2678c97b6e1e2db975938abdb6ae24de127cb6ef8220237571f58378522b0ee",
+    "e6-Link6-collision.stl": "a78147a09dd32c5f2d43a15c422028ab6f6384e871155227cc04421e6b43fe9b",
+    "e6-Link6.stl": "a2678c97b6e1e2db975938abdb6ae24de127cb6ef8220237571f58378522b0ee",
+    "finger-sweep-union.stl": "04d84f3e63d8d129988be171d06321e3158c44d1fd30ac273eae7f4c137a1ebb",
+    "gripper-base_link-collision.stl": "fa361b2b4b49574f7d731bf04bd730e390601af98df2f2480360795c82934fb0",
+    "gripper-base_link.stl": "fa361b2b4b49574f7d731bf04bd730e390601af98df2f2480360795c82934fb0",
+    "gripper-hand_narrow1_Link-collision.stl": "e7224df01e1c334adc15d8ee3322bc338aa19911668b730dd74239596f6c840a",
+    "gripper-hand_narrow1_Link.stl": "e7224df01e1c334adc15d8ee3322bc338aa19911668b730dd74239596f6c840a",
+    "gripper-hand_narrow2_Link-collision.stl": "6ea0dc8a3180cdfdc07de1ec6a8e1ff48cd8d392169b0b9632f173191e69a57f",
+    "gripper-hand_narrow2_Link.stl": "6ea0dc8a3180cdfdc07de1ec6a8e1ff48cd8d392169b0b9632f173191e69a57f",
+    "gripper-hand_narrow3_Link-collision.stl": "73adf9d8ddde5ae5702fae5f2b48ec7dc5705c114cdfbd95a89cc317eadd7274",
+    "gripper-hand_narrow3_Link.stl": "73adf9d8ddde5ae5702fae5f2b48ec7dc5705c114cdfbd95a89cc317eadd7274",
+    "gripper-hand_narrow_loop_Link-collision.stl": "e167fa6f3cd4e822e5f51b2f6b275ec7bb52feac242649275b67783748c88c56",
+    "gripper-hand_narrow_loop_Link.stl": "e167fa6f3cd4e822e5f51b2f6b275ec7bb52feac242649275b67783748c88c56",
+    "gripper-hand_wide1_Link-collision.stl": "0748ec1bdfaeb88fb171d42279f203194ec45b6dd2ad3fbc3e3563915ab5c28c",
+    "gripper-hand_wide1_Link.stl": "0748ec1bdfaeb88fb171d42279f203194ec45b6dd2ad3fbc3e3563915ab5c28c",
+    "gripper-hand_wide2_Link-collision.stl": "f84ebac4c52bacf98817943c43109064484b0da160cf22ebe256480aea0cb1b7",
+    "gripper-hand_wide2_Link.stl": "f84ebac4c52bacf98817943c43109064484b0da160cf22ebe256480aea0cb1b7",
+    "gripper-hand_wide3_Link-collision.stl": "922827559006cf2a7040b1075204b1dec3ad5928109d83f27f1a4d0a4123daef",
+    "gripper-hand_wide3_Link.stl": "922827559006cf2a7040b1075204b1dec3ad5928109d83f27f1a4d0a4123daef",
+    "gripper-hand_wide_loop_Link-collision.stl": "285571fefde3f4e8be60e57cd3faad9f71d8b5160a5e89a44f66dc465d19ec7d",
+    "gripper-hand_wide_loop_Link.stl": "285571fefde3f4e8be60e57cd3faad9f71d8b5160a5e89a44f66dc465d19ec7d",
+    "gripper-kinematics.json": "1100a756cde11993681cec573a35f84b4c8abc8f2624fb669645f41c6c36ae93",
+    "gripper-visual.stl": "8a32d6c21d9344d283f4660db364d862f21a64c512edf5bfb4ef9c3d738e6ca3",
+    "op_hand_narrow1_Link.stl": "98a59f86cd6fb5fc94ede970fbc2b79b8f41f6783223a5b15aa2a07039ac03b0",
+    "op_hand_narrow2_Link.stl": "0f7b545d03ce33739910c4a4602824e0fd8b5d3608577cae158122f6beccaced",
+    "op_hand_narrow3_Link.stl": "cf2422028b6dc28f1b7c9283d386593363e2bc5b7b92ad7eac35d125781c86b7",
+    "op_hand_narrow_loop_Link.stl": "dea43f23780029c283ede7e41e33e2a6fc741b4044cbfb7857fd4451fb5201f0",
+    "op_hand_wide1_Link.stl": "759fc26b8627ab7abf6fd092567d85abede99b194d62bfa3f6c1612a4ce039a3",
+    "op_hand_wide2_Link.stl": "988af69106476fa42861fed2ab37ea9cbbf17057875e9aaae3f97b8f86a25af2",
+    "op_hand_wide3_Link.stl": "d13de17d8ac833bad0294cd7c63ca45a8ad3205450947cbc98c06e34aa737591",
+    "op_hand_wide_loop_Link.stl": "a5560875eab4ccd33686b0f7ded13f1d22d4b541c49f1cde853834702e5772b9",
+    "r4-plate-collision.stl": "57c48ad62a6275d4de03220a84def71f179f8d9365416634738b68991857506b",
+    "r4-plate.stl": "57c48ad62a6275d4de03220a84def71f179f8d9365416634738b68991857506b",
+    "robot.srdf": "80cc5cc058048c9efc3c303cc3d2dd23ddf5681a2f86c154091a8f8b08151fa8",
+    "robot.urdf": "7035198ba97d3e608b1b2ce507fdc81f937adcf3a3c3debfc58bbf54e3d6deac"
+  },
+  "dynamic_gripper": {
+    "version": 1,
+    "qualification": "feedback_driven_nominal_unloaded_linkage_not_calibrated",
+    "source": "official_360g_URDF_four_bar",
+    "joint_names": [
+      "op_hand_narrow1_joint",
+      "op_hand_narrow2_joint",
+      "op_hand_narrow3_joint",
+      "op_hand_narrow_loop_joint",
+      "op_hand_wide1_joint",
+      "op_hand_wide2_joint",
+      "op_hand_wide3_joint",
+      "op_hand_wide_loop_joint"
+    ],
+    "raw_range": [
+      0,
+      255
+    ],
+    "driver_deg_by_raw": [
+      0.0,
+      -45.0
+    ],
+    "passive_fingertip_deg": 0.0,
+    "movable_links": [
+      "op_hand_narrow1_Link",
+      "op_hand_narrow2_Link",
+      "op_hand_narrow3_Link",
+      "op_hand_narrow_loop_Link",
+      "op_hand_wide1_Link",
+      "op_hand_wide2_Link",
+      "op_hand_wide3_Link",
+      "op_hand_wide_loop_Link"
+    ],
+    "fallback_link": "op_unknown_sweep",
+    "local_boxes": [
+      {
+        "name": "finger_hand_narrow1_Link",
+        "source_link": "hand_narrow1_Link",
+        "link": "op_hand_narrow1_Link",
+        "box_to_link": [
+          [
+            -0.5181957666628104,
+            -0.29697487017754015,
+            0.8020468028087734,
+            0.01163451918035943
+          ],
+          [
+            0.6953081362735597,
+            0.3997826000780874,
+            0.5972608042610807,
+            0.00866639915545677
+          ],
+          [
+            -0.49801580601877615,
+            0.8671676880268528,
+            -0.0006766074426884019,
+            -1.1057647258633395e-05
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "xyz_m": [
+          0.01163451918035943,
+          0.00866639915545677,
+          -1.1057647258633395e-05
+        ],
+        "rpy_rad": [
+          1.5715765764683183,
+          0.5213091371020755,
+          2.2112665665946745
+        ],
+        "size_m": [
+          0.03525227343211255,
+          0.04589547894768365,
+          0.06461824598316912
+        ],
+        "source_box_size_m": [
+          0.02525227343211255,
+          0.03589547894768365,
+          0.054618245983169125
+        ],
+        "reserve_m": 0.005
+      },
+      {
+        "name": "finger_hand_narrow2_Link",
+        "source_link": "hand_narrow2_Link",
+        "link": "op_hand_narrow2_Link",
+        "box_to_link": [
+          [
+            0.0,
+            0.5656893455779481,
+            0.8246184355807191,
+            0.007903778855491185
+          ],
+          [
+            0.0,
+            0.8246184355807192,
+            -0.5656893455779481,
+            -0.007072369501657798
+          ],
+          [
+            -1.0,
+            -0.0,
+            -0.0,
+            -0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "xyz_m": [
+          0.007903778855491185,
+          -0.007072369501657798,
+          -0.0
+        ],
+        "rpy_rad": [
+          0.6012689711475555,
+          1.5707963267948966,
+          0.0
+        ],
+        "size_m": [
+          0.020999999940395357,
+          0.022721826227881464,
+          0.046640077642246716
+        ],
+        "source_box_size_m": [
+          0.010999999940395355,
+          0.012721826227881466,
+          0.036640077642246714
+        ],
+        "reserve_m": 0.005
+      },
+      {
+        "name": "finger_hand_narrow3_Link",
+        "source_link": "hand_narrow3_Link",
+        "link": "op_hand_narrow3_Link",
+        "box_to_link": [
+          [
+            0.22088656167758652,
+            0.0,
+            0.9752995062391112,
+            0.021810463753057563
+          ],
+          [
+            0.9752995062391111,
+            0.0,
+            -0.22088656167758652,
+            -0.009219785096877604
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "xyz_m": [
+          0.021810463753057563,
+          -0.009219785096877604,
+          0.0
+        ],
+        "rpy_rad": [
+          1.5707963267948963,
+          0.0,
+          1.348072934933349
+        ],
+        "size_m": [
+          0.03188701406995486,
+          0.036000000536441805,
+          0.06661650885969085
+        ],
+        "source_box_size_m": [
+          0.021887014069954858,
+          0.026000000536441803,
+          0.05661650885969085
+        ],
+        "reserve_m": 0.005
+      },
+      {
+        "name": "finger_hand_narrow_loop_Link",
+        "source_link": "hand_narrow_loop_Link",
+        "link": "op_hand_narrow_loop_Link",
+        "box_to_link": [
+          [
+            0.2956006719653545,
+            0.955311594577199,
+            0.0,
+            0.016256270824286115
+          ],
+          [
+            0.9553115945771992,
+            -0.2956006719653545,
+            0.0,
+            -0.0032821127061687123
+          ],
+          [
+            -0.0,
+            -0.0,
+            -1.0,
+            -0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "xyz_m": [
+          0.016256270824286115,
+          -0.0032821127061687123,
+          -0.0
+        ],
+        "rpy_rad": [
+          3.141592653589793,
+          0.0,
+          1.2707120985116729
+        ],
+        "size_m": [
+          0.0233275260724896,
+          0.0530000012827199,
+          0.060999999046325686
+        ],
+        "source_box_size_m": [
+          0.0133275260724896,
+          0.0430000012827199,
+          0.050999999046325684
+        ],
+        "reserve_m": 0.005
+      },
+      {
+        "name": "finger_hand_wide1_Link",
+        "source_link": "hand_wide1_Link",
+        "link": "op_hand_wide1_Link",
+        "box_to_link": [
+          [
+            0.4830346171499865,
+            -0.20846044384866724,
+            -0.850424483411186,
+            0.012498514225708012
+          ],
+          [
+            0.7199713048914362,
+            -0.458189559947693,
+            0.5212519997926742,
+            -0.007644860020677107
+          ],
+          [
+            -0.4983160430567018,
+            -0.8640639851916965,
+            -0.07123588089548165,
+            0.001036899432085185
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "xyz_m": [
+          0.012498514225708012,
+          -0.007644860020677107,
+          0.001036899432085185
+        ],
+        "rpy_rad": [
+          -1.6530531325565923,
+          0.5216553986290942,
+          0.9798630563171418
+        ],
+        "size_m": [
+          0.03530521313417243,
+          0.04582081180182842,
+          0.06535183611965643
+        ],
+        "source_box_size_m": [
+          0.02530521313417243,
+          0.03582081180182842,
+          0.05535183611965644
+        ],
+        "reserve_m": 0.005
+      },
+      {
+        "name": "finger_hand_wide2_Link",
+        "source_link": "hand_wide2_Link",
+        "link": "op_hand_wide2_Link",
+        "box_to_link": [
+          [
+            0.0,
+            -0.5656893455779481,
+            0.8246184355807191,
+            0.007903778855491185
+          ],
+          [
+            0.0,
+            0.8246184355807192,
+            0.5656893455779481,
+            0.007072369501657798
+          ],
+          [
+            -1.0,
+            -0.0,
+            -0.0,
+            -0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "xyz_m": [
+          0.007903778855491185,
+          0.007072369501657798,
+          -0.0
+        ],
+        "rpy_rad": [
+          -0.6012689711475555,
+          1.5707963267948966,
+          0.0
+        ],
+        "size_m": [
+          0.020999999940395357,
+          0.022721826227881464,
+          0.046640077642246716
+        ],
+        "source_box_size_m": [
+          0.010999999940395355,
+          0.012721826227881466,
+          0.036640077642246714
+        ],
+        "reserve_m": 0.005
+      },
+      {
+        "name": "finger_hand_wide3_Link",
+        "source_link": "hand_wide3_Link",
+        "link": "op_hand_wide3_Link",
+        "box_to_link": [
+          [
+            0.22100319141214697,
+            0.9752730845182009,
+            1.3532542548211782e-17,
+            0.021820319763743108
+          ],
+          [
+            -0.9752730845182008,
+            0.22100319141214697,
+            -5.971825306248904e-17,
+            0.009247276898937926
+          ],
+          [
+            -6.123233995736766e-17,
+            -1.5407439555097887e-33,
+            1.0,
+            1.8887221813204473e-06
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "xyz_m": [
+          0.021820319763743108,
+          0.009247276898937926,
+          1.8887221813204473e-06
+        ],
+        "rpy_rad": [
+          0.0,
+          0.0,
+          -1.3479533498074485
+        ],
+        "size_m": [
+          0.03183539957332115,
+          0.0664925266397994,
+          0.07037770211696624
+        ],
+        "source_box_size_m": [
+          0.021835399573321146,
+          0.0564925266397994,
+          0.06037770211696625
+        ],
+        "reserve_m": 0.005
+      },
+      {
+        "name": "finger_hand_wide_loop_Link",
+        "source_link": "hand_wide_loop_Link",
+        "link": "op_hand_wide_loop_Link",
+        "box_to_link": [
+          [
+            -0.29559906696673843,
+            0.9553120912081002,
+            0.0,
+            0.016256264404353567
+          ],
+          [
+            0.9553120912081002,
+            0.2955990669667385,
+            0.0,
+            0.0032821240791697385
+          ],
+          [
+            -0.0,
+            -0.0,
+            -1.0,
+            -0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "xyz_m": [
+          0.016256264404353567,
+          0.0032821240791697385,
+          -0.0
+        ],
+        "rpy_rad": [
+          3.141592653589793,
+          0.0,
+          1.8708788749999048
+        ],
+        "size_m": [
+          0.02332755337686216,
+          0.053000001213835114,
+          0.061000002771615984
+        ],
+        "source_box_size_m": [
+          0.013327553376862162,
+          0.04300000121383511,
+          0.05100000277161598
+        ],
+        "reserve_m": 0.005
+      }
+    ],
+    "feedback_max_age_ms": 200,
+    "geometry_reserve_m": 0.005,
+    "mapping_note": "CAN position is feedback. The 0..-45 degree linkage mapping is nominal; no force-dependent passive finger deflection is measured.",
+    "fallback_coverage": {
+      "method": "OBB of all 256 nominal poses of each dynamic OBB plus 1 mm continuous-interpolation reserve",
+      "pieces": [
+        {
+          "link": "op_hand_narrow1_Link",
+          "samples": 256,
+          "corner_count": 2048,
+          "minimum_corner_reserve_m": 0.000999999999999987,
+          "size_m": [
+            0.06576679275184968,
+            0.06701958967763637,
+            0.08177433181181808
+          ]
+        },
+        {
+          "link": "op_hand_narrow2_Link",
+          "samples": 256,
+          "corner_count": 2048,
+          "minimum_corner_reserve_m": 0.000999999999999987,
+          "size_m": [
+            0.022999999940395373,
+            0.04799725513126123,
+            0.0800843701891288
+          ]
+        },
+        {
+          "link": "op_hand_narrow3_Link",
+          "samples": 256,
+          "corner_count": 2048,
+          "minimum_corner_reserve_m": 0.00099999999999998,
+          "size_m": [
+            0.03800000053644183,
+            0.08041353151874757,
+            0.10485251387326618
+          ]
+        },
+        {
+          "link": "op_hand_narrow_loop_Link",
+          "samples": 256,
+          "corner_count": 2048,
+          "minimum_corner_reserve_m": 0.000999999999999994,
+          "size_m": [
+            0.061064609105288686,
+            0.061157556863346375,
+            0.06299999904633695
+          ]
+        },
+        {
+          "link": "op_hand_wide1_Link",
+          "samples": 256,
+          "corner_count": 2048,
+          "minimum_corner_reserve_m": 0.000999999999999994,
+          "size_m": [
+            0.06639555179998145,
+            0.06777737533841824,
+            0.08322832576611537
+          ]
+        },
+        {
+          "link": "op_hand_wide2_Link",
+          "samples": 256,
+          "corner_count": 2048,
+          "minimum_corner_reserve_m": 0.0009999999999999731,
+          "size_m": [
+            0.022999999940395373,
+            0.04799723887988422,
+            0.08008436974917682
+          ]
+        },
+        {
+          "link": "op_hand_wide3_Link",
+          "samples": 256,
+          "corner_count": 2048,
+          "minimum_corner_reserve_m": 0.000999999999999994,
+          "size_m": [
+            0.0723777021169685,
+            0.08028180617630452,
+            0.10477171411851026
+          ]
+        },
+        {
+          "link": "op_hand_wide_loop_Link",
+          "samples": 256,
+          "corner_count": 2048,
+          "minimum_corner_reserve_m": 0.000999999999999994,
+          "size_m": [
+            0.06106460771100325,
+            0.06115758712024002,
+            0.06300000277161809
+          ]
+        }
+      ]
+    }
+  },
+  "mounting": {
+    "version": 1,
+    "parent": "controller_flange",
+    "child": "omnipicker",
+    "xyz_m": [
+      0.0,
+      0.0,
+      0.008
+    ],
+    "rpy_rad": [
+      0.0,
+      0.0,
+      -1.5707963267948966
+    ],
+    "confirmation": "User confirmed preview B, gripper-only minus 90 degrees, 2026-10-16",
+    "qualification": "user_confirmed_mount_direction_nominal_cad_not_metrologically_calibrated"
+  },
+  "mount_revision_of": "a8be000824779c4c7f0c2a449ca37550641eb5b3d2080629cb79caa5abf6b0a8",
+  "fallback_revision_of": "ab94b0ea9636b3b00d0d1cb400c1ced011f494adf181d9acf7cb8a21d753eeb4",
+  "parent_model_id": "b4e1f8bc0dab7909a2e490666bde04c2c3daf71ef96d558b2f827da112e71676",
+  "body_refinement": {
+    "base_link": {
+      "method": "CoACD_then_original_whole_triangle_exact_hull_cube_offset",
+      "coacd_version": "1.0.14",
+      "settings": {
+        "threshold": 0.05,
+        "max_convex_hull": 8,
+        "preprocess_mode": "auto",
+        "resolution": 1000,
+        "mcts_nodes": 10,
+        "mcts_iterations": 20,
+        "seed": 262
+      },
+      "partition_sha256": "a08b5f312804c3365725078977b4413ae0a9abe0c2eb84a0a1725f69ce18aab6",
+      "reserve_m": 0.0001,
+      "source_triangles": 143072,
+      "parts": [
+        {
+          "file": "e6-base_link-collision-0.stl",
+          "source_triangles": 1604,
+          "faces": 748,
+          "max_vertex_excess_m": -9.99999999999994e-05
+        },
+        {
+          "file": "e6-base_link-collision-1.stl",
+          "source_triangles": 136586,
+          "faces": 1216,
+          "max_vertex_excess_m": -9.999999999999999e-05
+        },
+        {
+          "file": "e6-base_link-collision-5.stl",
+          "source_triangles": 4882,
+          "faces": 270,
+          "max_vertex_excess_m": -9.99999999999994e-05
+        }
+      ],
+      "source_file": "e6-base_link-cad.stl"
+    },
+    "Link2": {
+      "method": "CoACD_then_original_whole_triangle_exact_hull_cube_offset",
+      "coacd_version": "1.0.14",
+      "settings": {
+        "threshold": 0.05,
+        "max_convex_hull": 8,
+        "preprocess_mode": "auto",
+        "resolution": 1000,
+        "mcts_nodes": 10,
+        "mcts_iterations": 20,
+        "seed": 262
+      },
+      "partition_sha256": "7b086bc3d2bd04332ddf6b16d40311a44877cb45dc63321adbf7f748de3de876",
+      "reserve_m": 0.0001,
+      "source_triangles": 48690,
+      "parts": [
+        {
+          "file": "e6-Link2-collision-0.stl",
+          "source_triangles": 14289,
+          "faces": 842,
+          "max_vertex_excess_m": -9.999999999998899e-05
+        },
+        {
+          "file": "e6-Link2-collision-1.stl",
+          "source_triangles": 4316,
+          "faces": 718,
+          "max_vertex_excess_m": -9.99999999999994e-05
+        },
+        {
+          "file": "e6-Link2-collision-2.stl",
+          "source_triangles": 3688,
+          "faces": 488,
+          "max_vertex_excess_m": -9.99999999999994e-05
+        },
+        {
+          "file": "e6-Link2-collision-3.stl",
+          "source_triangles": 4111,
+          "faces": 502,
+          "max_vertex_excess_m": -9.999999999999766e-05
+        },
+        {
+          "file": "e6-Link2-collision-4.stl",
+          "source_triangles": 8807,
+          "faces": 1432,
+          "max_vertex_excess_m": -9.999999999998899e-05
+        },
+        {
+          "file": "e6-Link2-collision-5.stl",
+          "source_triangles": 8846,
+          "faces": 1408,
+          "max_vertex_excess_m": -9.99999999999994e-05
+        },
+        {
+          "file": "e6-Link2-collision-6.stl",
+          "source_triangles": 3221,
+          "faces": 480,
+          "max_vertex_excess_m": -9.999999999999766e-05
+        },
+        {
+          "file": "e6-Link2-collision-7.stl",
+          "source_triangles": 1412,
+          "faces": 702,
+          "max_vertex_excess_m": -9.999999999998899e-05
+        }
+      ],
+      "source_file": "e6-Link2-cad.stl"
+    }
+  },
+  "model_id": "3b4003e47dc241273476c7a01a7102963d06ed59767ddd010afdaeeba72a72d7"
+}

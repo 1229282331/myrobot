@@ -1,0 +1,250 @@
+{
+  "started_at_utc": "2026-10-03T15:12:25.409274+00:00",
+  "status": "completed",
+  "preset": "both43",
+  "requested_seconds": 8,
+  "sdk": "1.10.37",
+  "opencv_threads": 1,
+  "opencv_version": "4.11.0",
+  "numpy_version": "1.26.4",
+  "sdk_root": "/root/installed-audit-20261002_2142/vendor/OrbbecSDK_v1.10.37/SDK",
+  "sdk_config": "/root/remaining-issues-20261002_2226/config_v4l2.xml",
+  "decode_workers": 2,
+  "uvc_pts_requested": true,
+  "uvc_pts_availability": {
+    "valid_color_frames": 180,
+    "missing_color_frames": 0
+  },
+  "uvc_pts_semantics": "Descriptor-frequency device PTS; exposure reference and host/RGB-D/robot synchronization unvalidated",
+  "decode_pending_capacity": 4,
+  "decode_pending_max": 4,
+  "snapshot_saving": "one asynchronous worker, at most one outstanding snapshot",
+  "source_sha256": "7b8bd3c8ed3efcab32cc7a8cd688940c7b53c0cb23e70799495e3bb309bc33f3",
+  "alignment_mode": 0,
+  "clock_semantics": "SDK fields unchanged; host receipt is not exposure time or synchronized observation",
+  "receiver_queue_capacity": 128,
+  "receiver_queue_max_size": 3,
+  "receiver_queue_overflow": false,
+  "receiver_errors": [],
+  "processing_errors": [],
+  "color_decode_stride": 1,
+  "color_decoded_frames": 180,
+  "color_validation": "Every color frame decoded",
+  "warmup_s": 2,
+  "depth_quality": {
+    "valid_frames": 0,
+    "zero_frames": 241
+  },
+  "uvc_clock": {
+    "clock_hz": 15000000,
+    "usb_device": "1-1.3.3",
+    "descriptor_source": "/sys/bus/usb/devices/1-1.3.3/descriptors",
+    "serial": "AY4A1520111"
+  },
+  "device": {
+    "name": "Gemini E",
+    "serial_number": "AY4A1520111",
+    "uid": "1-1.3.1-5",
+    "firmware_version": "RD3481",
+    "hardware_version": "",
+    "connection_type": "USB2.0",
+    "pid": 1628,
+    "vid": 11205
+  },
+  "profiles": {
+    "color": {
+      "width": 640,
+      "height": 480,
+      "format_id": 5,
+      "format": "MJPG",
+      "fps": 30
+    },
+    "depth": {
+      "width": 640,
+      "height": 480,
+      "format_id": 12,
+      "format": "Y12",
+      "fps": 30
+    }
+  },
+  "status_before": {
+    "ldp_enabled": true,
+    "laser_enabled": false,
+    "ldp_status": true,
+    "laser_mode": "unsupported",
+    "ir_auto_exposure": true,
+    "ir_exposure": 1356,
+    "ldp_distance_mm": "unsupported",
+    "color_auto_exposure": true,
+    "color_exposure": 157,
+    "color_gain": 0,
+    "ir_gain": 1000,
+    "min_depth": 0,
+    "max_depth": 10000,
+    "temperature": {
+      "returned_bytes": 44,
+      "celsius_raw": {
+        "cpu": 0.0,
+        "ir": 0.0,
+        "laser": 37.900001525878906,
+        "mainboard": 0.0,
+        "tec": 0.0,
+        "imu": 0.0,
+        "rgb": 0.0,
+        "ir_left": 41.0,
+        "ir_right": 39.70000076293945,
+        "chip_top": 0.0,
+        "chip_bottom": 0.0
+      },
+      "note": "Raw SDK fields; sentinel/unimplemented fields are not physical temperatures."
+    }
+  },
+  "calibration": {
+    "depthIntrinsic": {
+      "fx": 384.9397277832031,
+      "fy": 384.9397277832031,
+      "cx": 306.4521789550781,
+      "cy": 235.89273071289062,
+      "width": 640,
+      "height": 480
+    },
+    "rgbIntrinsic": {
+      "fx": 0.0,
+      "fy": 0.0,
+      "cx": 0.0,
+      "cy": 0.0,
+      "width": 0,
+      "height": 0
+    },
+    "depthDistortion": {
+      "k1": 0.0,
+      "k2": 0.0,
+      "k3": 0.0,
+      "k4": 0.0,
+      "k5": 0.0,
+      "k6": 0.0,
+      "p1": 0.0,
+      "p2": 0.0
+    },
+    "rgbDistortion": {
+      "k1": 0.0,
+      "k2": 0.0,
+      "k3": 0.0,
+      "k4": 0.0,
+      "k5": 0.0,
+      "k6": 0.0,
+      "p1": 0.0,
+      "p2": 0.0
+    },
+    "transform": {
+      "rot": [
+        0.9999887347221375,
+        0.004512300714850426,
+        0.0014669867232441902,
+        -0.004511201288551092,
+        0.9999895691871643,
+        -0.0007518058991990983,
+        -0.001470363698899746,
+        0.0007451795390807092,
+        0.9999986290931702
+      ],
+      "trans": [
+        -12.384055137634277,
+        0.09771329164505005,
+        -1.105897307395935
+      ]
+    },
+    "isMirrored": false
+  },
+  "calibration_plausibility": {
+    "depthIntrinsic": true,
+    "rgbIntrinsic": false,
+    "rotation_determinant": 1.0000000062807228,
+    "rotation_orthogonality_max_error": 5.4632306456525725e-08,
+    "translation_norm_mm": 12.4337194110948,
+    "note": "Numerical plausibility only; physical registration and accuracy require a target."
+  },
+  "warmup_frames_excluded": 109,
+  "timed_start_monotonic_ns": 12486551146160,
+  "last_sample": {
+    "elapsed_s": 7.116376867999861,
+    "depth": {
+      "valid_fraction": 0.0,
+      "median_mm": null,
+      "p05_mm": null,
+      "p95_mm": null,
+      "center_valid_fraction": 0.0,
+      "center_median_mm": null
+    },
+    "color": {
+      "mean_luma": 128.213955078125,
+      "black_fraction": 0.001669921875,
+      "white_fraction": 0.0,
+      "laplacian_variance": 237.94528198242188
+    }
+  },
+  "timed_elapsed_s": 8.015925320998576,
+  "status_after": {
+    "ldp_enabled": true,
+    "laser_enabled": false,
+    "ldp_status": true,
+    "laser_mode": "unsupported",
+    "ir_auto_exposure": true,
+    "ir_exposure": 1356,
+    "ldp_distance_mm": "unsupported",
+    "color_auto_exposure": true,
+    "color_exposure": 157,
+    "color_gain": 0,
+    "ir_gain": 1000,
+    "min_depth": 0,
+    "max_depth": 10000,
+    "temperature": {
+      "returned_bytes": 44,
+      "celsius_raw": {
+        "cpu": 0.0,
+        "ir": 0.0,
+        "laser": 38.0,
+        "mainboard": 0.0,
+        "tec": 0.0,
+        "imu": 0.0,
+        "rgb": 0.0,
+        "ir_left": 41.099998474121094,
+        "ir_right": 39.900001525878906,
+        "chip_top": 0.0,
+        "chip_bottom": 0.0
+      },
+      "note": "Raw SDK fields; sentinel/unimplemented fields are not physical temperatures."
+    }
+  },
+  "uvc_pts_total_wraps_including_warmup": 0,
+  "cleanup_errors": [],
+  "streams": {
+    "color": {
+      "frames": 180,
+      "host_fps_between_first_last": 22.480527936877593,
+      "max_host_gap_ms": 52.930281,
+      "index_nonmonotonic_count": 0,
+      "index_gaps": 0,
+      "device_timestamp_nonmonotonic_count": 0,
+      "device_timestamp_zero_count": 0,
+      "device_timestamp_elapsed_over_host_elapsed": 15004.991953191728,
+      "device_timestamp_rate_plausible_as_us": false
+    },
+    "depth": {
+      "frames": 241,
+      "host_fps_between_first_last": 29.95825180177942,
+      "max_host_gap_ms": 44.522582,
+      "index_nonmonotonic_count": 0,
+      "index_gaps": 0,
+      "device_timestamp_nonmonotonic_count": 0,
+      "device_timestamp_zero_count": 0,
+      "device_timestamp_elapsed_over_host_elapsed": 0.9985630815367971,
+      "device_timestamp_rate_plausible_as_us": true
+    }
+  },
+  "processed_frames": {
+    "color": 180,
+    "depth": 241
+  },
+  "ended_at_utc": "2026-10-03T15:12:36.985620+00:00"
+}

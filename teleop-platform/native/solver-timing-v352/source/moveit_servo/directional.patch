@@ -1,0 +1,65 @@
+--- upstream/src/utils/common.cpp
++++ directional/src/utils/common.cpp
+@@ -300,6 +300,10 @@
+   // Get the current Jacobian and compute SVD
+   const Eigen::JacobiSVD<Eigen::MatrixXd> current_svd = Eigen::JacobiSVD<Eigen::MatrixXd>(
+       robot_state->getJacobian(joint_model_group), Eigen::ComputeThinU | Eigen::ComputeThinV);
++  // E6 bounded directional escape: never invert a numerically singular Jacobian.
++  if (!current_svd.singularValues().allFinite() ||
++      current_svd.singularValues().tail(1)(0) <= 1e-10)
++    return {0.0, StatusCode::HALT_FOR_SINGULARITY};
+   const Eigen::MatrixXd matrix_s = current_svd.singularValues().asDiagonal();
+ 
+   // Compute pseudo inverse
+@@ -321,6 +325,7 @@
+   // Compute the new joint angles if we take the small step delta_x
+   Eigen::VectorXd next_joint_angles;
+   robot_state->copyJointGroupPositions(joint_model_group, next_joint_angles);
++  const Eigen::VectorXd original_joint_angles = next_joint_angles;
+   next_joint_angles += pseudo_inverse * delta_x;
+ 
+   // Compute the Jacobian SVD for the new robot state.
+@@ -355,10 +360,33 @@
+     upper_threshold = lower_singularity_threshold + (threshold_size * leaving_singularity_threshold_multiplier);
+   }
+ 
++  // E6: above the ordinary threshold only a finite, improving retreat is
++  // allowed, and only inside the existing leaving-threshold band. The
++  // original approach threshold is unchanged. Probe the requested direction
++  // at the maximum escape scale; the adapter also checks the final smoothed
++  // candidate before it can become an executable target.
++  const bool escape = current_condition_number >= hard_stop_singularity_threshold;
++  if (escape)
++  {
++    if (moving_towards_singularity || current_condition_number >= upper_threshold)
++      return {0.0, StatusCode::HALT_FOR_SINGULARITY};
++    const Eigen::VectorXd retreat_joints = original_joint_angles +
++        0.25 * pseudo_inverse * target_delta_x;
++    if (!retreat_joints.allFinite())
++      return {0.0, StatusCode::HALT_FOR_SINGULARITY};
++    moveit::core::RobotState probe(*robot_state);
++    probe.setJointGroupPositions(joint_model_group, retreat_joints);
++    const Eigen::JacobiSVD<Eigen::MatrixXd> retreat_svd(probe.getJacobian(joint_model_group));
++    const auto sv = retreat_svd.singularValues();
++    if (!sv.allFinite() || sv(dims - 1) <= 1e-10 ||
++        sv(0) / sv(dims - 1) >= current_condition_number - 1e-8)
++      return {0.0, StatusCode::HALT_FOR_SINGULARITY};
++  }
++
+   // Compute the scale based on the current condition number.
+   double velocity_scale = 1.0;
+   const bool is_above_lower_limit = current_condition_number > lower_singularity_threshold;
+-  const bool is_below_hard_stop_limit = current_condition_number < hard_stop_singularity_threshold;
++  const bool is_below_hard_stop_limit = current_condition_number < upper_threshold;
+   if (is_above_lower_limit && is_below_hard_stop_limit)
+   {
+     velocity_scale -=
+@@ -374,6 +402,8 @@
+     velocity_scale = 0.0;
+   }
+ 
++  if (escape)
++    velocity_scale = std::min(0.25, velocity_scale);
+   return std::make_pair(velocity_scale, servo_status);
+ }
+ 

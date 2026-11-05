@@ -1,0 +1,45 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "e6-teleop"
+version = "0.1.0"
+description = "Local E6 kinematic teleoperation and simulated demonstration workbench"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+  "mujoco==3.14.0", "numpy>=2.0,<2.3", "Pillow>=10,<13",
+  "fastapi>=0.115,<1", "uvicorn>=0.34,<1", "websockets>=14,<16",
+  "httpx>=0.28,<1", "pytest>=8,<10", "paramiko==4.0.0", "zstandard==0.25.0",
+]
+
+[project.optional-dependencies]
+test = ["opencv-python-headless==4.13.0.92"]
+dataset = [
+  "lerobot[dataset] @ git+https://github.com/huggingface/lerobot.git@8c920c4270460851cedd2737657584586d3dc66f",
+  "torch==2.8.0", "torchvision==0.23.0", "torchcodec==0.7.0",
+]
+
+[project.scripts]
+e6-teleop = "e6_teleop.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/e6_teleop"]
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.uv]
+environments = ["sys_platform == 'win32'"]
+
+[tool.uv.sources]
+torch = { index = "pytorch-cpu" }
+torchvision = { index = "pytorch-cpu" }
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

@@ -1,0 +1,18 @@
+{
+  "name": "complete_tool_default_pre_shutdown_standby",
+  "user_selected_on": "2026-10-04",
+  "robot_ip": "192.168.1.4",
+  "joints_deg": [-66.5019, -60.0, 105.0, -90.0, 90.0, 9.1974],
+  "nominal_tool0_pose_mm_deg": [-6.3359, -189.3302, 395.1109, -135.3707, 6.4895, -163.0334],
+  "installation": "OmniPicker original fingers, 7 mm R2 plate, Gemini E wrist camera",
+  "use": "Default enabled fold-in target before each user-requested end of hardware session or shutdown",
+  "arrival_tolerance_deg": 0.05,
+  "speed_percent": 1,
+  "acceleration_percent": 1,
+  "max_reviewed_segment_travel_deg": 3,
+  "path_policy": "Plan from a fresh actual origin; no movement if already parked. This file is a target, not a reusable path or motion command.",
+  "shutdown_policy": "After parking, perform authorized Stop/DisableRobot, verify disabled feedback, release camera/control resources and CAN, sync and power off X5, then notify user for physical power removal.",
+  "brake_status": "Historical disable-induced wrist settling remains unresolved; no power-off stability certification and no automatic re-enable to compensate.",
+  "validation_report": "docs/E6_完整末端停放姿态_2026-10-03.md",
+  "validation_summary": "docs/evidence/park_complete_tool_20261003/park_completion_summary_0018.json"
+}

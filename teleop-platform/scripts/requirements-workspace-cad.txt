@@ -1,0 +1,7 @@
+cadquery==2.6.1
+trimesh==4.7.4
+numpy==2.5.3
+scipy==1.16.2
+coacd==1.0.14
+fast-simplification==0.1.12
+rtree==1.4.1

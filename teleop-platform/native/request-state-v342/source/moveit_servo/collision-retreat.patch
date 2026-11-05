@@ -1,0 +1,85 @@
+--- proximity/include/moveit_servo/servo.hpp
++++ retreat/include/moveit_servo/servo.hpp
+@@ -53,6 +53,7 @@
+ #include <tf2_eigen/tf2_eigen.hpp>
+ #include <tf2_ros/transform_listener.h>
+ #include <variant>
++#include <functional>
+ #include <rclcpp/logger.hpp>
+ #include <queue>
+ 
+@@ -80,6 +81,12 @@
+    * @return The required joint state.
+    */
+   KinematicState getNextJointState(const moveit::core::RobotStatePtr& robot_state, const ServoInput& command);
++  // Optional selector for the final acceleration-smoothed candidate. Rejection
++  // restores the committed smoother state for the original scaled candidate.
++  // Collision halt (zero) is never overridable.
++  using CollisionScaleSelector = std::function<double(double, const Eigen::VectorXd&)>;
++  void setCollisionScaleSelector(CollisionScaleSelector selector) { collision_scale_selector_ = std::move(selector); }
++
+ 
+   /**
+    * \brief Set the type of incoming servo command.
+@@ -146,6 +153,7 @@
+   void resetSmoothing(const KinematicState& state);
+ 
+ private:
++  CollisionScaleSelector collision_scale_selector_;
+   /**
+    * \brief Finds the transform from the planning frame to a specified command frame.
+    * If the command frame is part of the robot model, directly look up the transform using the robot model.
+--- proximity/src/servo.cpp
++++ retreat/src/servo.cpp
+@@ -492,11 +492,13 @@
+   // Compute the change in joint position due to the incoming command
+   Eigen::VectorXd joint_position_delta = jointDeltaFromCommand(command, robot_state);
+ 
+-  if (collision_velocity_scale_ > 0 && collision_velocity_scale_ < 1)
++  const auto command_status = servo_status_;
++  double collision_scale = collision_velocity_scale_.load();
++  if (collision_scale > 0 && collision_scale < 1)
+   {
+     servo_status_ = StatusCode::DECELERATE_FOR_COLLISION;
+   }
+-  else if (collision_velocity_scale_ == 0)
++  else if (collision_scale == 0)
+   {
+     servo_status_ = StatusCode::HALT_FOR_COLLISION;
+   }
+@@ -523,9 +525,34 @@
+     // Adjust joint position based on scaled down velocity
+     target_state.positions = current_state.positions + (target_state.velocities * servo_params_.publish_period);
+ 
++    // Trial the final smoothed candidate once, after IK and velocity limits.
++    // AccelerationLimitedPlugin.reset restores committed position/velocity;
++    // do not assume this transactional behavior for other smoothing plugins.
++    if (collision_scale_selector_ && collision_scale > 0.0 && collision_scale < 1.0 &&
++        servo_params_.use_smoothing &&
++        servo_params_.smoothing_filter_plugin_name == "e6_reviewed_smoothing::AccelerationLimitedPlugin" &&
++        (command_status == StatusCode::NO_WARNING ||
++         command_status == StatusCode::DECELERATE_FOR_APPROACHING_SINGULARITY ||
++         command_status == StatusCode::DECELERATE_FOR_LEAVING_SINGULARITY))
++    {
++      const auto trial_halts = jointVariablesToHalt(target_state.positions, target_state.velocities,
++                                                   joint_bounds, joint_limit_margins_);
++      if (trial_halts.empty())
++      {
++        auto trial = target_state;
++        doSmoothing(trial);
++        const double selected = collision_scale_selector_(collision_scale, trial.positions);
++        if (selected == 1.0)
++        {
++          servo_status_ = command_status;
++          return trial;
++        }
++        resetSmoothing(current_state);
++      }
++    }
+     // Apply collision scaling to the joint position delta
+     target_state.positions =
+-        current_state.positions + collision_velocity_scale_ * (target_state.positions - current_state.positions);
++        current_state.positions + collision_scale * (target_state.positions - current_state.positions);
+ 
+     // Compute velocities based on smoothed joint positions
+     target_state.velocities = (target_state.positions - current_state.positions) / servo_params_.publish_period;

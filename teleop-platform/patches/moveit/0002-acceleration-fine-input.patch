@@ -1,0 +1,96 @@
+--- a/moveit_core/online_signal_smoothing/src/acceleration_filter.cpp
++++ b/moveit_core/online_signal_smoothing/src/acceleration_filter.cpp
+@@ -32,21 +32,19 @@
+  *  POSSIBILITY OF SUCH DAMAGE.
+  *********************************************************************/
+ 
+-#include <moveit/online_signal_smoothing/acceleration_filter.hpp>
++#include "reviewed_acceleration_filter.hpp"
+ #include <rclcpp/logging.hpp>
+ 
+ // Disable -Wold-style-cast because all _THROTTLE macros trigger this
+ #pragma GCC diagnostic ignored "-Wold-style-cast"
+ 
+-namespace online_signal_smoothing
++namespace e6_reviewed_smoothing
+ {
+ rclcpp::Logger getLogger()
+ {
+   return moveit::getLogger("moveit.core.acceleration_limited_plugin");
+ }
+ 
+-// The threshold below which any velocity or position difference is considered zero (rad and rad/s).
+-constexpr double COMMAND_DIFFERENCE_THRESHOLD = 1E-4;
+ // The scaling parameter alpha between the current point and commanded point must be less than 1.0
+ constexpr double ALPHA_UPPER_BOUND = 1.0;
+ // The scaling parameter alpha must also be greater than 0.0
+@@ -188,6 +186,9 @@
+   osqp_set_default_settings(&osqp_settings_);
+   osqp_settings_.warm_start = 0;
+   osqp_settings_.verbose = 0;
++  // SI joint increments and acceleration * dt^2 are much smaller than 1e-3.
++  osqp_settings_.eps_abs = 1e-8;
++  osqp_settings_.eps_rel = 1e-8;
+   osqp_data_ = std::make_shared<OSQPDataWrapper>(objective_sparse, constraints_sparse_);
+   osqp_data_->q[0] = 0;
+ 
+@@ -294,6 +295,19 @@
+   Eigen::VectorXd vel_point = last_positions_ + last_velocities_ * update_period;
+   Eigen::VectorXd upper_bound = vel_point - positions + max_acceleration_limits_ * (update_period * update_period);
+   Eigen::VectorXd lower_bound = vel_point - positions + min_acceleration_limits_ * (update_period * update_period);
++  // OSQP is initialized with zero motion rows; later update_A does not
++  // recompute its setup-time scaling. Normalize each equivalent inequality
++  // by its acceleration displacement so small SI steps remain well scaled.
++  for (size_t i = 0; i < num_joints_; ++i)
++  {
++    const double scale = std::max(std::abs(min_acceleration_limits_[i]),
++                                  std::abs(max_acceleration_limits_[i])) * update_period * update_period;
++    if (!(scale > 0.0))
++      return false;
++    constraints_sparse_.coeffRef(i, 0) /= scale;
++    upper_bound[i] /= scale;
++    lower_bound[i] /= scale;
++  }
+   if (!updateData(osqp_data_, osqp_workspace_, constraints_sparse_, lower_bound, upper_bound))
+   {
+     RCLCPP_ERROR_THROTTLE(getLogger(), *node_->get_clock(), 1000,
+@@ -301,8 +315,8 @@
+     return false;
+   }
+ 
+-  if (positions_offset_.norm() < COMMAND_DIFFERENCE_THRESHOLD &&
+-      velocities_offset_.norm() < COMMAND_DIFFERENCE_THRESHOLD)
++  // A nonzero position step must accumulate even at fine teleoperation speed.
++  if (positions_offset_.isZero(0.0) && velocities_offset_.isZero(0.0))
+   {
+     positions = last_positions_;
+     velocities = last_velocities_;
+@@ -341,7 +355,7 @@
+   return true;
+ }
+ 
+-}  // namespace online_signal_smoothing
++}  // namespace e6_reviewed_smoothing
+ 
+ #include <pluginlib/class_list_macros.hpp>
+-PLUGINLIB_EXPORT_CLASS(online_signal_smoothing::AccelerationLimitedPlugin, online_signal_smoothing::SmoothingBaseClass)
++PLUGINLIB_EXPORT_CLASS(e6_reviewed_smoothing::AccelerationLimitedPlugin, online_signal_smoothing::SmoothingBaseClass)
+--- a/moveit_core/online_signal_smoothing/include/moveit/online_signal_smoothing/acceleration_filter.hpp
++++ b/moveit_core/online_signal_smoothing/include/moveit/online_signal_smoothing/acceleration_filter.hpp
+@@ -84,8 +84,9 @@
+ #include <types.h>
+ #include <Eigen/Sparse>
+ 
+-namespace online_signal_smoothing
++namespace e6_reviewed_smoothing
+ {
++using online_signal_smoothing::SmoothingBaseClass;
+ MOVEIT_STRUCT_FORWARD(OSQPDataWrapper);
+ 
+ // Plugin
+@@ -159,4 +160,4 @@
+   OSQPWorkspace* osqp_workspace_ = nullptr;
+   OSQPSettings osqp_settings_;
+ };
+-}  // namespace online_signal_smoothing
++}  // namespace e6_reviewed_smoothing

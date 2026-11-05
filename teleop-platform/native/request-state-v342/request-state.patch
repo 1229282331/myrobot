@@ -1,0 +1,177 @@
+--- a/servo_cpp_adapter.cpp
++++ b/servo_cpp_adapter.cpp
+@@ -131,9 +131,11 @@
+       feedback.header.stamp=node->now();feedback.name=names;
+       feedback.position.assign(q.data(),q.data()+6);gripper.feedback(feedback,grip_raw);publisher->publish(feedback);
+       const auto feedback_updated=Clock::now();
+-      // The actual state used for tool transforms must include THIS request.
+-      // Equal positions still have a fresh CurrentStateMonitor timestamp.
+-      if(!monitor->getStateMonitor()->waitForCurrentState(feedback.header.stamp,initialized?.02:2.0))
++      // Initialize the upstream monitor and plugin once. Subsequent request
++      // transforms and collision checks both use `actual`, filled from THIS
++      // request below; DDS publication is observation, not a second feedback
++      // authority. Source-feedback and callback deadlines remain unchanged.
++      if(!initialized && !monitor->getStateMonitor()->waitForCurrentState(feedback.header.stamp,2.0))
+         throw std::runtime_error("actual state delivery timeout");
+       const auto state_delivered=Clock::now();
+       if(!initialized){servo=std::make_unique<Servo>(node,listener,monitor,CollisionCheckMode::REQUEST_STATE);initialized=true;}
+--- a/moveit_servo/src/servo.cpp
++++ b/moveit_servo/src/servo.cpp
+@@ -375,7 +375,8 @@
+   return bounded_state;
+ }
+ 
+-Eigen::VectorXd Servo::jointDeltaFromCommand(const ServoInput& command, const moveit::core::RobotStatePtr& robot_state)
++Eigen::VectorXd Servo::jointDeltaFromCommand(const ServoInput& command, const moveit::core::RobotStatePtr& robot_state,
++    const moveit::core::RobotStateConstPtr& actual_frame_state)
+ {
+   // Determine joint_name_group_index_map, if no subgroup is active, the map is empty
+   const auto& active_subgroup_name =
+@@ -408,7 +409,7 @@
+       if (planning_frame_maybe.has_value())
+       {
+         const auto& planning_frame = *planning_frame_maybe;
+-        const auto command_in_planning_frame_maybe = toPlanningFrame(std::get<TwistCommand>(command), planning_frame);
++        const auto command_in_planning_frame_maybe = toPlanningFrame(std::get<TwistCommand>(command), planning_frame, actual_frame_state);
+         if (command_in_planning_frame_maybe.has_value())
+         {
+           delta_result = jointDeltaFromTwist(*command_in_planning_frame_maybe, robot_state, servo_params_,
+@@ -437,7 +438,7 @@
+       if (planning_frame_maybe.has_value() && ee_frame_maybe.has_value())
+       {
+         const auto& planning_frame = *planning_frame_maybe;
+-        const auto command_in_planning_frame_maybe = toPlanningFrame(std::get<PoseCommand>(command), planning_frame);
++        const auto command_in_planning_frame_maybe = toPlanningFrame(std::get<PoseCommand>(command), planning_frame, actual_frame_state);
+         if (command_in_planning_frame_maybe.has_value())
+         {
+           delta_result = jointDeltaFromPose(*command_in_planning_frame_maybe, robot_state, servo_params_,
+@@ -476,6 +477,16 @@
+ {
+   if ((collision_mode_ == CollisionCheckMode::REQUEST_STATE) != bool(actual_collision_state))
+     throw std::invalid_argument("Collision mode requires its matching actual-state input");
++  // Validate before using the request in frame conversion, not only later
++  // during collision evaluation. Never fall back to a stale monitor state.
++  if (actual_collision_state)
++  {
++    if (actual_collision_state->getRobotModel().get() != planning_scene_monitor_->getRobotModel().get())
++      throw std::invalid_argument("Request feedback model mismatch");
++    for (size_t i = 0; i < actual_collision_state->getVariableCount(); ++i)
++      if (!std::isfinite(actual_collision_state->getVariablePositions()[i]))
++        throw std::invalid_argument("Nonfinite request feedback");
++  }
+   // Set status to clear
+   servo_status_ = StatusCode::NO_WARNING;
+ 
+@@ -497,7 +508,7 @@
+   target_state.joint_names = joint_names;
+ 
+   // Compute the change in joint position due to the incoming command
+-  Eigen::VectorXd joint_position_delta = jointDeltaFromCommand(command, robot_state);
++  Eigen::VectorXd joint_position_delta = jointDeltaFromCommand(command, robot_state, actual_collision_state);
+ 
+   const auto command_status = servo_status_;
+   collision_sample_ = collision_mode_ == CollisionCheckMode::REQUEST_STATE ?
+@@ -586,9 +597,17 @@
+ }
+ 
+ std::optional<Eigen::Isometry3d> Servo::getPlanningToCommandFrameTransform(const std::string& command_frame,
+-                                                                           const std::string& planning_frame) const
+-{
+-  const moveit::core::RobotStatePtr robot_state = planning_scene_monitor_->getStateMonitor()->getCurrentState();
++                                                                           const std::string& planning_frame,
++    const moveit::core::RobotStateConstPtr& actual_frame_state) const
++{
++  // BACKGROUND mode retains the upstream monitor/TF behavior. REQUEST_STATE
++  // uses the very same measured snapshot as the synchronous collision check.
++  // Own the FK cache: const RobotState access does not update dirty transforms.
++  // Never mutate the caller's measured snapshot while deriving its frames.
++  const moveit::core::RobotStatePtr robot_state = actual_frame_state ?
++      std::make_shared<moveit::core::RobotState>(*actual_frame_state) :
++      planning_scene_monitor_->getStateMonitor()->getCurrentState();
++  robot_state->updateLinkTransforms();
+   if (robot_state->knowsFrameTransform(command_frame) && (robot_state->knowsFrameTransform(planning_frame)))
+   {
+     return robot_state->getGlobalLinkTransform(planning_frame).inverse() *
+@@ -609,14 +628,15 @@
+   }
+ }
+ 
+-std::optional<TwistCommand> Servo::toPlanningFrame(const TwistCommand& command, const std::string& planning_frame) const
++std::optional<TwistCommand> Servo::toPlanningFrame(const TwistCommand& command, const std::string& planning_frame,
++    const moveit::core::RobotStateConstPtr& actual_frame_state) const
+ {
+   Eigen::VectorXd transformed_twist = command.velocities;
+ 
+   if (command.frame_id != planning_frame)
+   {
+     // Look up the transform between the planning and command frames.
+-    const auto planning_to_command_tf_maybe = getPlanningToCommandFrameTransform(command.frame_id, planning_frame);
++    const auto planning_to_command_tf_maybe = getPlanningToCommandFrameTransform(command.frame_id, planning_frame, actual_frame_state);
+     if (!planning_to_command_tf_maybe.has_value())
+     {
+       return std::nullopt;
+@@ -666,9 +686,10 @@
+   return TwistCommand{ planning_frame, transformed_twist };
+ }
+ 
+-std::optional<PoseCommand> Servo::toPlanningFrame(const PoseCommand& command, const std::string& planning_frame) const
+-{
+-  const auto planning_to_command_tf_maybe = getPlanningToCommandFrameTransform(command.frame_id, planning_frame);
++std::optional<PoseCommand> Servo::toPlanningFrame(const PoseCommand& command, const std::string& planning_frame,
++    const moveit::core::RobotStateConstPtr& actual_frame_state) const
++{
++  const auto planning_to_command_tf_maybe = getPlanningToCommandFrameTransform(command.frame_id, planning_frame, actual_frame_state);
+   if (!planning_to_command_tf_maybe)
+   {
+     return std::nullopt;
+--- a/moveit_servo/include/moveit_servo/servo.hpp
++++ b/moveit_servo/include/moveit_servo/servo.hpp
+@@ -81,6 +81,8 @@
+    * \brief Computes the joint state required to follow the given command.
+    * @param robot_state RobotStatePtr instance used for calculating the next joint state.
+    * @param command The command to follow, std::variant type, can handle JointJog, Twist and Pose.
++   * @param actual_collision_state In REQUEST_STATE mode, the same measured state supplies
++   * collision geometry and robot-model command-frame transforms. The target seed remains separate.
+    * @return The required joint state.
+    */
+   KinematicState getNextJointState(const moveit::core::RobotStatePtr& robot_state, const ServoInput& command,
+@@ -171,7 +173,8 @@
+    * up a transform.
+    */
+   std::optional<Eigen::Isometry3d> getPlanningToCommandFrameTransform(const std::string& command_frame,
+-                                                                      const std::string& planning_frame) const;
++                                                                      const std::string& planning_frame,
++      const moveit::core::RobotStateConstPtr& actual_frame_state) const;
+ 
+   /**
+    * \brief Convert a given twist command to planning frame,
+@@ -183,7 +186,8 @@
+    * @param planning_frame The name of the planning frame.
+    * @return The transformed twist command.
+    */
+-  std::optional<TwistCommand> toPlanningFrame(const TwistCommand& command, const std::string& planning_frame) const;
++  std::optional<TwistCommand> toPlanningFrame(const TwistCommand& command, const std::string& planning_frame,
++      const moveit::core::RobotStateConstPtr& actual_frame_state) const;
+ 
+   /**
+    * \brief Convert a given pose command to planning frame
+@@ -191,7 +195,8 @@
+    * @param planning_frame The name of the planning frame.
+    * @return The transformed pose command.
+    */
+-  std::optional<PoseCommand> toPlanningFrame(const PoseCommand& command, const std::string& planning_frame) const;
++  std::optional<PoseCommand> toPlanningFrame(const PoseCommand& command, const std::string& planning_frame,
++      const moveit::core::RobotStateConstPtr& actual_frame_state) const;
+ 
+   /**
+    * \brief Compute the change in joint position required to follow the received command.
+@@ -199,7 +204,8 @@
+    * @param robot_state RobotStatePtr instance used for calculating the command.
+    * @return The joint position change required (delta).
+    */
+-  Eigen::VectorXd jointDeltaFromCommand(const ServoInput& command, const moveit::core::RobotStatePtr& robot_state);
++  Eigen::VectorXd jointDeltaFromCommand(const ServoInput& command, const moveit::core::RobotStatePtr& robot_state,
++      const moveit::core::RobotStateConstPtr& actual_frame_state);
+ 
+   /**
+    * \brief Validate the servo parameters

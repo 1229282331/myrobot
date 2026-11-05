@@ -1,0 +1,79 @@
+--- a/dashboard/src/pages/control/KeyboardControlPage.tsx
++++ b/dashboard/src/pages/control/KeyboardControlPage.tsx
+@@ -432,8 +432,9 @@
+   if (!serverStatus) return <LoadingPage />;
+ 
+   return (
+-    <div className="container mx-auto px-4 py-6 lg:flex lg:flex-row lg:gap-8 space-y-8 lg:space-y-0">
+-      <div className="min-w-0 lg:w-1/2 space-y-6">
++    <div className={platform.enabled?"container mx-auto px-4 py-6 e6-control-layout":"container mx-auto px-4 py-6 lg:flex lg:flex-row lg:gap-8 space-y-8 lg:space-y-0"}>
++      {platform.enabled&&<ControlCamera control={platform}/>}
++      <div className={platform.enabled?"min-w-0 space-y-6":"min-w-0 lg:w-1/2 space-y-6"}>
+         {serverError && <ServerStatusRecovery retry={retryStatus} pending={checkingStatus}/>}
+         <Card className="">
+           <CardContent className="pt-6 flex flex-col items-center gap-2">
+@@ -507,8 +508,7 @@
+         <ControlStatus control={platform}/>
+       </div>
+ 
+-      <div className="min-w-0 lg:w-1/2">
+-        <div className="mb-6"><ControlCamera control={platform}/></div>
++      <div className={platform.enabled?"min-w-0":"min-w-0 lg:w-1/2"}>
+         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3" aria-label="Keyboard Controls">
+           {controls.map((control) => (
+             <TooltipProvider key={control.key}>
+--- a/dashboard/src/pages/control/GamepadControlPage.tsx
++++ b/dashboard/src/pages/control/GamepadControlPage.tsx
+@@ -538,7 +538,8 @@
+   if (!serverStatus) return <LoadingPage />;
+ 
+   return (
+-    <div className={platform.enabled?"container mx-auto px-4 py-6 grid gap-8 lg:grid-cols-2 items-start":"container mx-auto px-4 py-6"}>
++    <div className={platform.enabled?"container mx-auto px-4 py-6 e6-control-layout items-start":"container mx-auto px-4 py-6"}>
++      {platform.enabled&&<ControlCamera control={platform}/>}
+       <div className="min-w-0 space-y-6">
+         {serverError && <ServerStatusRecovery retry={retryStatus} pending={checkingStatus}/>}
+       <Card className="">
+@@ -1387,7 +1388,6 @@
+ 
+       </div>
+       <div className="min-w-0 space-y-6">
+-      {platform.enabled&&<ControlCamera control={platform}/>}
+       {/* Retain the upstream live visualizer while preparing E6 input. */}
+       {(isMoving || platform.enabled) && (
+         <Card>
+--- a/dashboard/src/components/common/camera-stream-card.tsx
++++ b/dashboard/src/components/common/camera-stream-card.tsx
+@@ -30,6 +30,7 @@
+   onRecordingToggle?: (id: number, isRecording: boolean) => void;
+   showRecordingControls?: boolean;
+   labelText?: string;
++  footer?: React.ReactNode;
+ }
+ 
+ export const CardContentPiece = ({
+@@ -116,6 +117,7 @@
+   onRecordingToggle,
+   showRecordingControls = false,
+   labelText = "Record",
++  footer,
+ }: CameraStreamProps) => {
+   const [quality, setQuality] = useState(defaultQuality);
+   const toggleQuality = () => {
+@@ -147,7 +149,7 @@
+           showRecordingControls={showRecordingControls}
+         />
+       </CardContent>
+-      <CardFooter className="justify-between">
++      <CardFooter className="justify-between flex-wrap gap-2">
+         <div className="flex items-center gap-2">
+           <Badge
+             variant="outline"
+@@ -172,6 +174,7 @@
+             </label>
+           </div>
+         )}
++        {footer}
+       </CardFooter>
+     </Card>
+   );

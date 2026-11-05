@@ -1,0 +1,567 @@
+diff --git a/dashboard/src/components/common/camera-stream-card.tsx b/dashboard/src/components/common/camera-stream-card.tsx
+index b601920..95571ca 100644
+--- a/dashboard/src/components/common/camera-stream-card.tsx
++++ b/dashboard/src/components/common/camera-stream-card.tsx
+@@ -10,6 +10,7 @@ import { Checkbox } from "@/components/ui/checkbox";
+ import { CameraOff, X } from "lucide-react";
+ import { useEffect, useRef, useState } from "react";
+ import type React from "react";
++import { WebRTCPreview } from '@/e6/WebRTCPreview';
+ 
+ // Default parameters for the streams (these can be passed as props or come from config)
+ const defaultQuality = 8;
+@@ -67,6 +68,10 @@ export const CardContentPiece = ({
+     };
+   }, []);
+ 
++  if (streamPath.startsWith('webrtc:')) return (
++    <WebRTCPreview url={streamPath.slice(7)}/>
++  );
++
+   return (
+     <div className="relative bg-muted">
+       {hasError && (
+@@ -124,7 +129,7 @@ export const CameraStreamCard = ({
+   };
+ 
+   return (
+-    <Card className="overflow-hidden">
++    <Card className={streamPath.startsWith("webrtc:")?"e6-camera-card":"overflow-hidden"}>
+       {title !== "" && (
+         <CardHeader className="space-y-1">
+           <CardTitle className="text-2xl flex items-center gap-2">
+@@ -147,10 +152,9 @@ export const CameraStreamCard = ({
+           <Badge
+             variant="outline"
+             className="hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+-            onClick={toggleQuality}
++            onClick={streamPath.startsWith('webrtc:') ? undefined : toggleQuality}
+           >
+-            Preview:{" "}
+-            {quality === defaultQuality ? "Low quality" : "High quality"}
++            {streamPath.startsWith('webrtc:') ? 'WebRTC · 640×360' : `Preview: ${quality === defaultQuality ? 'Low quality' : 'High quality'}`}
+           </Badge>
+         </div>
+         {showRecordingControls && (
+diff --git a/dashboard/src/pages/control/GamepadControlPage.tsx b/dashboard/src/pages/control/GamepadControlPage.tsx
+--- a/dashboard/src/pages/control/GamepadControlPage.tsx
++++ b/dashboard/src/pages/control/GamepadControlPage.tsx
+@@ -31,8 +31,6 @@
+   TooltipProvider,
+   TooltipTrigger,
+ } from "@/components/ui/tooltip";
+-import { fetcher } from "@/lib/utils";
+-import type { ServerStatus } from "@/types";
+ import {
+   AlertCircle,
+   ArrowDownFromLine,
+@@ -51,7 +49,9 @@
+ } from "lucide-react";
+ import { useEffect, useState } from "react";
+ import { toast } from "sonner";
+-import useSWR from "swr";
++import { useControlServerStatus, ServerStatusRecovery } from '@/e6/useControlServerStatus';
++import { useE6Control } from '@/e6/useE6Control';
++import { ControlStatus, ControlCamera } from '@/e6/ControlStatus';
+ 
+ import {
+   ControlButton,
+@@ -75,13 +75,7 @@
+ } from "./GamepadUtils";
+ 
+ export function GamepadControl() {
+-  const { data: serverStatus, error: serverError } = useSWR<ServerStatus>(
+-    ["/status"],
+-    fetcher,
+-    {
+-      refreshInterval: 5000,
+-    },
+-  );
++  const { data: serverStatus, error: serverError, mutate: retryStatus, isValidating: checkingStatus } = useControlServerStatus();
+ 
+   const [isMoving, setIsMoving] = useState(false);
+   const [selectedSpeed, setSelectedSpeed] = useState<number>(0.8);
+@@ -96,6 +90,10 @@
+   const [multiArmGroups, setMultiArmGroups] = useState<MultiArmGroup[]>([]);
+ 
+   const [hasUserMadeSelection, setHasUserMadeSelection] = useState(false);
++  const platform = useE6Control('gamepad', selectedSpeed, controllerArmPairs[0]?.controller_index ?? null);
++  useEffect(() => {
++    if (platform.enabled) setIsMoving(platform.state.ready);
++  }, [platform.enabled, platform.state.ready]);
+ 
+   // Active states for visual feedback - one per pair/group
+   const [activeButtonsPerPair, setActiveButtonsPerPair] = useState<
+@@ -125,7 +123,7 @@
+   );
+ 
+   const { controlStates } = useGamepadControl(
+-    isMoving,
++    isMoving && !platform.enabled,
+     configMode,
+     controllerArmPairs,
+     multiArmGroups,
+@@ -190,6 +188,7 @@
+   }, [configMode, serverStatus, multiArmGroups.length]);
+ 
+   const startMoving = async () => {
++    if (platform.enabled) { await platform.prepare(); return; }
+     let robotsToInit: string[] = [];
+ 
+     if (configMode === "individual") {
+@@ -214,6 +213,7 @@
+   };
+ 
+   const stopMoving = async () => {
++    if (platform.enabled) platform.stop();
+     setIsMoving(false);
+     controlStates.current.clear();
+     setActiveButtonsPerPair(new Map());
+@@ -406,6 +406,7 @@
+ 
+   const hasAvailableGamepads = availableGamepads.length > 0;
+   const hasAvailableRobots = (serverStatus?.robot_status?.length || 0) > 0;
++  const ConfigurationContainer = platform.enabled ? 'details' : 'div';
+ 
+   const controls: Control[] = [
+     {
+@@ -533,13 +534,15 @@
+     },
+   ];
+ 
+-  if (serverError) return <div>Failed to load server status.</div>;
++  if (serverError && !serverStatus) return <ServerStatusRecovery retry={retryStatus} pending={checkingStatus}/>;
+   if (!serverStatus) return <LoadingPage />;
+ 
+   return (
+-    <div className="container mx-auto px-4 py-6 space-y-8">
+-      <Card>
+-        <CardHeader className="flex flex-col gap-y-2">
++    <div className={platform.enabled ? "e6-control-workspace" : "container mx-auto px-4 py-6"}>
++      <div className={platform.enabled?"e6-operator-column e6-gamepad-column":"space-y-8"}>
++        {serverError && <ServerStatusRecovery retry={retryStatus} pending={checkingStatus}/>}
++      <Card className={platform.enabled?"e6-gamepad-configuration e6-prepare-card":""}>
++        {!platform.enabled&&<CardHeader className="flex flex-col gap-y-2">
+           <div className="flex items-center justify-between">
+             <CardDescription>
+               Control robot arms with game controllers - individual or multi-arm
+@@ -555,7 +558,7 @@
+                   onCheckedChange={(checked) =>
+                     switchConfigMode(checked ? "multi-arm" : "individual")
+                   }
+-                  disabled={isMoving}
++                  disabled={isMoving || platform.enabled}
+                 />
+                 <Users className="h-4 w-4" />
+               </div>
+@@ -681,7 +684,7 @@
+               </AccordionContent>
+             </AccordionItem>
+           </Accordion>
+-        </CardHeader>
++        </CardHeader>}
+         <CardContent className="flex flex-col gap-y-6">
+           {/* Gamepad Status Section */}
+           <div className="flex flex-col items-center space-y-4">
+@@ -690,48 +693,48 @@
+                 className={`size-8 ${gamepadConnected ? "text-green-500" : "text-gray-400"}`}
+               />
+               <span className="text-lg font-semibold">
+-                {gamepadConnected
++                {platform.enabled ? (platform.testPadState.selected ? (platform.testPadState.connected?'合成手柄 · 自动验收':'合成手柄已断开') : gamepadConnected?`已识别 ${availableGamepads.length} 个手柄`:'尚未识别手柄') : gamepadConnected
+                   ? `${availableGamepads.length} ${availableGamepads.length === 1 ? "Gamepad" : "Gamepads"} Connected`
+                   : "No Gamepads Detected"}
+               </span>
+             </div>
+-            {!gamepadConnected && (
++            {!gamepadConnected && !platform.testPadState.selected && (
+               <div className="text-center space-y-2">
+                 <p className="text-sm text-muted-foreground">
+-                  Connect a game controller to your computer
++                  {platform.enabled?'将手柄接收器插入本 PC':'Connect a game controller to your computer'}
+                 </p>
+                 <p className="text-lg font-medium text-primary animate-pulse">
+-                  Press any button on your controller to activate
++                  {platform.enabled?'按一下手柄按键以激活浏览器识别':'Press any button on your controller to activate'}
+                 </p>
+                 <p className="text-xs text-muted-foreground">
+-                  (Browser security requires a button press to detect gamepads)
++                  {platform.enabled?'保持网页有焦点，摇杆和扳机回中':'(Browser security requires a button press to detect gamepads)'}
+                 </p>
+               </div>
+             )}
+           </div>
+ 
+-          <div className="flex flex-col md:flex-row justify-center gap-4">
++          <div className={platform.enabled?"e6-gamepad-actions":"flex flex-col md:flex-row justify-center gap-4"}>
+             <SpeedSelect
+               defaultValue={selectedSpeed}
+               onChange={(newSpeed) => setSelectedSpeed(newSpeed)}
+-              title="Movement speed"
++              title={platform.enabled?"速度倍率":"Movement speed"}
+               minSpeed={0.1}
+-              maxSpeed={2.0}
++              maxSpeed={platform.enabled ? 1.0 : 2.0}
+               step={0.1}
+             />
+             <Button
+               onClick={startMoving}
+               disabled={
+-                isMoving ||
+-                !isConfigValid() ||
+-                !hasAvailableGamepads ||
+-                !hasAvailableRobots
++                isMoving || !hasAvailableRobots || (platform.enabled && !!platform.prepareBlockedReason) ||
++                (platform.enabled && platform.testPadState.selected
++                  ? !platform.testPadState.connected
++                  : !isConfigValid() || !hasAvailableGamepads)
+               }
+               variant={isMoving ? "outline" : "default"}
+               size="lg"
+             >
+               {!isMoving && <Play className="mr-2 h-4 w-4" />}
+-              {isMoving ? "Control Running" : "Start Control"}
++              {isMoving ? (platform.enabled?"已准备 · 等待输入":"Control Running") : platform.enabled ? "准备手柄控制" : "Start Control"}
+             </Button>
+             <Button
+               onClick={stopMoving}
+@@ -740,12 +743,12 @@
+               size="lg"
+             >
+               <Square className="mr-2 h-4 w-4" />
+-              Stop Control
++              {platform.enabled?"停止":"Stop Control"}
+             </Button>
+           </div>
+ 
+           {/* Alert Messages */}
+-          {!hasAvailableGamepads && (
++          {!hasAvailableGamepads && !platform.enabled && (
+             <Alert variant="destructive">
+               <AlertCircle className="h-4 w-4" />
+               <AlertTitle>No controllers detected</AlertTitle>
+@@ -759,7 +762,7 @@
+           {!hasAvailableRobots && (
+             <Alert variant="destructive">
+               <AlertCircle className="h-4 w-4" />
+-              <AlertTitle>No robots detected</AlertTitle>
++              <AlertTitle>{platform.enabled?'设备尚未连接':'No robots detected'}</AlertTitle>
+               <AlertDescription>
+                 Please make sure your robots are connected and powered on.
+               </AlertDescription>
+@@ -769,18 +772,20 @@
+           {!isConfigValid() && hasAvailableGamepads && hasAvailableRobots && (
+             <Alert variant="destructive">
+               <AlertCircle className="h-4 w-4" />
+-              <AlertTitle>Incomplete configuration</AlertTitle>
++              <AlertTitle>{platform.enabled?'请选择手柄与设备':'Incomplete configuration'}</AlertTitle>
+               <AlertDescription>
+-                Please complete the configuration below to start control.
++                {platform.enabled?'展开下方「手柄与设备配对」，选择本次输入。':'Please complete the configuration below to start control.'}
+               </AlertDescription>
+             </Alert>
+           )}
+ 
+           {/* Configuration Section */}
++          <ConfigurationContainer className={platform.enabled?'e6-gamepad-pairing':''}>
++          {platform.enabled&&<summary>手柄与设备配对</summary>}
+           {configMode === "individual" ? (
+             <div>
+               <div className="flex justify-between items-center mb-4">
+-                <h3 className="text-lg font-medium">Robot-Controller Pairs</h3>
++                <h3 className="text-lg font-medium">{platform.enabled?'输入配对':'Robot-Controller Pairs'}</h3>
+                 <div className="flex gap-2">
+                   <TooltipProvider>
+                     <Tooltip>
+@@ -814,7 +819,7 @@
+               {controllerArmPairs.map((pair, index) => (
+                 <Card key={`controller-arm-pair-${index}`} className="p-4 mb-4">
+                   <div className="flex justify-between items-center mb-4">
+-                    <h4 className="font-medium">Pair {index + 1}</h4>
++                    <h4 className="font-medium">{platform.enabled?'配对':'Pair'} {index + 1}</h4>
+                     <TooltipProvider>
+                       <Tooltip>
+                         <TooltipTrigger asChild>
+@@ -841,7 +846,7 @@
+ 
+                   <div className="flex flex-col md:flex-row items-center gap-4">
+                     <div className="space-y-2 w-full">
+-                      <Label htmlFor={`robot-arm-${index}`}>Robot Arm</Label>
++                      <Label htmlFor={`robot-arm-${index}`}>{platform.enabled?'机械臂':'Robot Arm'}</Label>
+                       <Select
+                         value={pair.robot_name || ""}
+                         onValueChange={(value) => {
+@@ -871,7 +876,7 @@
+ 
+                     <div className="space-y-2 w-full">
+                       <Label htmlFor={`controller-${index}`}>
+-                        Game Controller
++                        {platform.enabled?'PC 手柄':'Game Controller'}
+                       </Label>
+                       <Select
+                         value={pair.controller_index?.toString() || ""}
+@@ -1173,10 +1178,12 @@
+               ))}
+             </div>
+           )}
++          </ConfigurationContainer>
+         </CardContent>
+       </Card>
+ 
+-      <Card>
++      <ControlStatus control={platform}/>
++      {!platform.enabled && <Card>
+         <CardHeader>
+           <CardTitle className="flex items-center gap-x-2">
+             <Gamepad2 className="size-4" />
+@@ -1376,18 +1383,18 @@
+             })}
+           </div>
+         </CardContent>
+-      </Card>
+-
+-      {/* Show gamepad visualizers for active configurations when moving */}
+-      {isMoving && (
++      </Card>}
++
++      {/* Retain the upstream live visualizer while preparing E6 input. */}
++      {(isMoving || platform.enabled) && (
+         <Card>
+           <CardHeader>
+             <CardTitle className="flex items-center gap-x-2">
+               <Gamepad2 className="size-4" />
+-              Active Controller States
++              {platform.enabled?"手柄输入状态":"Active Controller States"}
+             </CardTitle>
+             <CardDescription>
+-              Real-time controller input visualization for active configurations
++              {platform.enabled?"当前配对手柄的实时按键与摇杆输入":"Real-time controller input visualization for active configurations"}
+             </CardDescription>
+           </CardHeader>
+           <CardContent>
+@@ -1531,6 +1538,8 @@
+           </CardContent>
+         </Card>
+       )}
++      </div>
++      {platform.enabled&&<aside className="e6-scene-column"><ControlCamera control={platform}/></aside>}
+     </div>
+   );
+ }
+diff --git a/dashboard/src/pages/control/KeyboardControlPage.tsx b/dashboard/src/pages/control/KeyboardControlPage.tsx
+index d3ea3e5..85e33ef 100755
+--- a/dashboard/src/pages/control/KeyboardControlPage.tsx
++++ b/dashboard/src/pages/control/KeyboardControlPage.tsx
+@@ -17,8 +17,6 @@ import {
+   TooltipProvider,
+   TooltipTrigger,
+ } from "@/components/ui/tooltip";
+-import { fetcher } from "@/lib/utils";
+-import { ServerStatus } from "@/types";
+ import {
+   ArrowDown,
+   ArrowDownFromLine,
+@@ -35,16 +33,12 @@ import {
+   Square,
+ } from "lucide-react";
+ import { useEffect, useRef, useState } from "react";
+-import useSWR from "swr";
++import { useControlServerStatus, ServerStatusRecovery } from '@/e6/useControlServerStatus';
++import { useE6Control } from '@/e6/useE6Control';
++import { ControlStatus, ControlCamera } from '@/e6/ControlStatus';
+ 
+ export function KeyboardControl() {
+-  const { data: serverStatus, error: serverError } = useSWR<ServerStatus>(
+-    ["/status"],
+-    fetcher,
+-    {
+-      refreshInterval: 5000,
+-    },
+-  );
++  const { data: serverStatus, error: serverError, mutate: retryStatus, isValidating: checkingStatus } = useControlServerStatus();
+ 
+   const [isMoving, setIsMoving] = useState(false);
+   const [activeKey, setActiveKey] = useState<string | null>(null);
+@@ -52,6 +46,10 @@ export function KeyboardControl() {
+     null,
+   );
+   const [selectedSpeed, setSelectedSpeed] = useState<number>(0.8);
++  const platform = useE6Control('keyboard', selectedSpeed);
++  useEffect(() => {
++    if (platform.enabled) setIsMoving(platform.state.ready);
++  }, [platform.enabled, platform.state.ready]);
+ 
+   // Refs to manage our control loop and state
+   const keysPressedRef = useRef(new Set<string>());
+@@ -133,6 +131,7 @@ export function KeyboardControl() {
+ 
+   // Effect for handling keyboard inputs and preventing page scroll
+   useEffect(() => {
++    if (platform.enabled) return;
+     const handleKeyDown = (event: KeyboardEvent) => {
+       // 1. Prevent page scrolling from control keys when active
+       if (
+@@ -183,7 +182,7 @@ export function KeyboardControl() {
+       window.removeEventListener("keydown", handleKeyDown);
+       window.removeEventListener("keyup", handleKeyUp);
+     };
+-  }, [isMoving, selectedRobotName, serverStatus]);
++  }, [isMoving, selectedRobotName, serverStatus, platform.enabled]);
+ 
+   // Effect for setting the default selected robot
+   useEffect(() => {
+@@ -199,6 +198,7 @@ export function KeyboardControl() {
+ 
+   // The main control loop
+   useEffect(() => {
++    if (platform.enabled) return;
+     const controlRobot = () => {
+       const currentTime = Date.now();
+       const deltaT_ms = currentTime - lastExecutionTimeRef.current;
+@@ -288,13 +288,14 @@ export function KeyboardControl() {
+         clearInterval(intervalIdRef.current);
+       }
+     };
+-  }, [isMoving, selectedSpeed, serverStatus, selectedRobotName]);
++  }, [isMoving, selectedSpeed, serverStatus, selectedRobotName, platform.enabled]);
+ 
+   const startKeyPressFromUI = (
+     key: string,
+     e?: React.MouseEvent | React.TouchEvent,
+   ) => {
+     e?.preventDefault();
++    if (platform.enabled) { platform.keyDown(key); return; }
+     if (!isMoving) return;
+ 
+     setActiveKey(key);
+@@ -314,6 +315,7 @@ export function KeyboardControl() {
+   };
+ 
+   const endKeyPressFromUI = (key: string) => {
++    if (platform.enabled) { platform.keyUp(key); return; }
+     setActiveKey(null);
+     const keyLower = key.toLowerCase();
+     keysPressedRef.current.delete(key);
+@@ -339,18 +341,30 @@ export function KeyboardControl() {
+   };
+ 
+   const startMoving = async () => {
++    if (platform.enabled) { await platform.prepare(); return; }
+     await initRobot();
+     setIsMoving(true);
+   };
+ 
+   const stopMoving = async () => {
++    if (platform.enabled) platform.stop();
+     setIsMoving(false);
+     // **FIX**: Clear any held keys to prevent them from being "stuck"
+     keysPressedRef.current.clear();
+     setActiveKey(null);
+   };
+ 
+-  const controls = [
++  const controls = platform.enabled ? [
++    {key:'a',description:'X− / Rx− / 关节−',icon:<ArrowLeft className="size-5"/>},
++    {key:'d',description:'X+ / Rx+ / 关节+',icon:<ArrowRight className="size-5"/>},
++    {key:'s',description:'Y− / Ry−',icon:<ArrowDown className="size-5"/>},
++    {key:'w',description:'Y+ / Ry+',icon:<ArrowUp className="size-5"/>},
++    {key:'q',description:'Z− / Rz−',icon:<ChevronDown className="size-5"/>},
++    {key:'e',description:'Z+ / Rz+',icon:<ChevronUp className="size-5"/>},
++    {key:'f',description:'逐渐张开',icon:<RotateCcw className="size-5"/>},
++    {key:'r',description:'逐渐闭合',icon:<RotateCw className="size-5"/>},
++    {key:' ',description:'按住允许动作；释放保持',icon:<Space className="size-5"/>},
++  ] : [
+     {
+       key: "ArrowUp",
+       description: "Move in the positive X direction",
+@@ -409,17 +423,18 @@ export function KeyboardControl() {
+     },
+   ];
+ 
+-  if (serverError) return <div>Failed to load server status.</div>;
++  if (serverError && !serverStatus) return <ServerStatusRecovery retry={retryStatus} pending={checkingStatus}/>;
+   if (!serverStatus) return <LoadingPage />;
+ 
+   return (
+-    <div className="container mx-auto px-4 py-6 lg:flex lg:flex-row lg:gap-8 space-y-8 lg:space-y-0">
+-      <div className="md:w-1/2 space-y-6">
+-        <Card>
++    <div className={platform.enabled?"e6-control-workspace":"container mx-auto px-4 py-6 lg:flex lg:flex-row lg:gap-8 space-y-8 lg:space-y-0"}>
++      <div className={platform.enabled?"e6-operator-column":"md:w-1/2 space-y-6"}>
++        {serverError && <ServerStatusRecovery retry={retryStatus} pending={checkingStatus}/>}
++        <Card className={platform.enabled?"e6-prepare-card":""}>
+           <CardContent className="pt-6 flex flex-col items-center gap-2">
+-            <div className="flex flex-wrap items-end justify-center gap-2">
++            <div className={platform.enabled?"e6-prepare-select":"flex flex-wrap items-end justify-center gap-2"}>
+               <div className="flex flex-col gap-y-2">
+-                <Label>Select Robot to Control</Label>
++                <Label htmlFor="follower-robot">{platform.enabled?"当前设备":"Select Robot to Control"}</Label>
+                 <Select
+                   value={selectedRobotName || ""}
+                   onValueChange={(value) => setSelectedRobotName(value)}
+@@ -448,20 +463,20 @@ export function KeyboardControl() {
+               <SpeedSelect
+                 defaultValue={selectedSpeed}
+                 onChange={(newSpeed) => setSelectedSpeed(newSpeed)}
+-                title="Movement speed"
++                title={platform.enabled?"速度倍率":"Movement speed"}
+                 minSpeed={0.1}
+-                maxSpeed={2.0}
++                maxSpeed={platform.enabled ? 1.0 : 2.0}
+                 step={0.1}
+               />
+             </div>
+-            <div className="flex justify-center items-center gap-2">
++            <div className={platform.enabled?"e6-prepare-buttons":"flex justify-center items-center gap-2"}>
+               <Button
+                 variant="default"
+                 onClick={startMoving}
+-                disabled={!selectedRobotName || isMoving}
++                disabled={!selectedRobotName || isMoving || (platform.enabled && !!platform.prepareBlockedReason)}
+               >
+                 <Play className="mr-2 h-4 w-4" />
+-                {isMoving ? "Controlling..." : "Start Keyboard Control"}
++                {isMoving ? (platform.enabled?"已准备 · 等待输入":"Controlling...") : platform.enabled ? "准备键盘控制" : "Start Keyboard Control"}
+               </Button>
+               <Button
+                 variant="destructive"
+@@ -469,10 +484,10 @@ export function KeyboardControl() {
+                 disabled={!isMoving}
+               >
+                 <Square className="mr-2 h-4 w-4" />
+-                Stop
++                {platform.enabled?"停止":"Stop"}
+               </Button>
+             </div>
+-            <figure className="flex flex-col items-center">
++            {!platform.enabled && <figure className="flex flex-col items-center">
+               <img
+                 src={controlschema}
+                 alt="Robot Control Schema"
+@@ -481,20 +496,22 @@ export function KeyboardControl() {
+               <figcaption className="text-sm text-muted-foreground text-center mt-2">
+                 Press a key or click a button to move the robot.
+               </figcaption>
+-            </figure>
++            </figure>}
+           </CardContent>
+         </Card>
++        <ControlStatus control={platform}/>
+       </div>
+ 
+-      <div className="md:w-1/2">
+-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
++      <div className={platform.enabled ? "e6-scene-column" : "md:w-1/2"}>
++        <ControlCamera control={platform}/>
++        <div className={platform.enabled?"e6-key-map":"grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3"} aria-label="键盘输入映射">
+           {controls.map((control) => (
+             <TooltipProvider key={control.key}>
+               <Tooltip>
+                 <TooltipTrigger asChild>
+                   <Card
+                     className={`flex flex-col items-center justify-center p-3 cursor-pointer select-none hover:bg-accent transition-colors ${
+-                      activeKey === control.key
++                      (platform.enabled ? platform.activeKeys.includes(control.key) : activeKey === control.key)
+                         ? "bg-primary text-primary-foreground"
+                         : "bg-card"
+                     }`}

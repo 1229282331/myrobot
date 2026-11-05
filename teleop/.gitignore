@@ -1,0 +1,8 @@
+.venv/
+runtime/
+web/node_modules/
+web/dist/
+.pytest_cache/
+__pycache__/
+*.egg-info/
+web/*.tsbuildinfo

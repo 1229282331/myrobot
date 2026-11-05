@@ -1,0 +1,1910 @@
+{
+  "kind": "state",
+  "state": "\u6682\u6302",
+  "ready": false,
+  "reason": "input_stale",
+  "arm": {
+    "enabled": true,
+    "mode": 5,
+    "enable_phase": "idle",
+    "enable_reason": null,
+    "can_enable": false,
+    "enable_receipt": null,
+    "stable_ms": 5000
+  },
+  "echo_ns": 23000679196999,
+  "actual": {
+    "joints_rad": [
+      -1.2330738115850597,
+      -0.9973376495310525,
+      1.7395046523742173,
+      -1.6539788318629765,
+      1.643840177593045,
+      0.25941053230134836
+    ],
+    "position_m": [
+      -0.014627443313598634,
+      -0.18840760803222656,
+      0.3927036437988281
+    ],
+    "quaternion_xyzw": [
+      -0.048820877970864575,
+      0.9443884854875524,
+      -0.29887900780163323,
+      0.12813371550139432
+    ],
+    "gripper": null
+  },
+  "feedback": {
+    "generation": "efc4f664-b2d4-4aae-8103-2872e5e79e25",
+    "sequence": 93912,
+    "connected": true,
+    "error": null,
+    "received_ns": 23000639526286,
+    "status": {
+      "timestamp": 1791370484114,
+      "run_time": 23017,
+      "enable_status": true,
+      "error_status": false,
+      "collision_state": 0,
+      "running_status": 0,
+      "run_queued_cmd": 0,
+      "current_command_id": 564,
+      "user_coordinate": 0,
+      "tool_coordinate": 0,
+      "user_value": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "tool_value": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "robot_mode": 5,
+      "joint_state": {
+        "q_actual": [
+          -70.6499252319336,
+          -57.14323806762695,
+          99.66627502441406,
+          -94.76600646972656,
+          94.18510437011719,
+          14.863128662109375
+        ],
+        "q_target": [
+          -70.6499252319336,
+          -57.14324951171875,
+          99.666259765625,
+          -94.76756286621094,
+          94.18644714355469,
+          14.86355972290039
+        ],
+        "qd_actual": [
+          0.015616086311638355,
+          0.038064636290073395,
+          0.008804019540548325,
+          3.074798583984375,
+          -1.1693572998046875,
+          -2.437591552734375
+        ]
+      },
+      "tool_vector_actual": {
+        "x": -14.627443313598633,
+        "y": -188.40760803222656,
+        "z": 392.7036437988281,
+        "rx": -143.8034210205078,
+        "ry": 12.288421630859375,
+        "rz": -170.05149841308594
+      },
+      "tool_vector_target": {
+        "x": -14.625840187072754,
+        "y": -188.40725708007812,
+        "z": 392.70037841796875,
+        "rx": -143.80528259277344,
+        "ry": 12.289466857910156,
+        "rz": -170.05140686035156
+      },
+      "actual_quaternion": {
+        "qw": 0.12813372910022736,
+        "qx": -0.048820916563272476,
+        "qy": 0.9443885087966919,
+        "qz": -0.298878937959671
+      }
+    },
+    "age_ms": 4.392334
+  },
+  "camera": {
+    "valid": true,
+    "age_ms": 68.903633,
+    "frame_id": 22906,
+    "reason": null,
+    "latency_marker": false
+  },
+  "gripper": {
+    "phase": "uninitialized",
+    "reason": null,
+    "valid": false,
+    "actual": null,
+    "last_observed": null,
+    "age_ms": null,
+    "target": null,
+    "last_sent": null,
+    "initialized": false,
+    "received_ns": null,
+    "exchanges": 0,
+    "event_drops": 0,
+    "limits": {
+      "minimum": 0.15,
+      "maximum": 0.35,
+      "rate_s": 0.025,
+      "velocity": 25,
+      "force": 64,
+      "acceleration": 25,
+      "deceleration": 25
+    }
+  },
+  "candidate": {
+    "kind": "moveit_servoj",
+    "position_m": [
+      -0.014626801901511059,
+      -0.1884083935177132,
+      0.3927007518927873
+    ],
+    "quaternion_xyzw": [
+      -0.04871512649429293,
+      0.9446369213752315,
+      -0.2980893425250442,
+      0.12818216372942345
+    ],
+    "joints_rad": [
+      -1.2333014211265816,
+      -0.9966373906091579,
+      1.7381161241713279,
+      -1.6548518071661087,
+      1.6444316046894767,
+      0.2595671086164788
+    ],
+    "input_sequence": 15220,
+    "moveit": {
+      "id": 963,
+      "epoch": 23,
+      "received_ns": 22970995867536,
+      "valid_until_ns": 22971020867536,
+      "sample_started_ns": 22970998558203,
+      "computed_ns": 22970999428245,
+      "joints_rad": [
+        -1.2333014211265816,
+        -0.9966373906091579,
+        1.7381161241713279,
+        -1.6548518071661087,
+        1.6444316046894767,
+        0.2595671086164788
+      ],
+      "position_m": [
+        -0.014626801901511059,
+        -0.1884083935177132,
+        0.3927007518927873
+      ],
+      "quaternion_xyzw": [
+        -0.04871512649429293,
+        0.9446369213752315,
+        -0.2980893425250442,
+        0.12818216372942345
+      ],
+      "status": 0,
+      "sample_ros_ns": 1791369610864662865,
+      "bracket_ros_ns": [
+        1791369610859518066,
+        1791369610869517526
+      ],
+      "input_sequence": 15220,
+      "source_input": {
+        "sequence": 15220,
+        "epoch": 23,
+        "kind": "t",
+        "ros_stamp_ns": 1791369610761806817,
+        "at_ns": 22970946460114,
+        "intent": {
+          "linear_m_s": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "angular_rad_s": [
+            -0.04363323129985824,
+            0.0,
+            0.0
+          ],
+          "joint_rad_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "gripper_rate_s": 0.0,
+          "deadman": true,
+          "frame": "base"
+        },
+        "observation_received_ns": 22970932031528
+      },
+      "trajectory_sources": [
+        {
+          "point_ns": 1791369610709502882,
+          "kind": "t",
+          "input_ns": 1791369610577815044,
+          "input": {
+            "sequence": 15216,
+            "epoch": 23,
+            "kind": "t",
+            "ros_stamp_ns": 1791369610577815044,
+            "at_ns": 22970762703175,
+            "intent": {
+              "linear_m_s": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "angular_rad_s": [
+                -0.04363323129985824,
+                0.0,
+                0.0
+              ],
+              "joint_rad_s": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "gripper_rate_s": 0.0,
+              "deadman": true,
+              "frame": "base"
+            },
+            "observation_received_ns": 22970746883423
+          }
+        },
+        {
+          "point_ns": 1791369610719514216,
+          "kind": "t",
+          "input_ns": 1791369610577815044,
+          "input": {
+            "sequence": 15216,
+            "epoch": 23,
+            "kind": "t",
+            "ros_stamp_ns": 1791369610577815044,
+            "at_ns": 22970762703175,
+            "intent": {
+              "linear_m_s": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "angular_rad_s": [
+                -0.04363323129985824,
+                0.0,
+                0.0
+              ],
+              "joint_rad_s": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "gripper_rate_s": 0.0,
+              "deadman": true,
+              "frame": "base"
+            },
+            "observation_received_ns": 22970746883423
+          }
+        },
+        {
+          "point_ns": 1791369610729561759,
+          "kind": "t",
+          "input_ns": 1791369610577815044,
+          "input": {
+            "sequence": 15216,
+            "epoch": 23,
+            "kind": "t",
+            "ros_stamp_ns": 1791369610577815044,
+            "at_ns": 22970762703175,
+            "intent": {
+              "linear_m_s": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "angular_rad_s": [
+                -0.04363323129985824,
+                0.0,
+                0.0
+              ],
+              "joint_rad_s": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "gripper_rate_s": 0.0,
+              "deadman": true,
+              "frame": "base"
+            },
+            "observation_received_ns": 22970746883423
+          }
+        },
+        {
+          "point_ns": 1791369610739522427,
+          "kind": "t",
+          "input_ns": 1791369610577815044,
+          "input": {
+            "sequence": 15216,
+            "epoch": 23,
+            "kind": "t",
+            "ros_stamp_ns": 1791369610577815044,
+            "at_ns": 22970762703175,
+            "intent": {
+              "linear_m_s": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "angular_rad_s": [
+                -0.04363323129985824,
+                0.0,
+                0.0
+              ],
+              "joint_rad_s": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "gripper_rate_s": 0.0,
+              "deadman": true,
+              "frame": "base"
+            },
+            "observation_received_ns": 22970746883423
+          }
+        },
+        {
+          "point_ns": 1791369610749499511,
+          "kind": "t",
+          "input_ns": 1791369610640876552,
+          "input": {
+            "sequence": 15219,
+            "epoch": 23,
+            "kind": "t",
+            "ros_stamp_ns": 1791369610640876552,
+            "at_ns": 22970825311849,
+            "intent": {
+              "linear_m_s": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "angular_rad_s": [
+                -0.04363323129985824,
+                0.0,
+                0.0
+              ],
+              "joint_rad_s": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "gripper_rate_s": 0.0,
+              "deadman": true,
+              "frame": "base"
+            },
+            "observation_received_ns": 22970814253639
+          }
+        },
+        {
+          "point_ns": 1791369610759485929,
+          "kind": "t",
+          "input_ns": 1791369610640876552,
+          "input": {
+            "sequence": 15219,
+            "epoch": 23,
+            "kind": "t",
+            "ros_stamp_ns": 1791369610640876552,
+            "at_ns": 22970825311849,
+            "intent": {
+              "linear_m_s": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "angular_rad_s": [
+                -0.04363323129985824,
+                0.0,
+                0.0
+              ],
+              "joint_rad_s": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "gripper_rate_s": 0.0,
+              "deadman": true,
+              "frame": "base"
+            },
+            "observation_received_ns": 22970814253639
+          }
+        },
+        {
+          "point_ns": 1791369610769507597,
+          "kind": "t",
+          "input_ns": 1791369610640876552,
+          "input": {
+            "sequence": 15219,
+            "epoch": 23,
+            "kind": "t",
+            "ros_stamp_ns": 1791369610640876552,
+            "at_ns": 22970825311849,
+            "intent": {
+              "linear_m_s": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "angular_rad_s": [
+                -0.04363323129985824,
+                0.0,
+                0.0
+              ],
+              "joint_rad_s": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "gripper_rate_s": 0.0,
+              "deadman": true,
+              "frame": "base"
+            },
+            "observation_received_ns": 22970814253639
+          }
+        },
+        {
+          "point_ns": 1791369610779515265,
+          "kind": "t",
+          "input_ns": 1791369610640876552,
+          "input": {
+            "sequence": 15219,
+            "epoch": 23,
+            "kind": "t",
+            "ros_stamp_ns": 1791369610640876552,
+            "at_ns": 22970825311849,
+            "intent": {
+              "linear_m_s": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "angular_rad_s": [
+                -0.04363323129985824,
+                0.0,
+                0.0
+              ],
+              "joint_rad_s": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "gripper_rate_s": 0.0,
+              "deadman": true,
+              "frame": "base"
+            },
+            "observation_received_ns": 22970814253639
+          }
+        },
+        {
+          "point_ns": 1791369610789496850,
+          "kind": "t",
+          "input_ns": 1791369610640876552,
+          "input": {
+            "sequence": 15219,
+            "epoch": 23,
+            "kind": "t",
+            "ros_stamp_ns": 1791369610640876552,
+            "at_ns": 22970825311849,
+            "intent": {
+              "linear_m_s": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "angular_rad_s": [
+                -0.04363323129985824,
+                0.0,
+                0.0
+              ],
+              "joint_rad_s": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "gripper_rate_s": 0.0,
+              "deadman": true,
+              "frame": "base"
+            },
+            "observation_received_ns": 22970814253639
+          }
+        },
+        {
+          "point_ns": 1791369610799511226,
+          "kind": "t",
+          "input_ns": 1791369610640876552,
+          "input": {
+            "sequence": 15219,
+            "epoch": 23,
+            "kind": "t",
+            "ros_stamp_ns": 1791369610640876552,
+            "at_ns": 22970825311849,
+            "intent": {
+              "linear_m_s": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "angular_rad_s": [
+                -0.04363323129985824,
+                0.0,
+                0.0
+              ],
+              "joint_rad_s": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "gripper_rate_s": 0.0,
+              "deadman": true,
+              "frame": "base"
+            },
+            "observation_received_ns": 22970814253639
+          }
+        },
+        {
+          "point_ns": 1791369610809501685,
+          "kind": "t",
+          "input_ns": 1791369610700798351,
+          "input": {
+            "sequence": 15220,
+            "epoch": 23,
+            "kind": "t",
+            "ros_stamp_ns": 1791369610700798351,
+            "at_ns": 22970885897939,
+            "intent": {
+              "linear_m_s": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "angular_rad_s": [
+                -0.04363323129985824,
+                0.0,
+                0.0
+              ],
+              "joint_rad_s": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "gripper_rate_s": 0.0,
+              "deadman": true,
+              "frame": "base"
+            },
+            "observation_received_ns": 22970877757480
+          }
+        },
+        {
+          "point_ns": 1791369610819503187,
+          "kind": "t",
+          "input_ns": 1791369610700798351,
+          "input": {
+            "sequence": 15220,
+            "epoch": 23,
+            "kind": "t",
+            "ros_stamp_ns": 1791369610700798351,
+            "at_ns": 22970885897939,
+            "intent": {
+              "linear_m_s": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "angular_rad_s": [
+                -0.04363323129985824,
+                0.0,
+                0.0
+              ],
+              "joint_rad_s": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "gripper_rate_s": 0.0,
+              "deadman": true,
+              "frame": "base"
+            },
+            "observation_received_ns": 22970877757480
+          }
+        },
+        {
+          "point_ns": 1791369610829512188,
+          "kind": "t",
+          "input_ns": 1791369610700798351,
+          "input": {
+            "sequence": 15220,
+            "epoch": 23,
+            "kind": "t",
+            "ros_stamp_ns": 1791369610700798351,
+            "at_ns": 22970885897939,
+            "intent": {
+              "linear_m_s": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "angular_rad_s": [
+                -0.04363323129985824,
+                0.0,
+                0.0
+              ],
+              "joint_rad_s": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "gripper_rate_s": 0.0,
+              "deadman": true,
+              "frame": "base"
+            },
+            "observation_received_ns": 22970877757480
+          }
+        },
+        {
+          "point_ns": 1791369610839542189,
+          "kind": "t",
+          "input_ns": 1791369610700798351,
+          "input": {
+            "sequence": 15220,
+            "epoch": 23,
+            "kind": "t",
+            "ros_stamp_ns": 1791369610700798351,
+            "at_ns": 22970885897939,
+            "intent": {
+              "linear_m_s": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "angular_rad_s": [
+                -0.04363323129985824,
+                0.0,
+                0.0
+              ],
+              "joint_rad_s": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "gripper_rate_s": 0.0,
+              "deadman": true,
+              "frame": "base"
+            },
+            "observation_received_ns": 22970877757480
+          }
+        },
+        {
+          "point_ns": 1791369610849502940,
+          "kind": "t",
+          "input_ns": 1791369610700798351,
+          "input": {
+            "sequence": 15220,
+            "epoch": 23,
+            "kind": "t",
+            "ros_stamp_ns": 1791369610700798351,
+            "at_ns": 22970885897939,
+            "intent": {
+              "linear_m_s": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "angular_rad_s": [
+                -0.04363323129985824,
+                0.0,
+                0.0
+              ],
+              "joint_rad_s": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "gripper_rate_s": 0.0,
+              "deadman": true,
+              "frame": "base"
+            },
+            "observation_received_ns": 22970877757480
+          }
+        },
+        {
+          "point_ns": 1791369610859518066,
+          "kind": "t",
+          "input_ns": 1791369610700798351,
+          "input": {
+            "sequence": 15220,
+            "epoch": 23,
+            "kind": "t",
+            "ros_stamp_ns": 1791369610700798351,
+            "at_ns": 22970885897939,
+            "intent": {
+              "linear_m_s": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "angular_rad_s": [
+                -0.04363323129985824,
+                0.0,
+                0.0
+              ],
+              "joint_rad_s": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "gripper_rate_s": 0.0,
+              "deadman": true,
+              "frame": "base"
+            },
+            "observation_received_ns": 22970877757480
+          }
+        },
+        {
+          "point_ns": 1791369610869517526,
+          "kind": "t",
+          "input_ns": 1791369610761806817,
+          "input": {
+            "sequence": 15220,
+            "epoch": 23,
+            "kind": "t",
+            "ros_stamp_ns": 1791369610761806817,
+            "at_ns": 22970946460114,
+            "intent": {
+              "linear_m_s": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "angular_rad_s": [
+                -0.04363323129985824,
+                0.0,
+                0.0
+              ],
+              "joint_rad_s": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "gripper_rate_s": 0.0,
+              "deadman": true,
+              "frame": "base"
+            },
+            "observation_received_ns": 22970932031528
+          }
+        },
+        {
+          "point_ns": 1791369610879521902,
+          "kind": "t",
+          "input_ns": 1791369610761806817,
+          "input": {
+            "sequence": 15220,
+            "epoch": 23,
+            "kind": "t",
+            "ros_stamp_ns": 1791369610761806817,
+            "at_ns": 22970946460114,
+            "intent": {
+              "linear_m_s": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "angular_rad_s": [
+                -0.04363323129985824,
+                0.0,
+                0.0
+              ],
+              "joint_rad_s": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "gripper_rate_s": 0.0,
+              "deadman": true,
+              "frame": "base"
+            },
+            "observation_received_ns": 22970932031528
+          }
+        },
+        {
+          "point_ns": 1791369610889520737,
+          "kind": "t",
+          "input_ns": 1791369610761806817,
+          "input": {
+            "sequence": 15220,
+            "epoch": 23,
+            "kind": "t",
+            "ros_stamp_ns": 1791369610761806817,
+            "at_ns": 22970946460114,
+            "intent": {
+              "linear_m_s": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "angular_rad_s": [
+                -0.04363323129985824,
+                0.0,
+                0.0
+              ],
+              "joint_rad_s": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "gripper_rate_s": 0.0,
+              "deadman": true,
+              "frame": "base"
+            },
+            "observation_received_ns": 22970932031528
+          }
+        },
+        {
+          "point_ns": 1791369610899516946,
+          "kind": "t",
+          "input_ns": 1791369610761806817,
+          "input": {
+            "sequence": 15220,
+            "epoch": 23,
+            "kind": "t",
+            "ros_stamp_ns": 1791369610761806817,
+            "at_ns": 22970946460114,
+            "intent": {
+              "linear_m_s": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "angular_rad_s": [
+                -0.04363323129985824,
+                0.0,
+                0.0
+              ],
+              "joint_rad_s": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "gripper_rate_s": 0.0,
+              "deadman": true,
+              "frame": "base"
+            },
+            "observation_received_ns": 22970932031528
+          }
+        }
+      ],
+      "input_association": "exact bracket sources; full smoothing window retained",
+      "pre_action_received_ns": 22970985783952,
+      "host_received_ns": 22971008274996
+    },
+    "pre_action_received_ns": 22970968822075
+  },
+  "accepted": {
+    "kind": "moveit_servoj",
+    "position_m": [
+      -0.014626801901511059,
+      -0.1884083935177132,
+      0.3927007518927873
+    ],
+    "quaternion_xyzw": [
+      -0.04871512649429293,
+      0.9446369213752315,
+      -0.2980893425250442,
+      0.12818216372942345
+    ],
+    "joints_rad": [
+      -1.2333014211265816,
+      -0.9966373906091579,
+      1.7381161241713279,
+      -1.6548518071661087,
+      1.6444316046894767,
+      0.2595671086164788
+    ],
+    "input_sequence": 15220,
+    "moveit": {
+      "id": 963,
+      "epoch": 23,
+      "received_ns": 22970995867536,
+      "valid_until_ns": 22971020867536,
+      "sample_started_ns": 22970998558203,
+      "computed_ns": 22970999428245,
+      "joints_rad": [
+        -1.2333014211265816,
+        -0.9966373906091579,
+        1.7381161241713279,
+        -1.6548518071661087,
+        1.6444316046894767,
+        0.2595671086164788
+      ],
+      "position_m": [
+        -0.014626801901511059,
+        -0.1884083935177132,
+        0.3927007518927873
+      ],
+      "quaternion_xyzw": [
+        -0.04871512649429293,
+        0.9446369213752315,
+        -0.2980893425250442,
+        0.12818216372942345
+      ],
+      "status": 0,
+      "sample_ros_ns": 1791369610864662865,
+      "bracket_ros_ns": [
+        1791369610859518066,
+        1791369610869517526
+      ],
+      "input_sequence": 15220,
+      "source_input": {
+        "sequence": 15220,
+        "epoch": 23,
+        "kind": "t",
+        "ros_stamp_ns": 1791369610761806817,
+        "at_ns": 22970946460114,
+        "intent": {
+          "linear_m_s": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "angular_rad_s": [
+            -0.04363323129985824,
+            0.0,
+            0.0
+          ],
+          "joint_rad_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "gripper_rate_s": 0.0,
+          "deadman": true,
+          "frame": "base"
+        },
+        "observation_received_ns": 22970932031528
+      },
+      "trajectory_sources": [
+        {
+          "point_ns": 1791369610709502882,
+          "kind": "t",
+          "input_ns": 1791369610577815044,
+          "input": {
+            "sequence": 15216,
+            "epoch": 23,
+            "kind": "t",
+            "ros_stamp_ns": 1791369610577815044,
+            "at_ns": 22970762703175,
+            "intent": {
+              "linear_m_s": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "angular_rad_s": [
+                -0.04363323129985824,
+                0.0,
+                0.0
+              ],
+              "joint_rad_s": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "gripper_rate_s": 0.0,
+              "deadman": true,
+              "frame": "base"
+            },
+            "observation_received_ns": 22970746883423
+          }
+        },
+        {
+          "point_ns": 1791369610719514216,
+          "kind": "t",
+          "input_ns": 1791369610577815044,
+          "input": {
+            "sequence": 15216,
+            "epoch": 23,
+            "kind": "t",
+            "ros_stamp_ns": 1791369610577815044,
+            "at_ns": 22970762703175,
+            "intent": {
+              "linear_m_s": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "angular_rad_s": [
+                -0.04363323129985824,
+                0.0,
+                0.0
+              ],
+              "joint_rad_s": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "gripper_rate_s": 0.0,
+              "deadman": true,
+              "frame": "base"
+            },
+            "observation_received_ns": 22970746883423
+          }
+        },
+        {
+          "point_ns": 1791369610729561759,
+          "kind": "t",
+          "input_ns": 1791369610577815044,
+          "input": {
+            "sequence": 15216,
+            "epoch": 23,
+            "kind": "t",
+            "ros_stamp_ns": 1791369610577815044,
+            "at_ns": 22970762703175,
+            "intent": {
+              "linear_m_s": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "angular_rad_s": [
+                -0.04363323129985824,
+                0.0,
+                0.0
+              ],
+              "joint_rad_s": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "gripper_rate_s": 0.0,
+              "deadman": true,
+              "frame": "base"
+            },
+            "observation_received_ns": 22970746883423
+          }
+        },
+        {
+          "point_ns": 1791369610739522427,
+          "kind": "t",
+          "input_ns": 1791369610577815044,
+          "input": {
+            "sequence": 15216,
+            "epoch": 23,
+            "kind": "t",
+            "ros_stamp_ns": 1791369610577815044,
+            "at_ns": 22970762703175,
+            "intent": {
+              "linear_m_s": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "angular_rad_s": [
+                -0.04363323129985824,
+                0.0,
+                0.0
+              ],
+              "joint_rad_s": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "gripper_rate_s": 0.0,
+              "deadman": true,
+              "frame": "base"
+            },
+            "observation_received_ns": 22970746883423
+          }
+        },
+        {
+          "point_ns": 1791369610749499511,
+          "kind": "t",
+          "input_ns": 1791369610640876552,
+          "input": {
+            "sequence": 15219,
+            "epoch": 23,
+            "kind": "t",
+            "ros_stamp_ns": 1791369610640876552,
+            "at_ns": 22970825311849,
+            "intent": {
+              "linear_m_s": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "angular_rad_s": [
+                -0.04363323129985824,
+                0.0,
+                0.0
+              ],
+              "joint_rad_s": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "gripper_rate_s": 0.0,
+              "deadman": true,
+              "frame": "base"
+            },
+            "observation_received_ns": 22970814253639
+          }
+        },
+        {
+          "point_ns": 1791369610759485929,
+          "kind": "t",
+          "input_ns": 1791369610640876552,
+          "input": {
+            "sequence": 15219,
+            "epoch": 23,
+            "kind": "t",
+            "ros_stamp_ns": 1791369610640876552,
+            "at_ns": 22970825311849,
+            "intent": {
+              "linear_m_s": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "angular_rad_s": [
+                -0.04363323129985824,
+                0.0,
+                0.0
+              ],
+              "joint_rad_s": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "gripper_rate_s": 0.0,
+              "deadman": true,
+              "frame": "base"
+            },
+            "observation_received_ns": 22970814253639
+          }
+        },
+        {
+          "point_ns": 1791369610769507597,
+          "kind": "t",
+          "input_ns": 1791369610640876552,
+          "input": {
+            "sequence": 15219,
+            "epoch": 23,
+            "kind": "t",
+            "ros_stamp_ns": 1791369610640876552,
+            "at_ns": 22970825311849,
+            "intent": {
+              "linear_m_s": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "angular_rad_s": [
+                -0.04363323129985824,
+                0.0,
+                0.0
+              ],
+              "joint_rad_s": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "gripper_rate_s": 0.0,
+              "deadman": true,
+              "frame": "base"
+            },
+            "observation_received_ns": 22970814253639
+          }
+        },
+        {
+          "point_ns": 1791369610779515265,
+          "kind": "t",
+          "input_ns": 1791369610640876552,
+          "input": {
+            "sequence": 15219,
+            "epoch": 23,
+            "kind": "t",
+            "ros_stamp_ns": 1791369610640876552,
+            "at_ns": 22970825311849,
+            "intent": {
+              "linear_m_s": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "angular_rad_s": [
+                -0.04363323129985824,
+                0.0,
+                0.0
+              ],
+              "joint_rad_s": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "gripper_rate_s": 0.0,
+              "deadman": true,
+              "frame": "base"
+            },
+            "observation_received_ns": 22970814253639
+          }
+        },
+        {
+          "point_ns": 1791369610789496850,
+          "kind": "t",
+          "input_ns": 1791369610640876552,
+          "input": {
+            "sequence": 15219,
+            "epoch": 23,
+            "kind": "t",
+            "ros_stamp_ns": 1791369610640876552,
+            "at_ns": 22970825311849,
+            "intent": {
+              "linear_m_s": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "angular_rad_s": [
+                -0.04363323129985824,
+                0.0,
+                0.0
+              ],
+              "joint_rad_s": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "gripper_rate_s": 0.0,
+              "deadman": true,
+              "frame": "base"
+            },
+            "observation_received_ns": 22970814253639
+          }
+        },
+        {
+          "point_ns": 1791369610799511226,
+          "kind": "t",
+          "input_ns": 1791369610640876552,
+          "input": {
+            "sequence": 15219,
+            "epoch": 23,
+            "kind": "t",
+            "ros_stamp_ns": 1791369610640876552,
+            "at_ns": 22970825311849,
+            "intent": {
+              "linear_m_s": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "angular_rad_s": [
+                -0.04363323129985824,
+                0.0,
+                0.0
+              ],
+              "joint_rad_s": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "gripper_rate_s": 0.0,
+              "deadman": true,
+              "frame": "base"
+            },
+            "observation_received_ns": 22970814253639
+          }
+        },
+        {
+          "point_ns": 1791369610809501685,
+          "kind": "t",
+          "input_ns": 1791369610700798351,
+          "input": {
+            "sequence": 15220,
+            "epoch": 23,
+            "kind": "t",
+            "ros_stamp_ns": 1791369610700798351,
+            "at_ns": 22970885897939,
+            "intent": {
+              "linear_m_s": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "angular_rad_s": [
+                -0.04363323129985824,
+                0.0,
+                0.0
+              ],
+              "joint_rad_s": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "gripper_rate_s": 0.0,
+              "deadman": true,
+              "frame": "base"
+            },
+            "observation_received_ns": 22970877757480
+          }
+        },
+        {
+          "point_ns": 1791369610819503187,
+          "kind": "t",
+          "input_ns": 1791369610700798351,
+          "input": {
+            "sequence": 15220,
+            "epoch": 23,
+            "kind": "t",
+            "ros_stamp_ns": 1791369610700798351,
+            "at_ns": 22970885897939,
+            "intent": {
+              "linear_m_s": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "angular_rad_s": [
+                -0.04363323129985824,
+                0.0,
+                0.0
+              ],
+              "joint_rad_s": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "gripper_rate_s": 0.0,
+              "deadman": true,
+              "frame": "base"
+            },
+            "observation_received_ns": 22970877757480
+          }
+        },
+        {
+          "point_ns": 1791369610829512188,
+          "kind": "t",
+          "input_ns": 1791369610700798351,
+          "input": {
+            "sequence": 15220,
+            "epoch": 23,
+            "kind": "t",
+            "ros_stamp_ns": 1791369610700798351,
+            "at_ns": 22970885897939,
+            "intent": {
+              "linear_m_s": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "angular_rad_s": [
+                -0.04363323129985824,
+                0.0,
+                0.0
+              ],
+              "joint_rad_s": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "gripper_rate_s": 0.0,
+              "deadman": true,
+              "frame": "base"
+            },
+            "observation_received_ns": 22970877757480
+          }
+        },
+        {
+          "point_ns": 1791369610839542189,
+          "kind": "t",
+          "input_ns": 1791369610700798351,
+          "input": {
+            "sequence": 15220,
+            "epoch": 23,
+            "kind": "t",
+            "ros_stamp_ns": 1791369610700798351,
+            "at_ns": 22970885897939,
+            "intent": {
+              "linear_m_s": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "angular_rad_s": [
+                -0.04363323129985824,
+                0.0,
+                0.0
+              ],
+              "joint_rad_s": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "gripper_rate_s": 0.0,
+              "deadman": true,
+              "frame": "base"
+            },
+            "observation_received_ns": 22970877757480
+          }
+        },
+        {
+          "point_ns": 1791369610849502940,
+          "kind": "t",
+          "input_ns": 1791369610700798351,
+          "input": {
+            "sequence": 15220,
+            "epoch": 23,
+            "kind": "t",
+            "ros_stamp_ns": 1791369610700798351,
+            "at_ns": 22970885897939,
+            "intent": {
+              "linear_m_s": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "angular_rad_s": [
+                -0.04363323129985824,
+                0.0,
+                0.0
+              ],
+              "joint_rad_s": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "gripper_rate_s": 0.0,
+              "deadman": true,
+              "frame": "base"
+            },
+            "observation_received_ns": 22970877757480
+          }
+        },
+        {
+          "point_ns": 1791369610859518066,
+          "kind": "t",
+          "input_ns": 1791369610700798351,
+          "input": {
+            "sequence": 15220,
+            "epoch": 23,
+            "kind": "t",
+            "ros_stamp_ns": 1791369610700798351,
+            "at_ns": 22970885897939,
+            "intent": {
+              "linear_m_s": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "angular_rad_s": [
+                -0.04363323129985824,
+                0.0,
+                0.0
+              ],
+              "joint_rad_s": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "gripper_rate_s": 0.0,
+              "deadman": true,
+              "frame": "base"
+            },
+            "observation_received_ns": 22970877757480
+          }
+        },
+        {
+          "point_ns": 1791369610869517526,
+          "kind": "t",
+          "input_ns": 1791369610761806817,
+          "input": {
+            "sequence": 15220,
+            "epoch": 23,
+            "kind": "t",
+            "ros_stamp_ns": 1791369610761806817,
+            "at_ns": 22970946460114,
+            "intent": {
+              "linear_m_s": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "angular_rad_s": [
+                -0.04363323129985824,
+                0.0,
+                0.0
+              ],
+              "joint_rad_s": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "gripper_rate_s": 0.0,
+              "deadman": true,
+              "frame": "base"
+            },
+            "observation_received_ns": 22970932031528
+          }
+        },
+        {
+          "point_ns": 1791369610879521902,
+          "kind": "t",
+          "input_ns": 1791369610761806817,
+          "input": {
+            "sequence": 15220,
+            "epoch": 23,
+            "kind": "t",
+            "ros_stamp_ns": 1791369610761806817,
+            "at_ns": 22970946460114,
+            "intent": {
+              "linear_m_s": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "angular_rad_s": [
+                -0.04363323129985824,
+                0.0,
+                0.0
+              ],
+              "joint_rad_s": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "gripper_rate_s": 0.0,
+              "deadman": true,
+              "frame": "base"
+            },
+            "observation_received_ns": 22970932031528
+          }
+        },
+        {
+          "point_ns": 1791369610889520737,
+          "kind": "t",
+          "input_ns": 1791369610761806817,
+          "input": {
+            "sequence": 15220,
+            "epoch": 23,
+            "kind": "t",
+            "ros_stamp_ns": 1791369610761806817,
+            "at_ns": 22970946460114,
+            "intent": {
+              "linear_m_s": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "angular_rad_s": [
+                -0.04363323129985824,
+                0.0,
+                0.0
+              ],
+              "joint_rad_s": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "gripper_rate_s": 0.0,
+              "deadman": true,
+              "frame": "base"
+            },
+            "observation_received_ns": 22970932031528
+          }
+        },
+        {
+          "point_ns": 1791369610899516946,
+          "kind": "t",
+          "input_ns": 1791369610761806817,
+          "input": {
+            "sequence": 15220,
+            "epoch": 23,
+            "kind": "t",
+            "ros_stamp_ns": 1791369610761806817,
+            "at_ns": 22970946460114,
+            "intent": {
+              "linear_m_s": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "angular_rad_s": [
+                -0.04363323129985824,
+                0.0,
+                0.0
+              ],
+              "joint_rad_s": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "gripper_rate_s": 0.0,
+              "deadman": true,
+              "frame": "base"
+            },
+            "observation_received_ns": 22970932031528
+          }
+        }
+      ],
+      "input_association": "exact bracket sources; full smoothing window retained",
+      "pre_action_received_ns": 22970985783952,
+      "host_received_ns": 22971008274996
+    },
+    "pre_action_received_ns": 22970968822075,
+    "receipt": {
+      "command": "ServoJ(-70.662966,-57.103116,99.586718,-94.816024,94.218991,14.872100,t=0.050,aheadtime=50.0,gain=500.0)",
+      "acknowledged": true,
+      "accepted": true,
+      "sent_ns": 22971019064581,
+      "send_completed_ns": 22971020713331,
+      "reply": "0,{564},ServoJ(-70.662966,-57.103116,99.586718,-94.816024,94.218991,14.872100,t=0.050,aheadtime=50.0,gain=500.0);",
+      "reply_ns": 22971037103458
+    }
+  },
+  "receipt": {
+    "command": "Stop()",
+    "acknowledged": true,
+    "accepted": true,
+    "sent_ns": 22971116989259,
+    "send_completed_ns": 22971118542301,
+    "reply": "0,{},Stop();",
+    "reply_ns": 22971616651278
+  },
+  "stage": "live",
+  "model": {
+    "ready": true,
+    "phase": "paused",
+    "error": null,
+    "status": 0,
+    "motion_profile": {
+      "name": "intermediate",
+      "linear_m_s": 0.01,
+      "angular_deg_s": 5,
+      "input_joint_deg_s": 5,
+      "solver_joint_deg_s": 15,
+      "solver_joint_acceleration_deg_s2": 30,
+      "singularity_slowdown": 30.0,
+      "singularity_stop": 60.0,
+      "qualification": "candidate; actual hardware qualification is separate"
+    },
+    "session": "/root/e6-teleop-rebuild/jazzy-v32/rootfs/qualification/sessions/1791368870243284429",
+    "host_poll_gap_ms": 7.893834,
+    "model_error": {
+      "position_mm": 0.001311711882110691,
+      "orientation_deg": 0.00027955722395214133
+    },
+    "urdf_sha256": "cc7639d8e351b0e84db214b8fe9cf2ca003f219e7633ce39215ad01e414d6551",
+    "servo_pid": 72293,
+    "kdl_pid": 72294,
+    "trajectory_rejections": 0,
+    "last_rejection": null,
+    "sampling": {
+      "counts": {
+        "no_trajectory": 21,
+        "outside_window": 32,
+        "produced": 973
+      },
+      "last": {
+        "reason": "produced",
+        "at_ns": 22971109842092,
+        "pump_to_sample_ms": 2.579834,
+        "trajectory_age_ms": 4.638792,
+        "sample_ros_ns": 1791369610975946712,
+        "id": 973,
+        "target_fk_ms": 0.547042,
+        "sample_work_ms": 0.917458,
+        "deadline_remaining_ms": 21.502708
+      },
+      "trajectory": {
+        "received_ns": 22971116805676,
+        "first_ros_ns": 1791369610829512188,
+        "last_ros_ns": 1791369611009515876
+      },
+      "actual_fk_ms": 0.644542,
+      "pump_ms": 1.206126
+    },
+    "shared_clock": "same X5 kernel CLOCK_MONOTONIC",
+    "candidate_horizon_s": 0.05,
+    "ipc_replaced": 498,
+    "epoch": 24,
+    "take_counts": {
+      "no_candidate": 24,
+      "accepted": 200
+    },
+    "last_take": {
+      "reason": "accepted",
+      "at_ns": 22971008444663,
+      "id": 963,
+      "sample_age_ms": 12.577127,
+      "deadline_remaining_ms": 12.422873,
+      "computed_ns": 22970999428245,
+      "host_received_ns": 22971008274996
+    }
+  },
+  "pending": null,
+  "stop_acknowledged": true,
+  "stationary": true,
+  "stopping": false,
+  "stop_uncertain": false,
+  "recording": {
+    "phase": "idle",
+    "episode": null,
+    "error": null,
+    "samples": 0,
+    "bundle_sha256": null
+  },
+  "capabilities": {
+    "enabled": true,
+    "backend": "E6 live",
+    "motion_profile": {
+      "name": "intermediate",
+      "linear_m_s": 0.01,
+      "angular_deg_s": 5,
+      "input_joint_deg_s": 5,
+      "solver_joint_deg_s": 15,
+      "solver_joint_acceleration_deg_s2": 30,
+      "singularity_slowdown": 30.0,
+      "singularity_stop": 60.0,
+      "qualification": "candidate; actual hardware qualification is separate"
+    },
+    "synthetic_keys": true,
+    "servo_period_s": 0.05,
+    "servo_aheadtime": 50,
+    "servo_gain": 500,
+    "release_mode": "immediate",
+    "motion_engine": "moveit_servo",
+    "original_recording": true,
+    "video_url": "http://127.0.0.1:8889/gemini?muted=true&controls=false",
+    "linear_m_s": 0.01,
+    "angular_rad_s": 0.08726646259971647,
+    "joint_rad_s": 0.08726646259971647,
+    "gripper_rate_s": 0.025
+  },
+  "pc_received_ns": 23033123751700
+}

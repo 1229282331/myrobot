@@ -1,0 +1,43 @@
+{
+  "ssh_host": "192.168.1.13",
+  "ssh_user": "root",
+  "remote_base": "/root/e6-teleop-rebuild/platform",
+  "rootfs": "/root/e6-teleop-rebuild/jazzy-v32/rootfs",
+  "gateway_dependencies": "/root/e6-teleop-rebuild/gateway-deps",
+  "camera_tools": "/root/remaining-issues-20261002_2226/tools",
+  "camera_sdk": "/root/installed-audit-20261002_2142/vendor/OrbbecSDK_v1.10.37/SDK",
+  "camera_config": "/root/remaining-issues-20261002_2226/config_v4l2.xml",
+  "mediamtx_executable_sha256": "7de0b5c1060f716cc813c6fab302c938f1fe7faccbd92eba6567f3bf18c9054e",
+  "runtime_manifest": {
+    "qualification/model/e6.urdf": "cc7639d8e351b0e84db214b8fe9cf2ca003f219e7633ce39215ad01e414d6551",
+    "qualification/model/e6.srdf": "a63347ce8a6ad7f8da9649ca721302039f790cbf7efe4f705bf09932fe06d57a",
+    "qualification/model/profile.json": "24dd6f96fd51dac9c4799fffd811c41ec533b62b30ae1cad72c38b8f166adb96",
+    "qualification/servo_jazzy.yaml": "c198cf7de6e3cf138f746773d9966a2cf70360260c1fc41e10fac82f4bafaa3f",
+    "qualification/jazzy-runtime.json": "cc17b980b126021512d200ac44226018b56dcfadb3df17b43ecd7a2c8999a026",
+    "qualification/jazzy-adapter-v35/build/servo_e6_traced": "0ea0a67c3deca98eeca889c459d67d139b980052edc7e89374e4b4e135991257",
+    "qualification/jazzy-adapter-v35/build/kdl_model_probe": "ea491613c43ad19c492196b1f98ffe9324f30f6c3b2595ddcd57e98322f38b92",
+    "qualification/filter-overlay-v34/lib/libe6_acceleration_filter.so": "e5e326c9c145b2b6878a44b8878a884e57edb72d9b9a9d42b9af7ede6ac6eb20"
+  },
+  "cpp_runtime_manifest": {
+    "qualification/cpp-adapter.json": "682b721c972a4c0b021f88d94727b6b4509800615ef1b3bf169c9b21e57c61a6",
+    "qualification/delivery-timing-release-v355/servo_cpp_adapter": "d5551ee2cc564dd5d1fbb07141b65a9ce768e432af502e870790c01b6cb1cdc1"
+  },
+  "tcp_profile": "omnipicker-r4",
+  "payload": {
+    "mass_kg": 0.75,
+    "center_mm": [
+      0,
+      -14,
+      46
+    ]
+  },
+  "cpu_governor": "performance",
+  "wifi_power_save": "off",
+  "wifi_interface": "wlan0",
+  "test_workspace": {
+    "position_m": 0.05,
+    "rotation_deg": null,
+    "joint_deg": null,
+    "mode": "model"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "schema": "e6_fixed_grasp_profile_v1",
+  "scope": "fixed_blue_bottle_same_location",
+  "target_base_mm": [72.63047402217965, -370.9566667037829, 61.607769511789854],
+  "reviewed_hover_q": [-66.5019, -74.9236, 42.5551, -57.6311, 90, 9.1974],
+  "reviewed_hover_pose": [72.6302, -370.9563, 280.0005, -179.9996, 0.0001, -165.6993],
+  "table_z_mm": -22,
+  "nominal_tool_radius_mm": 170,
+  "T_flange_camera_mm": [
+    [0.999267568632991, -0.03619115799178363, -0.01243086326547771, -7.602307266907424],
+    [0.03627559859047835, 0.9993197922240142, 0.0066357997680484004, -65.26401749370113],
+    [0.01218225041822052, -0.007081876491469075, 0.9999007149760644, 38.25210064579157],
+    [0, 0, 0, 1]
+  ],
+  "force_raw": 64,
+  "opening_percent": 60,
+  "closing_percent": 10,
+  "camera": {
+    "tools_dir": "/root/remaining-issues-20261002_2226/tools",
+    "sdk_root": "/root/installed-audit-20261002_2142/vendor/OrbbecSDK_v1.10.37/SDK",
+    "sdk_config": "/root/remaining-issues-20261002_2226/config_v4l2.xml",
+    "sdk_config_sha256": "ee621e32c5f8ab9089533171c7d41e082ea67e2c4e911e5025a54f2350eaefc6",
+    "healthcheck_sha256": "7b8bd3c8ed3efcab32cc7a8cd688940c7b53c0cb23e70799495e3bb309bc33f3"
+  },
+  "geometry_status": "Historical local geometry only; hand-eye validated_for_motion=false; no measured finger TCP",
+  "evidence": "docs/evidence/first_grasp_20261003/first_grasp_completion_summary_2358.json"
+}

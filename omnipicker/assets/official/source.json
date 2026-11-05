@@ -1,0 +1,8 @@
+{
+  "source_page": "https://www.agibot.com.cn/DOCS/PM/X1",
+  "archive_url": "https://www.agibot.com.cn/file/ueditor/php/upload/file/20250114/robot_description.zip",
+  "archive_sha256": "ab379eac6f8997fceca5dbc139cb6ccf8ae26e52f7791795f67ac3b2849132f5",
+  "archive_bytes": 6263175,
+  "retrieved_date": "2026-09-26",
+  "usage": "Official model used locally for nominal target visualization; no measured joint feedback."
+}

@@ -1,0 +1,114 @@
+--- a/moveit_ros/moveit_servo/src/servo_node.cpp
++++ b/moveit_ros/moveit_servo/src/servo_node.cpp
+@@ -171,6 +171,7 @@
+ 
+     // clear out the command rolling window and reset last commanded state to be the current state
+     joint_cmd_rolling_window_.clear();
++    input_sources_.clear();
+ 
+     // reactivate collision checking
+     servo_->setCollisionChecking(true);
+@@ -196,18 +197,24 @@
+ 
+ void ServoNode::jointJogCallback(const control_msgs::msg::JointJog::ConstSharedPtr& msg)
+ {
++  // The loop already holds this lock while consuming the selected input.
++  std::lock_guard<std::mutex> lock_guard(lock_);
+   latest_joint_jog_ = *msg;
+   new_joint_jog_msg_ = true;
+ }
+ 
+ void ServoNode::twistCallback(const geometry_msgs::msg::TwistStamped::ConstSharedPtr& msg)
+ {
++  // The loop already holds this lock while consuming the selected input.
++  std::lock_guard<std::mutex> lock_guard(lock_);
+   latest_twist_ = *msg;
+   new_twist_msg_ = true;
+ }
+ 
+ void ServoNode::poseCallback(const geometry_msgs::msg::PoseStamped::ConstSharedPtr& msg)
+ {
++  // The loop already holds this lock while consuming the selected input.
++  std::lock_guard<std::mutex> lock_guard(lock_);
+   latest_pose_ = *msg;
+   new_pose_msg_ = true;
+ }
+@@ -327,12 +334,15 @@
+ 
+   // wait for first robot joint state update
+   const auto servo_node_start = node_->now();
+-  while (planning_scene_monitor_->getLastUpdateTime().get_clock_type() != node_->get_clock()->get_clock_type() ||
+-         servo_node_start > planning_scene_monitor_->getLastUpdateTime())
++  while (rclcpp::ok() && !stop_servo_ &&
++         (planning_scene_monitor_->getLastUpdateTime().get_clock_type() != node_->get_clock()->get_clock_type() ||
++          servo_node_start > planning_scene_monitor_->getLastUpdateTime()))
+   {
+     RCLCPP_INFO(node_->get_logger(), "Waiting to receive robot state update.");
+     rclcpp::sleep_for(std::chrono::seconds(1));
+   }
++  if (!rclcpp::ok() || stop_servo_)
++    return;
+   KinematicState current_state = servo_->getCurrentRobotState(true /* block for current robot state */);
+   last_commanded_state_ = current_state;
+   // Ensure the filter is up to date
+@@ -366,6 +376,7 @@
+       {
+         // if all joint_cmd_rolling_window_ is empty or all commands in it are outdated, use current robot state
+         joint_cmd_rolling_window_.clear();
++        input_sources_.clear();
+         current_state = servo_->getCurrentRobotState(false /* block for current robot state */);
+         current_state.velocities *= 0.0;
+       }
+@@ -403,8 +414,31 @@
+           auto& next_joint_state_value = next_joint_state.value();
+           updateSlidingWindow(next_joint_state_value, joint_cmd_rolling_window_, servo_params_.max_expected_latency,
+                               cur_time);
+-          if (const auto msg = composeTrajectoryMessage(servo_params_, joint_cmd_rolling_window_))
++          const char kind = expected_type == CommandType::JOINT_JOG ? 'j' :
++                            expected_type == CommandType::TWIST ? 't' : 'p';
++          const auto stamp = expected_type == CommandType::JOINT_JOG ? latest_joint_jog_.header.stamp :
++                             expected_type == CommandType::TWIST ? latest_twist_.header.stamp : latest_pose_.header.stamp;
++          const int64_t input_ns = rclcpp::Time(stamp).nanoseconds();
++          const bool stale = (cur_time - rclcpp::Time(stamp)) >=
++                             rclcpp::Duration::from_seconds(servo_params_.incoming_command_timeout);
++          input_sources_[next_joint_state_value.time_stamp.nanoseconds()] = {stale ? 'h' : kind, input_ns};
++          while (!input_sources_.empty() && input_sources_.begin()->first <
++                 joint_cmd_rolling_window_.front().time_stamp.nanoseconds())
++            input_sources_.erase(input_sources_.begin());
++          if (auto msg = composeTrajectoryMessage(servo_params_, joint_cmd_rolling_window_))
+           {
++            // Include the whole window, including the final point omitted from
++            // the message because it contributes to its predecessor's velocity.
++            std::ostringstream trace;
++            trace << "e6_trace_v1";
++            for (const auto& state : joint_cmd_rolling_window_)
++            {
++              const auto found = input_sources_.find(state.time_stamp.nanoseconds());
++              trace << ';' << state.time_stamp.nanoseconds() << ',';
++              if (found == input_sources_.end()) trace << "s,0";
++              else trace << found->second.first << ',' << found->second.second;
++            }
++            msg->header.frame_id = trace.str();
+             trajectory_publisher_->publish(msg.value());
+           }
+         }
+--- a/moveit_ros/moveit_servo/include/moveit_servo/servo_node.hpp
++++ b/moveit_ros/moveit_servo/include/moveit_servo/servo_node.hpp
+@@ -41,6 +41,8 @@
+ 
+ #pragma once
+ 
++#include <map>
++#include <sstream>
+ #include <control_msgs/msg/joint_jog.hpp>
+ #include <geometry_msgs/msg/pose_stamped.hpp>
+ #include <geometry_msgs/msg/twist_stamped.hpp>
+@@ -138,6 +140,8 @@
+ 
+   // rolling window of joint commands
+   std::deque<KinematicState> joint_cmd_rolling_window_;
++  // Output-only provenance keyed by generated trajectory point time.
++  std::map<int64_t, std::pair<char, int64_t>> input_sources_;
+ };
+ 
+ }  // namespace moveit_servo

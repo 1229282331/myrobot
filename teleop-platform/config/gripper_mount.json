@@ -1,0 +1,9 @@
+{
+  "version": 1,
+  "parent": "controller_flange",
+  "child": "omnipicker",
+  "xyz_m": [0.0, 0.0, 0.008],
+  "rpy_rad": [0.0, 0.0, -1.5707963267948966],
+  "confirmation": "User confirmed preview B, gripper-only minus 90 degrees, 2026-10-16",
+  "qualification": "user_confirmed_mount_direction_nominal_cad_not_metrologically_calibrated"
+}

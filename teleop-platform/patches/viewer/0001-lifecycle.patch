@@ -1,0 +1,138 @@
+--- upstream/src/urdf-viewer-element.js
++++ frontend/vendor/urdf-viewer-element.js
+@@ -1,7 +1,7 @@
+ import * as THREE from 'three';
+ import { MeshPhongMaterial } from 'three';
+ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+-import URDFLoader from './URDFLoader.js';
++import URDFLoader from 'urdf-loader';
+ 
+ const tempVec2 = new THREE.Vector2();
+ const emptyRaycast = () => {};
+@@ -144,6 +144,8 @@
+         super();
+ 
+         this._requestId = 0;
++        this._disposed = false;
++        this._materials = new Set();
+         this._dirty = false;
+         this._loadScheduled = false;
+         this.robot = null;
+@@ -174,7 +176,7 @@
+         renderer.setClearColor(0xffffff);
+         renderer.setClearAlpha(0);
+         renderer.shadowMap.enabled = true;
+-        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
++        renderer.shadowMap.type = THREE.PCFShadowMap;
+         renderer.outputColorSpace = THREE.SRGBColorSpace;
+ 
+         // Camera setup
+@@ -293,7 +295,28 @@
+     disconnectedCallback() {
+ 
+         cancelAnimationFrame(this._renderLoopId);
+-
++        cancelAnimationFrame(this._loadFrame);
++        this._disposed = true;
++        this._requestId++;
++        this.controls.dispose();
++        this._disposeObject(this.scene);
++        this._materials.forEach(m => m.dispose());
++        this._materials.clear();
++        this._collisionMaterial.dispose();
++        this.renderer.dispose();
++        this.renderer.forceContextLoss();
++
++    }
++
++    _disposeObject(object) {
++        if (!object) return;
++        object.traverse(node => {
++            node.geometry?.dispose();
++            if (node.material) {
++                const materials = Array.isArray(node.material) ? node.material : [node.material];
++                materials.forEach(m => { m.map?.dispose(); m.dispose(); });
++            }
++        });
+     }
+ 
+     attributeChangedCallback(attr, oldval, newval) {
+@@ -345,6 +368,7 @@
+         const r = this.renderer;
+         const w = this.clientWidth;
+         const h = this.clientHeight;
++        if (!w || !h || this._disposed) return;
+         const currSize = r.getSize(tempVec2);
+ 
+         if (currSize.width !== w || currSize.height !== h) {
+@@ -353,7 +377,7 @@
+ 
+         }
+ 
+-        r.setPixelRatio(window.devicePixelRatio);
++        r.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+         r.setSize(w, h, false);
+ 
+         this.camera.aspect = w / h;
+@@ -488,14 +512,15 @@
+ 
+         if (this.robot) {
+ 
+-            this.robot.traverse(c => c.dispose && c.dispose());
++            this._disposeObject(this.robot);
+             this.robot.parent.remove(this.robot);
+             this.robot = null;
+ 
+         }
+ 
+-        requestAnimationFrame(() => {
+-
++        this._loadFrame = requestAnimationFrame(() => {
++
++            if (this._disposed) return;
+             this._loadUrdf(this.package, this.urdf);
+             this._loadScheduled = false;
+ 
+@@ -579,17 +604,26 @@
+ 
+             let robot = null;
+             const manager = new THREE.LoadingManager();
++            let failed = false;
++            const reportError = error => {
++                failed = true;
++                if (!this._disposed) this.dispatchEvent(new CustomEvent('urdf-error', {detail: String(error)}));
++            };
++            manager.onError = reportError;
+             manager.onLoad = () => {
+ 
+                 // If another request has come in to load a new
+                 // robot, then ignore this one
+-                if (this._requestId !== requestId) {
+-
+-                    robot.traverse(c => c.dispose && c.dispose());
++                if (this._disposed || failed || !robot || this._requestId !== requestId) {
++
++                    this._disposeObject(robot);
+                     return;
+ 
+                 }
+ 
++                robot.traverse(node => {
++                    if (node.material) (Array.isArray(node.material) ? node.material : [node.material]).forEach(m => this._materials.add(m));
++                });
+                 this.robot = robot;
+                 this.world.add(robot);
+                 updateMaterials(robot);
+@@ -612,10 +646,10 @@
+ 
+             const loader = new URDFLoader(manager);
+             loader.packages = pkg;
+-            loader.loadMeshCb = this.loadMeshFunc;
++            if (this.loadMeshFunc) loader.loadMeshCb = this.loadMeshFunc;
+             loader.fetchOptions = { mode: 'cors', credentials: 'same-origin' };
+             loader.parseCollision = true;
+-            loader.load(urdf, model => robot = model);
++            loader.load(urdf, model => robot = model, undefined, reportError);
+ 
+         }
+ 

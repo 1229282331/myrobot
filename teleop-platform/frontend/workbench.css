@@ -1,0 +1,16 @@
+/* Layout uses the pinned upstream Tailwind and shadcn components. */
+.e6-control-layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; }
+.e6-observation-row { grid-column: 1 / -1; container-type: inline-size; }
+.e6-acceptance[open] { position: fixed; z-index: 45; right: 24px; bottom: 72px; width: min(520px, calc(100vw - 48px)); border: 1px solid var(--border); border-radius: var(--radius); background: var(--card); color: var(--card-foreground); padding: 16px; box-shadow: 0 8px 24px #0003; }
+.e6-acceptance[open] > summary { margin-bottom: 12px; cursor: pointer; }
+.e6-observation-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; align-items: stretch; }
+.e6-observation-grid > * { min-width: 0; }
+.e6-workspace-slot { min-height: 548px; }
+.e6-workspace-card { height: 100%; }
+@container (min-width: 720px) { .e6-observation-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1024px) { .e6-control-layout { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.e6-observation-grid .e6-camera-card { display: flex; flex-direction: column; }
+.e6-observation-grid .e6-camera-card > :nth-child(2) { flex: 1; }
+.e6-observation-grid video { height: 320px; aspect-ratio: auto; object-fit: contain; background: hsl(var(--muted)); border-radius: 6px; }
+.e6-workspace-expanded { position: fixed; height: auto; inset: 16px; z-index: 60; display: flex; flex-direction: column; box-shadow: 0 16px 64px #0005; }
+.e6-workspace-expanded .e6-workspace-canvas { min-height: 0; }

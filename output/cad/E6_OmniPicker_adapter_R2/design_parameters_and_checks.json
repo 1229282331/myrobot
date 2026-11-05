@@ -1,0 +1,201 @@
+{
+  "revision": "R2",
+  "units": "mm",
+  "material": "6061-T6",
+  "diameter": 65.0,
+  "thickness": 7.0,
+  "edge_chamfer": 0.3,
+  "m6_pcd": 50.0,
+  "m6_clearance": 6.6,
+  "countersink_diameter": 12.4,
+  "countersink_angle": 90.0,
+  "m3_pcd": 25.0,
+  "m3_tap_drill": 2.5,
+  "m3_thread": "M3x0.5-6H THRU",
+  "outer_m3_pcd": 56.0,
+  "outer_m3_clearance": 3.4,
+  "outer_m3_csink_diameter": 6.4,
+  "outer_m3_csink_angle": 90.0,
+  "outer_m3_first_angle_deg": 22.5,
+  "outer_m3_spacing_deg": 45.0,
+  "relief_diameter": 34.0,
+  "relief_depth": 1.0,
+  "tap_entry_diameter": 3.4,
+  "m6_xy": [
+    [
+      17.67766952966369,
+      17.67766952966369
+    ],
+    [
+      -17.677669529663685,
+      17.67766952966369
+    ],
+    [
+      -17.677669529663692,
+      -17.677669529663685
+    ],
+    [
+      17.677669529663685,
+      -17.677669529663692
+    ]
+  ],
+  "m3_xy": [
+    [
+      12.5,
+      0
+    ],
+    [
+      0,
+      12.5
+    ],
+    [
+      -12.5,
+      0
+    ],
+    [
+      0,
+      -12.5
+    ]
+  ],
+  "outer_m3_xy": [
+    [
+      25.868626910316028,
+      10.715136106222515
+    ],
+    [
+      10.715136106222516,
+      25.868626910316028
+    ],
+    [
+      -10.715136106222513,
+      25.868626910316028
+    ],
+    [
+      -25.868626910316028,
+      10.715136106222516
+    ],
+    [
+      -25.86862691031603,
+      -10.715136106222511
+    ],
+    [
+      -10.715136106222506,
+      -25.86862691031603
+    ],
+    [
+      10.71513610622252,
+      -25.868626910316024
+    ],
+    [
+      25.86862691031603,
+      -10.715136106222507
+    ]
+  ],
+  "csink_depth_reference": 2.9000000000000004,
+  "computed_mass_g": 54.355897039308125,
+  "checks": {
+    "step_valid_single_solid": true,
+    "roundtrip_volume_mm3": 20131.813718262383,
+    "step_size_mm": [
+      65.0,
+      65.0,
+      7.000000000000002
+    ],
+    "official_cover_interference_mm3": 0.0,
+    "m6_bore_centres": [
+      [
+        -17.6777,
+        -17.6777
+      ],
+      [
+        -17.6777,
+        17.6777
+      ],
+      [
+        17.6777,
+        -17.6777
+      ],
+      [
+        17.6777,
+        17.6777
+      ]
+    ],
+    "m3_tap_drill_centres": [
+      [
+        -12.5,
+        0.0
+      ],
+      [
+        0.0,
+        -12.5
+      ],
+      [
+        0.0,
+        12.5
+      ],
+      [
+        12.5,
+        0.0
+      ]
+    ],
+    "outer_m3_clearance_centres": [
+      [
+        -25.8686,
+        -10.7151
+      ],
+      [
+        -25.8686,
+        10.7151
+      ],
+      [
+        -10.7151,
+        -25.8686
+      ],
+      [
+        -10.7151,
+        25.8686
+      ],
+      [
+        10.7151,
+        -25.8686
+      ],
+      [
+        10.7151,
+        25.8686
+      ],
+      [
+        25.8686,
+        -10.7151
+      ],
+      [
+        25.8686,
+        10.7151
+      ]
+    ],
+    "outer_m3_hole_count": 8,
+    "total_attachment_hole_count": 16,
+    "m6_to_outer_m3_centre_distance_min_mm": 10.750286251267836,
+    "m6_to_outer_m3_csink_ligament_nominal_mm": 1.3502862512678355,
+    "m6_to_outer_m3_csink_ligament_conservative_with_tolerances_mm": 1.108864895030526,
+    "outer_m3_edge_ligament_at_B_nominal_mm": 1.0000000000000027,
+    "cover_step_clamp_thickness_mm": 2.896583278057797,
+    "cover_drawing_clamp_thickness_mm": 2.5,
+    "m3x8_nominal_insertion_mm": [
+      5.103416721942203,
+      5.5
+    ],
+    "m3x8_tip_clearance_to_relief_floor_mm": [
+      0.8965832780577969,
+      0.5
+    ],
+    "m3_head_envelope": "generic diameter 5.5 max, height 1.3 max; counterbore diameter 6, depth 1.5",
+    "outer_m3_screw_envelope": "DIN7991 M3x12, head diameter6, simplified 90deg cone, nominal insertion5.2; optional",
+    "outer_m3_fastener_interferences_mm3": 0.0,
+    "m6_nominal_insertion_reference_mm": 5.2,
+    "csink_edge_ligament_before_chamfer_mm": 1.2999999999999998,
+    "minimum_edge_ligament_at_B_face_mm": 1.0000000000000027,
+    "m3_nominal_threaded_material_thickness_mm": 6.0,
+    "m3_straight_tap_drill_length_after_entries_mm": 5.1,
+    "limits": "Cover and simplified fastener envelopes only; no E6 solid, PCB, full gripper, plug/cable swept volume, strength or physical fit validation."
+  }
+}

@@ -1,0 +1,32 @@
+diff --git a/dashboard/src/components/common/add-robot-connection.tsx b/dashboard/src/components/common/add-robot-connection.tsx
+index fc2f452..c0c4b19 100644
+--- a/dashboard/src/components/common/add-robot-connection.tsx
++++ b/dashboard/src/components/common/add-robot-connection.tsx
+@@ -175,12 +175,12 @@ export function RobotConfigModal({
+   );
+ 
+   const { data: networkDevices, isLoading: isLoadingDevices } =
+-    useSWR<NetworkReponse>(["/network/scan-devices"], ([endpoint]) =>
++    useSWR<NetworkReponse>(open ? ["/network/scan-devices"] : null, ([endpoint]) =>
+       fetcher(endpoint, "POST"),
+     );
+ 
+   const { data: usbPorts, isLoading: isLoadingUsb } = useSWR<LocalResponse>(
+-    ["/local/scan-devices"],
++    open ? ["/local/scan-devices"] : null,
+     ([endpoint]) => fetcher(endpoint, "POST"),
+   );
+ 
+diff --git a/phosphobot/phosphobot/robot.py b/phosphobot/phosphobot/robot.py
+index 7ed0a74..31e77da 100644
+--- a/phosphobot/phosphobot/robot.py
++++ b/phosphobot/phosphobot/robot.py
+@@ -140,7 +140,7 @@ class RobotConnectionManager:
+         # If we are only simulating, we can just use the SO100Hardware class
+         if config.ONLY_SIMULATION:
+             logger.debug("ONLY_SIMULATION is set to True. Using SO-100 in simulation.")
+-            self._all_robots = [SO100Hardware(only_simulation=True)]
++            self._all_robots = [SO100Hardware(only_simulation=True, serial_id="simulation-so100")]
+             return
+ 
+         # Keep track of connected devices by port name and serial to avoid duplicates

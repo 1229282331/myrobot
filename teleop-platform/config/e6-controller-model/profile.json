@@ -1,0 +1,79 @@
+{
+  "kind": "controller_equivalent_serial_kinematics",
+  "version": 1,
+  "production_eligible": false,
+  "source_urdf_sha256": "93502aa14c640bf2de576ef5fa7410373dc9cb1db9ccbb2867c21eea66220cf4",
+  "basis_evidence_sha256": "196cfdc233ec2b6321997de55f3f459c21267053d1a051e4edb123f48244547d",
+  "basis_indices": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+  ],
+  "geometry_m": {
+    "shoulder_height": 0.16519999999999999,
+    "upper_arm": 0.189,
+    "forearm": 0.16,
+    "wrist_height": 0.101,
+    "flange_axial": 0.0695,
+    "parallel_axes_total": 0.0813
+  },
+  "changes": [
+    {
+      "joint": "joint1",
+      "component": 2,
+      "old_m": 0.1268,
+      "new_m": 0.12519999999999998,
+      "reason": "Base-to-J2 height identified by zero and J2 rotations"
+    },
+    {
+      "joint": "joint3",
+      "component": 1,
+      "old_m": 0.18906,
+      "new_m": 0.189,
+      "reason": "J2/J3 rotation radius difference"
+    },
+    {
+      "joint": "joint4",
+      "component": 1,
+      "old_m": 0.16,
+      "new_m": 0.16,
+      "reason": "J3/J4 rotation radius difference"
+    },
+    {
+      "joint": "joint5",
+      "component": 1,
+      "old_m": 0.067,
+      "new_m": 0.067,
+      "reason": "J4 radius minus unchanged internal CAD wrist offset"
+    },
+    {
+      "joint": "joint5",
+      "component": 2,
+      "old_m": 0.032,
+      "new_m": 0.027299999999999998,
+      "reason": "Identified parallel-axis total; keep upstream internal along-axis allocation"
+    }
+  ],
+  "flange_origin_from_Link6_m": [
+    0,
+    0,
+    0.022500000000000006
+  ],
+  "base_yaw_rad": 1.5707963267948966,
+  "flange_yaw_rad": 3.141592653589793,
+  "urdf_sha256": "cc7639d8e351b0e84db214b8fe9cf2ca003f219e7633ce39215ad01e414d6551",
+  "srdf_sha256": "a63347ce8a6ad7f8da9649ca721302039f790cbf7efe4f705bf09932fe06d57a",
+  "joint_mapping": "Upstream joint1..6 order, same signs and zero angles; controller degrees converted to radians",
+  "collision_geometry": "Nominal CAD only; internal parallel-axis frame origins are not physically measured",
+  "validation": "Must validate held-out global poses and Jacobians with native FK; not a local residual offset"
+}

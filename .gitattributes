@@ -1,0 +1,381 @@
+# Preserve bytes used by deployment and acceptance SHA checks on Windows/Linux.
+teleop-platform/patches/*.patch text eol=lf whitespace=-blank-at-eol
+teleop/** -text
+docs/evidence/** -text
+docs/evidence/**/*.xml whitespace=-blank-at-eol
+# Deployed-source snapshots must retain the bytes covered by SHA256.json.
+docs/teleop-rebuild/evidence/**/*.py -text whitespace=cr-at-eol
+docs/teleop-rebuild/evidence/jazzy-runtime-v32/** -text
+docs/teleop-rebuild/evidence/moveit-jazzy-virtual-v32/** -text
+docs/teleop-rebuild/evidence/acceleration-plugin-v33/** -text
+teleop-platform/patches/moveit/0002-acceleration-fine-input.patch text eol=lf
+teleop-platform/patches/moveit/0003-jazzy-trajectory-provenance.patch text eol=lf whitespace=-blank-at-eol
+# Original logs and Windows manifests are byte-exact evidence, not formatted source.
+docs/teleop-rebuild/evidence/moveit-jazzy-trace-v35/** -text whitespace=cr-at-eol,-blank-at-eol
+docs/teleop-rebuild/evidence/moveit-jazzy-bridge-v36/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/shadow_moveit-v39/** -text whitespace=cr-at-eol,-blank-at-eol
+docs/teleop-rebuild/evidence/shadow_setup-v37/** -text whitespace=cr-at-eol,-blank-at-eol
+docs/teleop-rebuild/evidence/shadow_setup-v38/** -text whitespace=cr-at-eol,-blank-at-eol
+docs/teleop-rebuild/evidence/launcher-v40/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/launcher-v40-tests/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/speed-profiles-v41/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/enable-v42/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/input-lifecycle-v43/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/page-lifecycle-v44/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/live-jazzy-v45/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/live-jazzy-v46/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/live-jazzy-v47/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/live-jazzy-v48/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/live-jazzy-v49/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/live-jazzy-v50/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/live-jazzy-v51/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/native-servoj-x-v52/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/live-jazzy-v53/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/live-jazzy-v54/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/live-jazzy-v55/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/live-jazzy-v56/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+teleop-platform/patches/0002-e6-input-pages.patch whitespace=-blank-at-eol
+docs/teleop-rebuild/evidence/input-latency-v57/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/live-jazzy-v57/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/live-jazzy-v58/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/live-jazzy-v59/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/live-jazzy-v60/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/live-jazzy-v61/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/live-jazzy-v62/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/aheadtime-v61-* -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/live-jazzy-v63/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/live-jazzy-v64/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/live-jazzy-v65/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/live-jazzy-v66/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/moveit-endpoint-v67/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/live-jazzy-v67/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/live-jazzy-v68/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/first-candidate-v69/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/live-jazzy-v69/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/live-jazzy-v69b/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/live-jazzy-v70/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/live-jazzy-v71/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/gripper-updates-v72/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/live-jazzy-v72/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/live-jazzy-v73/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/gripper-range-v74/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/gripper-recovery-v76/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/live-jazzy-v74/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/live-jazzy-v75/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/live-jazzy-v76/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/camera-recovery-v77/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/live-jazzy-v77/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/association-v78/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/live-jazzy-v78/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/recording-timing-v79/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/recording-status-v80/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/recording-queue-v81/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/live-jazzy-v79/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/live-jazzy-v80/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/live-jazzy-v81/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/camera-restart-v83/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/camera-restart-v84/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/camera-restart-v85/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/camera-restart-v86/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/live-jazzy-v82/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/live-jazzy-v83/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/live-jazzy-v83failed/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/live-jazzy-v84/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/live-jazzy-v84term/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/live-jazzy-v85/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/live-jazzy-v85success/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/live-jazzy-v85term/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/live-jazzy-v86/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/continuous-input-v87/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/live-jazzy-v87/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/live-jazzy-v88/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/live-jazzy-v89/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/following-v90/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/video-timing-v91/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/video-timing-v92/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/live-jazzy-v91/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/live-jazzy-v92/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/page-lifecycle-v93/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/page-lifecycle-v94/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/live-jazzy-v93/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/live-jazzy-v94/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/recording-receipt-v95/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/live-jazzy-v95/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/pc-transfer-v96/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/native-dataset-v97/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/live-jazzy-v99/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/live-jazzy-v100/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/live-jazzy-v101/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/post-contact-v99/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/boundary-retreat-v101/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/live-jazzy-v102/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/live-jazzy-v103/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/live-jazzy-v104/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/live-jazzy-v105/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/live-jazzy-v106/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/live-jazzy-v107/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/workspace-v102/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/rotation-v104/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/rotation-v105/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/rotation-v106/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/rotation-v107/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/reversal-v108/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/rotation-v109/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/rotation-v110/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/live-jazzy-v109/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/live-jazzy-v110/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/axes-v111/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/input-batching-v112/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/axes-v113/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/timing-v114/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/axes-v115/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/scheduling-v116/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/live-jazzy-v111/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/live-jazzy-v112/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/live-jazzy-v113/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/live-jazzy-v114/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/live-jazzy-v115/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/live-jazzy-v116/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/scheduling-v117/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/axes-v118/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/live-jazzy-v117/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/live-jazzy-v118/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/axes-v119/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/scheduling-v120/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/camera-cache-v121/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/live-jazzy-v119/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/live-jazzy-v120/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/live-jazzy-v121/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/dds-v122/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/dds-shadow-v123/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/axes-v124/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/live-jazzy-v123/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/live-jazzy-v124/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+# Preserve the original kernel log without whitespace normalization.
+docs/teleop-rebuild/evidence/recording-interruption-v158/kernel-tail.txt binary
+docs/teleop-rebuild/evidence/recording-interruption-v158/storage-inspection.txt -text whitespace=-blank-at-eol
+docs/teleop-rebuild/evidence/recording-interruption-v158/storage-v159.txt -text whitespace=-blank-at-eol
+docs/teleop-rebuild/evidence/storage-isolation-v159/v159-frontend-tests.txt -text whitespace=cr-at-eol,-blank-at-eof
+# Preserve original captures, manifests, logs and verification receipts.
+docs/teleop-rebuild/evidence/live-jazzy-v16*/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/receive-timing-v16*/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/receive-window-v16*/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/recording-interruption-v160/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/media-buffer-v163/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/report-save-v165/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/runtime-tests-v165/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/ux-research/source-manifest.json -text whitespace=cr-at-eol
+docs/teleop-rebuild/evidence/startup-v166/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/workbench-v168/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/workbench-v169/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/live-jazzy-v17*/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/local-control-v17*/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/local-response-v17*/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/contention-v171/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/profile-v172/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/cadence-v173/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/recording-capacity-v174/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/cpp-api-v175/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/cpp-api-v176/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/problem-report-v178/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/ipc-v180/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/live-jazzy-v181/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/live-jazzy-v182/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/transfer-progress-v183/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/cancellation-v184/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/live-jazzy-v184/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/live-jazzy-v185/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/live-jazzy-v186/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/live-jazzy-v187/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/live-jazzy-v188/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/live-jazzy-v189/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/system-window-v188/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/system-window-v189/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/recovery-v189/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/live-jazzy-v190/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/system-window-v190/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/ssh-echo-v191/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/input-relay-v192/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/input-wire-v193/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/live-jazzy-v192/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/live-jazzy-v193/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+docs/teleop-rebuild/evidence/tunnel-v194/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/tunnel-v195/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/tunnel-v196/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/input-wire-v197/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/live-jazzy-v197/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+# Original assembly drawings and load/startup verification snapshots.
+research/grippers/e6_omnipicker_pd01_r4_2026-10-12/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+evidence/maintenance-v255/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+evidence/payload-fixed-v257/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+evidence/enable-platform-v258/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+evidence/j5-startup-v251/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+evidence/soft-ramp-v252/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/native-console-v243/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/shutdown-v253/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/git-submit-v259/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+# Versioned workspace geometry and byte-verified delivery bundles.
+teleop-platform/src/e6_phosphobot/assets/workspace/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+teleop-platform/src/e6_phosphobot/gripper.py -text
+teleop-platform/src/e6_phosphobot/gateway.py -text
+teleop-platform/frontend/vendor/** -text
+output/gripper-smooth-v272/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+evidence/*v26[0-9]*/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+evidence/*v27[0-2]*/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/git-submit-v273/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+teleop-platform/scripts/*.cpp -text whitespace=cr-at-eol
+teleop-platform/scripts/*.hpp -text whitespace=cr-at-eol
+teleop-platform/patches/viewer/*.patch text eol=lf whitespace=-blank-at-eol,-blank-at-eof
+docs/teleop-rebuild/evidence/optimization-v274/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+output/optimization-v274/baseline/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof,-space-before-tab
+docs/teleop-rebuild/evidence/shutdown-v275/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+# Preserve original evidence and hash-addressed v278/v279 release packages.
+evidence/*v27[6-9]*/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+evidence/reconnect-v280/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+output/geometry-budget-v278/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+output/operation-regression-v279/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof,-space-before-tab
+# Preserve v283 audit evidence and byte-verified rollback bundles.
+evidence/gripper-review-v281/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+evidence/gripper-typec-v282/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+evidence/gripper-can-v283/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+output/gripper-can-v283/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof,-space-before-tab
+output/gripper-v283-*.txt -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+teleop-platform/src/e6_phosphobot/gripper_stroke.py -text whitespace=cr-at-eol
+teleop-platform/src/e6_phosphobot/omnipicker_can.py -text whitespace=cr-at-eol
+teleop-platform/src/e6_phosphobot/operator_logs.py -text whitespace=cr-at-eol
+teleop-platform/frontend/ControlStatus.tsx -text whitespace=cr-at-eol
+teleop-platform/frontend/useE6Control.ts -text whitespace=cr-at-eol
+teleop-platform/frontend/PlatformPages.tsx -text whitespace=cr-at-eol
+teleop-platform/frontend/WorkbenchChrome.tsx -text whitespace=cr-at-eol
+teleop-platform/frontend/EpisodeInspector.tsx -text whitespace=cr-at-eol
+teleop-platform/config/workstation.json -text whitespace=cr-at-eol
+# Preserve deployed V358 sources and the native/release manifests they reference.
+teleop-platform/src/e6_phosphobot/*.py -text whitespace=cr-at-eol
+teleop-platform/native/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+output/final-delivery-v355/release/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+output/alignment-v356/release/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+output/control-recovery-v357/release/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+output/tracking-tolerance-v358/release/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+evidence/following-threshold-v358/** -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+# GitHub source publication: retain hashed release and fixture bytes.
+teleop-platform/releases/** -text
+.githooks/* text eol=lf
+.github/workflows/* text eol=lf
+local-network/e6-readonly-2026-09-19-tcp-mode.json -text
+teleop-platform/config/** -text
+*.json -text
+*.urdf -text
+*.srdf -text

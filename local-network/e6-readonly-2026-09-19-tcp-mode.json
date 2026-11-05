@@ -1,0 +1,82 @@
+{
+  "started_at_utc": "2026-09-18T16:18:05.725862+00:00",
+  "robot_ip": "192.168.1.4",
+  "scope": "Fixed read-only queries; no enable, clear, motion, mode change or IO writes",
+  "dashboard": {
+    "port": 29999,
+    "connected": true,
+    "queries": [
+      {
+        "command": "RobotMode()",
+        "raw": "0,{4},RobotMode();",
+        "elapsed_ms": 0.0,
+        "error_id": 0,
+        "payload": "4"
+      },
+      {
+        "command": "GetAngle()",
+        "raw": "0,{78.6759,117.3672,-130.1950,144.6762,-21.9205,80.6561},GetAngle();",
+        "elapsed_ms": 31.0,
+        "error_id": 0,
+        "payload": "78.6759,117.3672,-130.1950,144.6762,-21.9205,80.6561"
+      },
+      {
+        "command": "GetPose()",
+        "raw": "0,{105.5807,-215.1705,147.6148,109.3874,-33.1005,82.8250},GetPose();",
+        "elapsed_ms": 0.0,
+        "error_id": 0,
+        "payload": "105.5807,-215.1705,147.6148,109.3874,-33.1005,82.8250"
+      },
+      {
+        "command": "GetErrorID()",
+        "raw": "0,{[]},GetErrorID();",
+        "elapsed_ms": 0.0,
+        "error_id": 0,
+        "payload": "[]"
+      }
+    ],
+    "local_address": [
+      "192.168.1.7",
+      64441
+    ],
+    "connect_ms": 47.0
+  },
+  "feedback": {
+    "port": 30004,
+    "connected": true,
+    "application_bytes_sent": 0,
+    "local_address": [
+      "192.168.1.7",
+      64442
+    ],
+    "connect_ms": 31.0,
+    "bytes_received": 1440,
+    "prefix_hex": "a005000000000000000000000000000000000000000000000400000000000000",
+    "decoded": {
+      "layout_source_commit": "82bce656c6e1a1c71599901baa93ed45bb50963d",
+      "robot_mode": 4,
+      "q_actual_deg": [
+        78.67594146728516,
+        117.36723327636719,
+        -130.19505310058594,
+        144.6734619140625,
+        -21.921157836914062,
+        80.65681457519531
+      ],
+      "tcp_actual_xyz_mm_rxyz_deg": [
+        105.57943725585938,
+        -215.17344665527344,
+        147.616455078125,
+        109.38899230957031,
+        -33.098487854003906,
+        82.82486724853516
+      ],
+      "user_index": 0,
+      "tool_index": 0,
+      "enable_status": 0,
+      "error_status": 0,
+      "note": "Decoded with pinned V4 layout; controller firmware version remains unconfirmed"
+    }
+  },
+  "finished_at_utc": "2026-09-18T16:18:05.842411+00:00"
+}

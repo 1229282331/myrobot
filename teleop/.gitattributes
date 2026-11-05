@@ -1,0 +1,3 @@
+# Hardware acceptance pins exact source bytes, including line endings.
+# Preserve authored bytes when staging and checking out the accepted sources.
+* -text

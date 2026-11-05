@@ -1,0 +1,367 @@
+--- retreat/include/moveit_servo/collision_monitor.hpp
++++ snapshot/include/moveit_servo/collision_monitor.hpp
+@@ -44,9 +44,25 @@
+ #include <moveit/planning_scene_monitor/planning_scene_monitor.hpp>
+ #include <moveit/planning_scene/planning_scene.hpp>
+ #include <moveit_servo/moveit_servo_lib_parameters.hpp>
++#include <moveit_servo/arm_proximity.hpp>
++#include <sstream>
++#include <map>
+ 
+ namespace moveit_servo
+ {
++
++struct CollisionSample
++{
++  double scale = 1.0;
++  double self_distance = 0.0, scene_distance = 0.0;
++  bool checked = false, self_collision = false, scene_collision = false;
++  // Exact in-range distances only, associated with the checked state and ACM.
++  moveit::core::RobotModelConstPtr model;
++  collision_detection::CollisionEnvConstPtr environment;
++  std::vector<double> positions;
++  std::string matrix;
++  std::map<std::pair<std::string,std::string>,double> exact_self_distances;
++};
+ 
+ class CollisionMonitor
+ {
+@@ -58,7 +74,13 @@
+ 
+   void stop();
+ 
++  // Evaluate this exact state under one scene read lock. All per-call results
++  // are local, so background and request-state callers never share scratch.
++  CollisionSample evaluate(const moveit::core::RobotState& actual) const;
++
+ private:
++  CollisionSample evaluateLocked(const planning_scene::PlanningScene& scene,
++      const moveit::core::RobotState& actual) const;
+   /**
+    * \brief The collision checking function, this will run in a separate thread.
+    */
+@@ -69,22 +91,16 @@
+   const servo::Params& servo_params_;
+ 
+   const planning_scene_monitor::PlanningSceneMonitorPtr planning_scene_monitor_;
+-  moveit::core::RobotState robot_state_;
++  const ArmProximityPolicy proximity_policy_;
+ 
+   // The collision monitor thread.
+   std::thread monitor_thread_;
+   // The flag used for stopping the collision monitor thread.
+-  std::atomic<bool> stop_requested_;
++  std::atomic<bool> stop_requested_{true};
+ 
+   // The scaling factor when approaching a collision.
+   std::atomic<double>& collision_velocity_scale_;
+ 
+-  // The data structures used to get information about robot self collisions.
+-  collision_detection::CollisionRequest self_collision_request_;
+-  collision_detection::CollisionResult self_collision_result_;
+-  // The data structures used to get information about robot collision with other objects in the collision scene.
+-  collision_detection::CollisionRequest scene_collision_request_;
+-  collision_detection::CollisionResult scene_collision_result_;
+ };
+ 
+ }  // namespace moveit_servo
+--- retreat/src/collision_monitor.cpp
++++ snapshot/src/collision_monitor.cpp
+@@ -56,14 +56,10 @@
+                                    const servo::Params& servo_params, std::atomic<double>& collision_velocity_scale)
+   : servo_params_(servo_params)
+   , planning_scene_monitor_(planning_scene_monitor)
+-  , robot_state_(planning_scene_monitor->getPlanningScene()->getCurrentState())
++  , proximity_policy_(planning_scene_monitor->getRobotModel(), servo_params.move_group_name)
+   , collision_velocity_scale_(collision_velocity_scale)
+ {
+-  scene_collision_request_.distance = true;
+-  scene_collision_request_.group_name = servo_params.move_group_name;
+ 
+-  self_collision_request_.distance = true;
+-  self_collision_request_.group_name = servo_params.move_group_name;
+ }
+ 
+ void CollisionMonitor::start()
+@@ -90,91 +86,104 @@
+   RCLCPP_INFO_STREAM(getLogger(), "Collision monitor stopped");
+ }
+ 
++CollisionSample CollisionMonitor::evaluate(const moveit::core::RobotState& actual) const
++{
++  planning_scene_monitor::LockedPlanningSceneRO scene(planning_scene_monitor_);
++  return evaluateLocked(*scene.operator->(), actual);
++}
++
++CollisionSample CollisionMonitor::evaluateLocked(const planning_scene::PlanningScene& scene,
++    const moveit::core::RobotState& actual) const
++{
++  if (actual.getRobotModel().get() != planning_scene_monitor_->getRobotModel().get())
++    throw std::invalid_argument("Collision feedback model mismatch");
++  for (size_t i = 0; i < actual.getRobotModel()->getVariableCount(); ++i)
++    if (!std::isfinite(actual.getVariablePositions()[i]))
++      throw std::invalid_argument("Nonfinite collision feedback");
++  CollisionSample sample;
++  if (!servo_params_.check_collisions)
++    return sample;
++
++  moveit::core::RobotState state(actual);
++  state.updateCollisionBodyTransforms();
++  collision_detection::CollisionRequest request;
++  request.distance = true;
++  request.group_name = servo_params_.move_group_name;
++  collision_detection::CollisionResult self, world;
++  scene.getCollisionEnv()->checkRobotCollision(request, world, state, scene.getAllowedCollisionMatrix());
++  // Original ACM for actual collisions; invariant pairs only affect distance.
++  auto collision_request = request;
++  collision_request.distance = false;
++  const auto& environment = scene.getCollisionEnvUnpadded();
++  environment->checkSelfCollision(collision_request, self, state, scene.getAllowedCollisionMatrix());
++  if (self.collision)
++    self.distance = 0.0;
++  else
++  {
++    auto distance_acm = proximity_policy_.distanceMatrix(scene.getAllowedCollisionMatrix());
++    collision_detection::DistanceRequest distance_request;
++    distance_request.group_name = request.group_name;
++    distance_request.enableGroup(state.getRobotModel());
++    distance_request.acm = &distance_acm;
++    // FCL's documented bounded query still computes every distance that can
++    // change the original scale. At/above the unchanged threshold scale is 1.
++    // SINGLE honors distance_threshold; GLOBAL replaces it with its current
++    // minimum in the pinned MoveIt callback, so cannot be used for this bound.
++    distance_request.type = collision_detection::DistanceRequestType::SINGLE;
++    distance_request.distance_threshold = servo_params_.self_collision_proximity_threshold;
++    collision_detection::DistanceResult distance_result;
++    environment->distanceSelf(distance_request, distance_result, state);
++    for (const auto& item : distance_result.distances)
++    {
++      double minimum = std::numeric_limits<double>::infinity();
++      for (const auto& entry : item.second)
++        minimum = std::min(minimum, entry.distance);
++      if (std::isfinite(minimum) && minimum > 0.0 && minimum < distance_request.distance_threshold)
++        sample.exact_self_distances[std::minmax(item.first.first,item.first.second)] = minimum;
++    }
++    const double distance = distance_result.minimum_distance.distance;
++    // A missing in-range distance is unknown beyond the query threshold,
++    // not a measured far-away clearance. The adapter emits it as JSON null.
++    self.distance = distance < distance_request.distance_threshold ?
++        distance : std::numeric_limits<double>::infinity();
++  }
++  sample.checked = true;
++  sample.model = actual.getRobotModel();
++  sample.environment = environment;
++  sample.positions.assign(actual.getVariablePositions(), actual.getVariablePositions()+sample.model->getVariableCount());
++  std::ostringstream matrix;
++  scene.getAllowedCollisionMatrix().print(matrix);
++  sample.matrix = matrix.str();
++  sample.self_distance = self.distance;
++  sample.scene_distance = world.distance;
++  sample.self_collision = self.collision;
++  sample.scene_collision = world.collision;
++  if (self.collision || world.collision)
++    sample.scale = 0.0;
++  else
++  {
++    const double log_val = -log(0.001);
++    const double self_coefficient = log_val / servo_params_.self_collision_proximity_threshold;
++    const double scene_coefficient = log_val / servo_params_.scene_collision_proximity_threshold;
++    const double self_scale = self.distance < servo_params_.self_collision_proximity_threshold ?
++        std::exp(self_coefficient * (self.distance - servo_params_.self_collision_proximity_threshold)) : 1.0;
++    const double scene_scale = world.distance < servo_params_.scene_collision_proximity_threshold ?
++        std::exp(scene_coefficient * (world.distance - servo_params_.scene_collision_proximity_threshold)) : 1.0;
++    sample.scale = std::min(scene_scale, self_scale);
++  }
++  return sample;
++}
++
+ void CollisionMonitor::checkCollisions()
+ {
+   rclcpp::WallRate rate(servo_params_.collision_check_rate);
+-
+-  bool approaching_self_collision, approaching_scene_collision;
+-  double self_collision_threshold_delta, scene_collision_threshold_delta;
+-  double self_collision_scale, scene_collision_scale;
+-  const double log_val = -log(0.001);
+-  const ArmProximityPolicy proximity_policy(planning_scene_monitor_->getRobotModel(), servo_params_.move_group_name);
+-
+   while (rclcpp::ok() && !stop_requested_)
+   {
+-    const double self_velocity_scale_coefficient{ log_val / servo_params_.self_collision_proximity_threshold };
+-    const double scene_velocity_scale_coefficient{ log_val / servo_params_.scene_collision_proximity_threshold };
+-
+-    if (servo_params_.check_collisions)
+     {
+-      // Get a read-only copy of the planning scene.
+-      planning_scene_monitor::LockedPlanningSceneRO locked_scene(planning_scene_monitor_);
+-
+-      // Fetch latest robot state using planning scene instead of state monitor due to
+-      // https://github.com/moveit/moveit2/issues/2748
+-      robot_state_ = locked_scene->getCurrentState();
+-      // This must be called before doing collision checking.
+-      robot_state_.updateCollisionBodyTransforms();
+-
+-      // Check collision with environment.
+-      scene_collision_result_.clear();
+-      locked_scene->getCollisionEnv()->checkRobotCollision(scene_collision_request_, scene_collision_result_,
+-                                                           robot_state_, locked_scene->getAllowedCollisionMatrix());
+-
+-      // Check robot self collision.
+-      self_collision_result_.clear();
+-      // Actual collisions retain the original ACM; only proximity distances
+-      // invariant to this joint group's motion are excluded from slowdown.
+-      proximity_policy.check(locked_scene->getCollisionEnvUnpadded(),
+-          self_collision_request_, self_collision_result_, robot_state_, locked_scene->getAllowedCollisionMatrix());
+-
+-      // If collision detected scale velocity to 0, else start decelerating exponentially.
+-      // velocity_scale = e ^ k * (collision_distance - threshold)
+-      // k = - ln(0.001) / collision_proximity_threshold
+-      // velocity_scale should equal one when collision_distance is at collision_proximity_threshold.
+-      // velocity_scale should equal 0.001 when collision_distance is at zero.
+-      //
+-      // NOTE:
+-      // collision_velocity_scale_ is shared by the primary servo thread. Be sure to not set any
+-      // intermediate values in this loop or they can be picked up and throw off scaling while processing
+-      // joint updates.
+-
+-      if (self_collision_result_.collision || scene_collision_result_.collision)
+-      {
+-        collision_velocity_scale_ = 0.0;
+-      }
+-      else
+-      {
+-        self_collision_scale = scene_collision_scale = 1.0;
+-
+-        approaching_scene_collision =
+-            scene_collision_result_.distance < servo_params_.scene_collision_proximity_threshold;
+-        approaching_self_collision = self_collision_result_.distance < servo_params_.self_collision_proximity_threshold;
+-
+-        if (approaching_scene_collision)
+-        {
+-          scene_collision_threshold_delta =
+-              scene_collision_result_.distance - servo_params_.scene_collision_proximity_threshold;
+-          scene_collision_scale = std::exp(scene_velocity_scale_coefficient * scene_collision_threshold_delta);
+-        }
+-
+-        if (approaching_self_collision)
+-        {
+-          self_collision_threshold_delta =
+-              self_collision_result_.distance - servo_params_.self_collision_proximity_threshold;
+-          self_collision_scale = std::exp(self_velocity_scale_coefficient * self_collision_threshold_delta);
+-        }
+-
+-        // Use the scaling factor with lower value, i.e maximum scale down.
+-        collision_velocity_scale_ = std::min(scene_collision_scale, self_collision_scale);
+-      }
++      planning_scene_monitor::LockedPlanningSceneRO scene(planning_scene_monitor_);
++      // Keep state, world, and ACM under the same read lock, as in the original.
++      collision_velocity_scale_ = evaluateLocked(*scene.operator->(), scene->getCurrentState()).scale;
+     }
+-    else
+-    {
+-      // If collision checking is disabled we do not scale
+-      collision_velocity_scale_ = 1.0;
+-    }
+-
+     rate.sleep();
+   }
+ }
+--- retreat/include/moveit_servo/servo.hpp
++++ snapshot/include/moveit_servo/servo.hpp
+@@ -60,11 +60,14 @@
+ namespace moveit_servo
+ {
+ 
++enum class CollisionCheckMode { BACKGROUND, REQUEST_STATE };
++
+ class Servo
+ {
+ public:
+   Servo(const rclcpp::Node::SharedPtr& node, std::shared_ptr<const servo::ParamListener> servo_param_listener,
+-        const planning_scene_monitor::PlanningSceneMonitorPtr& planning_scene_monitor);
++        const planning_scene_monitor::PlanningSceneMonitorPtr& planning_scene_monitor,
++        CollisionCheckMode collision_mode = CollisionCheckMode::BACKGROUND);
+ 
+   ~Servo();
+ 
+@@ -80,7 +83,9 @@
+    * @param command The command to follow, std::variant type, can handle JointJog, Twist and Pose.
+    * @return The required joint state.
+    */
+-  KinematicState getNextJointState(const moveit::core::RobotStatePtr& robot_state, const ServoInput& command);
++  KinematicState getNextJointState(const moveit::core::RobotStatePtr& robot_state, const ServoInput& command,
++      const moveit::core::RobotStateConstPtr& actual_collision_state = nullptr);
++  const CollisionSample& getCollisionSample() const { return collision_sample_; }
+   // Optional selector for the final acceleration-smoothed candidate. Rejection
+   // restores the committed smoother state for the original scaled candidate.
+   // Collision halt (zero) is never overridable.
+@@ -153,6 +158,8 @@
+   void resetSmoothing(const KinematicState& state);
+ 
+ private:
++  const CollisionCheckMode collision_mode_;
++  CollisionSample collision_sample_;
+   CollisionScaleSelector collision_scale_selector_;
+   /**
+    * \brief Finds the transform from the planning frame to a specified command frame.
+--- retreat/src/servo.cpp
++++ snapshot/src/servo.cpp
+@@ -56,8 +56,10 @@
+ {
+ 
+ Servo::Servo(const rclcpp::Node::SharedPtr& node, std::shared_ptr<const servo::ParamListener> servo_param_listener,
+-             const planning_scene_monitor::PlanningSceneMonitorPtr& planning_scene_monitor)
+-  : node_(node)
++             const planning_scene_monitor::PlanningSceneMonitorPtr& planning_scene_monitor,
++             CollisionCheckMode collision_mode)
++  : collision_mode_(collision_mode)
++  , node_(node)
+   , logger_(moveit::getLogger("moveit.ros.servo"))
+   , servo_param_listener_{ std::move(servo_param_listener) }
+   , planning_scene_monitor_{ planning_scene_monitor }
+@@ -82,7 +84,8 @@
+   // Create the collision checker and start collision checking.
+   collision_monitor_ =
+       std::make_unique<CollisionMonitor>(planning_scene_monitor_, servo_params_, std::ref(collision_velocity_scale_));
+-  collision_monitor_->start();
++  if (collision_mode_ == CollisionCheckMode::BACKGROUND)
++    collision_monitor_->start();
+ 
+   servo_status_ = StatusCode::NO_WARNING;
+ 
+@@ -179,7 +182,8 @@
+ 
+ void Servo::setCollisionChecking(const bool check_collision)
+ {
+-  check_collision ? collision_monitor_->start() : collision_monitor_->stop();
++  (check_collision && collision_mode_ == CollisionCheckMode::BACKGROUND) ?
++      collision_monitor_->start() : collision_monitor_->stop();
+ }
+ 
+ bool Servo::validateParams(const servo::Params& servo_params)
+@@ -467,8 +471,11 @@
+   return joint_position_deltas;
+ }
+ 
+-KinematicState Servo::getNextJointState(const moveit::core::RobotStatePtr& robot_state, const ServoInput& command)
+-{
++KinematicState Servo::getNextJointState(const moveit::core::RobotStatePtr& robot_state, const ServoInput& command,
++    const moveit::core::RobotStateConstPtr& actual_collision_state)
++{
++  if ((collision_mode_ == CollisionCheckMode::REQUEST_STATE) != bool(actual_collision_state))
++    throw std::invalid_argument("Collision mode requires its matching actual-state input");
+   // Set status to clear
+   servo_status_ = StatusCode::NO_WARNING;
+ 
+@@ -493,7 +500,10 @@
+   Eigen::VectorXd joint_position_delta = jointDeltaFromCommand(command, robot_state);
+ 
+   const auto command_status = servo_status_;
+-  double collision_scale = collision_velocity_scale_.load();
++  collision_sample_ = collision_mode_ == CollisionCheckMode::REQUEST_STATE ?
++      collision_monitor_->evaluate(*actual_collision_state) : CollisionSample{};
++  const double collision_scale = collision_mode_ == CollisionCheckMode::REQUEST_STATE ?
++      collision_sample_.scale : collision_velocity_scale_.load();
+   if (collision_scale > 0 && collision_scale < 1)
+   {
+     servo_status_ = StatusCode::DECELERATE_FOR_COLLISION;

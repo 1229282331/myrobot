@@ -1,0 +1,50 @@
+{
+  "commit": "ec201c40d5db63185a3593ec9c39f80fe25aa527",
+  "files": [
+    {
+      "path": "e6.urdf",
+      "source": "research\\sources\\me6_robot_ec201c40.urdf",
+      "sha256": "a8a30b81479fd48c51a20bf51437114ec3d59a56eaa85ad94d8d1ce11fecc1d7"
+    },
+    {
+      "path": "base_link.STL",
+      "url": "https://raw.githubusercontent.com/Dobot-Arm/DOBOT_6Axis_ROS2_V4/ec201c40d5db63185a3593ec9c39f80fe25aa527/dobot_rviz/meshes/me6/base_link.STL",
+      "sha256": "0f08154e7a7423536bb2457da772be222d687f1f553943bc7e85652a8a52059d"
+    },
+    {
+      "path": "Link1.STL",
+      "url": "https://raw.githubusercontent.com/Dobot-Arm/DOBOT_6Axis_ROS2_V4/ec201c40d5db63185a3593ec9c39f80fe25aa527/dobot_rviz/meshes/me6/Link1.STL",
+      "sha256": "9778d3fdcd58b9fba2753c441e6ea9787db3f1af48e5d0d4c39776a655372a36"
+    },
+    {
+      "path": "Link2.STL",
+      "url": "https://raw.githubusercontent.com/Dobot-Arm/DOBOT_6Axis_ROS2_V4/ec201c40d5db63185a3593ec9c39f80fe25aa527/dobot_rviz/meshes/me6/Link2.STL",
+      "sha256": "647e98aad0d533c13ac7d0bc9bfd1fca2b131fa4e8959b8d1af4efc63b1939e9"
+    },
+    {
+      "path": "Link3.STL",
+      "url": "https://raw.githubusercontent.com/Dobot-Arm/DOBOT_6Axis_ROS2_V4/ec201c40d5db63185a3593ec9c39f80fe25aa527/dobot_rviz/meshes/me6/Link3.STL",
+      "sha256": "a50c83cf4bfcefe91cda0391e1840866348ce4960d98293b3f0e1fe978d00ac0"
+    },
+    {
+      "path": "Link4.STL",
+      "url": "https://raw.githubusercontent.com/Dobot-Arm/DOBOT_6Axis_ROS2_V4/ec201c40d5db63185a3593ec9c39f80fe25aa527/dobot_rviz/meshes/me6/Link4.STL",
+      "sha256": "0115d78951a9e887265da27ac7d7d4b6c570f11ed6afd080ed08ae28ca16f2f9"
+    },
+    {
+      "path": "Link5.STL",
+      "url": "https://raw.githubusercontent.com/Dobot-Arm/DOBOT_6Axis_ROS2_V4/ec201c40d5db63185a3593ec9c39f80fe25aa527/dobot_rviz/meshes/me6/Link5.STL",
+      "sha256": "21b0d7fe1f8da62144cfec7b185241d8cd96ab75d0f9fa5d3e77846d5713ca63"
+    },
+    {
+      "path": "Link6.STL",
+      "url": "https://raw.githubusercontent.com/Dobot-Arm/DOBOT_6Axis_ROS2_V4/ec201c40d5db63185a3593ec9c39f80fe25aa527/dobot_rviz/meshes/me6/Link6.STL",
+      "sha256": "318b57a9cfc1f86099c98f836bda099dfd13026aeac193e7158173e9cf4a0626"
+    },
+    {
+      "path": "LICENSE",
+      "url": "https://raw.githubusercontent.com/Dobot-Arm/DOBOT_6Axis_ROS2_V4/ec201c40d5db63185a3593ec9c39f80fe25aa527/LICENSE",
+      "sha256": "a55351a1634b6cd46d2ca5555459a245761e11ac9956e3771faf343187cf2132"
+    }
+  ]
+}

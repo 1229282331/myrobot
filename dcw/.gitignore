@@ -1,0 +1,8 @@
+.venv/
+.runtime/
+vendor/
+downloads/
+logs/
+captures/
+__pycache__/
+*.py[cod]

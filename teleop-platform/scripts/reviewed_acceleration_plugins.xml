@@ -1,0 +1,7 @@
+<library path="e6_acceleration_filter">
+  <class name="e6_reviewed_smoothing::AccelerationLimitedPlugin"
+         type="e6_reviewed_smoothing::AccelerationLimitedPlugin"
+         base_class_type="online_signal_smoothing::SmoothingBaseClass">
+    <description>MoveIt 2.12.4 acceleration smoother with recorded fine-increment and OSQP precision fixes.</description>
+  </class>
+</library>

@@ -1,0 +1,30 @@
+--- baseline/dynamic_gripper.hpp
++++ candidate/dynamic_gripper.hpp
+@@ -26,7 +26,7 @@
+   // Neither the original feedback deadline nor permit age is extended.
+   static constexpr double maximum_budget_ms=35.;
+   bool enabled=false;
+-  DynamicGripper(const rclcpp::Node::SharedPtr& node, planning_scene_monitor::PlanningSceneMonitorPtr m):monitor(m),certificate(m->getRobotModel()) {
++  DynamicGripper(const rclcpp::Node::SharedPtr& node, planning_scene_monitor::PlanningSceneMonitorPtr m):monitor(m),certificate(m->getRobotModel(),node->get_parameter("moveit_servo.move_group_name").as_string(),true,true) {
+     enabled=node->has_parameter("e6_gripper_joint_names");
+     if(!enabled)return;
+     names=node->get_parameter("e6_gripper_joint_names").as_string_array();
+@@ -91,12 +91,12 @@
+     if(raw<0)for(auto& link:links)acm.setEntry(link,true);
+     else acm.setEntry(fallback,true);
+     collision_detection::CollisionRequest req;
+-    // This group includes the fingers and fallback proxy, checked against ALL
+-    // other links. Static E6 self collision remains the official Servo monitor.
+-    // MoveIt group filtering uses UPDATED links, not all explicitly listed
+-    // links. The fixed fallback proxy is not updated by the gripper joints,
+-    // so unknown-state queries must use the whole robot.
+-    req.group_name=raw<0?"":"e6_gripper_geometry";
++    // Check the final smoothed arm path as well as the fingers. The official
++    // Servo monitor checks measured state; its proximity scale alone cannot
++    // prove a smoothed target safe when the device lags the committed target.
++    // The arm's updated links include all distal attachments and fingers.
++    // Unknown feedback keeps the original whole-robot proxy query.
++    req.group_name=raw<0?"":arm->getName();
+     std::vector<double> seed;actual.copyJointGroupPositions(arm,seed);
+     Eigen::Map<Eigen::VectorXd> initial(seed.data(),seed.size());
+     collision_detection::DistanceResult distances;

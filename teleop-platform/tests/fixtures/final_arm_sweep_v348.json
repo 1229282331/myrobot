@@ -1,0 +1,296 @@
+{
+  "source": "v346 synthetic delayed-device Tool combination",
+  "physical_io": false,
+  "oracle": "original MoveIt/FCL, unchanged model and ACM; 65 points per path",
+  "model_proof": {
+    "equivalent_except_resource_locations": true,
+    "original_srdf_equal": true,
+    "poses_equal": true,
+    "production_params_sha256": "256a084846f5704e91b14d4f3589b61d66a0d24e4a6da2a4f0249939355b0864",
+    "pc_params_sha256": "5c930e16776afff0b6bb9696df67846068b4c3008b345048229c7b5d815871be",
+    "physical_io": false
+  },
+  "cases": [
+    {
+      "name": "deferred-tool-a-704",
+      "actual_rad": [
+        -1.3149239080057977,
+        -2.1821446933273334,
+        2.110067597294061,
+        0.007379729271816491,
+        1.4225760796905094,
+        0.09937878653378676
+      ],
+      "target_rad": [
+        -1.3152464750303274,
+        -2.2143430749789865,
+        2.0862588938280164,
+        0.08525100569868937,
+        1.4206876314277612,
+        0.09615504066742804
+      ],
+      "raw": 30,
+      "expected_arm_safe": true,
+      "target_collision": false,
+      "target_contacts": []
+    },
+    {
+      "name": "deferred-tool-a-705",
+      "actual_rad": [
+        -1.3150126831700448,
+        -2.1910061590143046,
+        2.1035150937832268,
+        0.02881104378702833,
+        1.4220563511009483,
+        0.09849156450855223
+      ],
+      "target_rad": [
+        -1.3153135611062687,
+        -2.2210395532684695,
+        2.081307264035377,
+        0.10144633245791823,
+        1.4202948802351976,
+        0.0954845801319131
+      ],
+      "raw": 30,
+      "expected_arm_safe": false,
+      "target_collision": true,
+      "target_contacts": [
+        [
+          "Link3",
+          "base_link"
+        ]
+      ]
+    },
+    {
+      "name": "deferred-tool-a-706",
+      "actual_rad": [
+        -1.3150960360622155,
+        -2.199326377851904,
+        2.0973628087019414,
+        0.04893336136324442,
+        1.4215683668606365,
+        0.0976585328557476
+      ],
+      "target_rad": [
+        -1.3153752249101334,
+        -2.2271947847085802,
+        2.076755852672286,
+        0.11633266227815134,
+        1.4199338733918834,
+        0.09486830996882807
+      ],
+      "raw": 30,
+      "expected_arm_safe": false,
+      "target_collision": true,
+      "target_contacts": [
+        [
+          "Link3",
+          "base_link"
+        ]
+      ]
+    },
+    {
+      "name": "deferred-tool-a-707",
+      "actual_rad": [
+        -1.3151739666823097,
+        -2.2071053498401314,
+        2.0916107420502046,
+        0.06774668200046477,
+        1.4211121269695743,
+        0.09687969157537289
+      ],
+      "target_rad": [
+        -1.3154314664419215,
+        -2.232808769299319,
+        2.0726046597387437,
+        0.1299099951593887,
+        1.4196046108978184,
+        0.09430623017817293
+      ],
+      "raw": 30,
+      "expected_arm_safe": false,
+      "target_collision": true,
+      "target_contacts": [
+        [
+          "Link3",
+          "base_link"
+        ]
+      ]
+    },
+    {
+      "name": "deferred-tool-a-708",
+      "actual_rad": [
+        -1.3152464750303274,
+        -2.2143430749789865,
+        2.0862588938280164,
+        0.08525100569868937,
+        1.4206876314277612,
+        0.09615504066742804
+      ],
+      "target_rad": [
+        -1.3154822857016333,
+        -2.2378815070406852,
+        2.06885368523475,
+        0.1421783311016303,
+        1.419307092753003,
+        0.09379834075994768
+      ],
+      "raw": 30,
+      "expected_arm_safe": false,
+      "target_collision": true,
+      "target_contacts": [
+        [
+          "Link3",
+          "base_link"
+        ]
+      ]
+    },
+    {
+      "name": "inline-tool-b-688",
+      "actual_rad": [
+        -1.331342860056521,
+        -2.187666842150541,
+        2.0617225174733096,
+        0.08528132582773572,
+        1.443112878107538,
+        0.06256976540886064
+      ],
+      "target_rad": [
+        -1.3321808063025702,
+        -2.215324394602656,
+        2.0377409799072335,
+        0.15743711227802343,
+        1.4426140468183413,
+        0.05991570575291613
+      ],
+      "raw": 30,
+      "expected_arm_safe": true,
+      "target_collision": false,
+      "target_contacts": []
+    },
+    {
+      "name": "inline-tool-b-689",
+      "actual_rad": [
+        -1.331575148720091,
+        -2.195333844571049,
+        2.055074550091346,
+        0.10528376784880127,
+        1.4429745961424827,
+        0.061834028512346394
+      ],
+      "target_rad": [
+        -1.3323522893606532,
+        -2.220984425536553,
+        2.032833233833122,
+        0.17220356654310598,
+        1.4425119625673022,
+        0.0593725608098102
+      ],
+      "raw": 30,
+      "expected_arm_safe": false,
+      "target_collision": true,
+      "target_contacts": [
+        [
+          "Link3",
+          "base_link"
+        ]
+      ]
+    },
+    {
+      "name": "inline-tool-b-690",
+      "actual_rad": [
+        -1.3317922359822891,
+        -2.2024991041199042,
+        2.0488616380363456,
+        0.12397721293087106,
+        1.4428453636059315,
+        0.06114643960418423
+      ],
+      "target_rad": [
+        -1.3325085710173645,
+        -2.2261427135987972,
+        2.0283605430859732,
+        0.1856610238691928,
+        1.4424189277447672,
+        0.058877563855056346
+      ],
+      "raw": 30,
+      "expected_arm_safe": false,
+      "target_collision": true,
+      "target_contacts": [
+        [
+          "Link3",
+          "base_link"
+        ]
+      ]
+    },
+    {
+      "name": "inline-tool-b-691",
+      "actual_rad": [
+        -1.3319941218431157,
+        -2.2091626207971067,
+        2.043083781308308,
+        0.14136166107394513,
+        1.4427251804978845,
+        0.06050699868437415
+      ],
+      "target_rad": [
+        -1.3326496512727042,
+        -2.2307992587893883,
+        2.024322907665788,
+        0.1978094842562839,
+        1.4423349423507361,
+        0.05843071488865457
+      ],
+      "raw": 30,
+      "expected_arm_safe": false,
+      "target_collision": true,
+      "target_contacts": [
+        [
+          "Link3",
+          "base_link"
+        ]
+      ]
+    }
+  ],
+  "model_binding": {
+    "geometry_sha256": "e1f854cb185ed20f5ecfcb8f5f98e766da3a20f0df5d0c14b30747a302512aee",
+    "mesh_sha256": {
+      "file:///mnt/c/vscode_files/robot/teleop-platform/src/e6_phosphobot/assets/workspace/e6-base_link.stl": "19bbd4ef5bece23606c53a71760e08104ae081b71ee3df0bce505c5b5ec2d0a2",
+      "file:///mnt/c/vscode_files/robot/teleop-platform/src/e6_phosphobot/assets/workspace/e6-base_link-collision-0.stl": "30c9e8793419f5410d2cf9b9e66bff87c6667457afbfdb1dfa8e263fc13911ac",
+      "file:///mnt/c/vscode_files/robot/teleop-platform/src/e6_phosphobot/assets/workspace/e6-base_link-collision-1.stl": "58a885eeac4c84bef32807a5d12312b7892d9156005ea135a3b498ff65a666e6",
+      "file:///mnt/c/vscode_files/robot/teleop-platform/src/e6_phosphobot/assets/workspace/e6-base_link-collision-5.stl": "4270abef65c3ccda90c8147e55ea41287d7ecc446ffdd1bdf063862a6eb3dee2",
+      "file:///mnt/c/vscode_files/robot/teleop-platform/src/e6_phosphobot/assets/workspace/e6-Link1.stl": "73689155471d567fd728cedd91328d23cbca49dfed9fd2110fd1b30103f884c9",
+      "file:///mnt/c/vscode_files/robot/teleop-platform/src/e6_phosphobot/assets/workspace/e6-Link1-collision.stl": "5b899625528ebf4752065177a2944f20e75becf18c2f8418d1961c4a1238e791",
+      "file:///mnt/c/vscode_files/robot/teleop-platform/src/e6_phosphobot/assets/workspace/e6-Link2.stl": "a7761e882b84722b9491fbbf65871b3ad3f9bf338390c3e7a68aef8f07fed49e",
+      "file:///mnt/c/vscode_files/robot/teleop-platform/src/e6_phosphobot/assets/workspace/e6-Link2-collision-0.stl": "0ae7a71519e9a159570ad0000f2465100fb41cdf78794de39639e8f60093be72",
+      "file:///mnt/c/vscode_files/robot/teleop-platform/src/e6_phosphobot/assets/workspace/e6-Link2-collision-1.stl": "7825807d3047c9c746bf28ebd142f300c64b968f109c205d81df758a4223b690",
+      "file:///mnt/c/vscode_files/robot/teleop-platform/src/e6_phosphobot/assets/workspace/e6-Link2-collision-2.stl": "c2060d43f72e5c1180f64c77b35068c5ca56836c5b07d8b75beccee3bd9a3ecd",
+      "file:///mnt/c/vscode_files/robot/teleop-platform/src/e6_phosphobot/assets/workspace/e6-Link2-collision-3.stl": "6dae23fdeba3abef64ea85179b23988bec3103beef5a9a51428043b61be011eb",
+      "file:///mnt/c/vscode_files/robot/teleop-platform/src/e6_phosphobot/assets/workspace/e6-Link2-collision-4.stl": "517f6f2b553c6dbc4742537c3afcb2eb6c5295d3c638e19e472604d45ce95556",
+      "file:///mnt/c/vscode_files/robot/teleop-platform/src/e6_phosphobot/assets/workspace/e6-Link2-collision-5.stl": "7794504191989cc1ee7297f378b9c4b080f6e94010d45df5d45b1283818f9e88",
+      "file:///mnt/c/vscode_files/robot/teleop-platform/src/e6_phosphobot/assets/workspace/e6-Link2-collision-6.stl": "b311b7ad58c55e147be951bd11bd376a7aea4f15ca21ae255afbdd376ba2db43",
+      "file:///mnt/c/vscode_files/robot/teleop-platform/src/e6_phosphobot/assets/workspace/e6-Link2-collision-7.stl": "0cf3ef7fe9ac63cbff10a91f0d0a1121fcdd286b8bebf2f06ca5fb63fc448838",
+      "file:///mnt/c/vscode_files/robot/teleop-platform/src/e6_phosphobot/assets/workspace/e6-Link3.stl": "15de8d023e044cc0ce469670309d6cd98ba6b035b99d2a5408e32096749c43cd",
+      "file:///mnt/c/vscode_files/robot/teleop-platform/src/e6_phosphobot/assets/workspace/e6-Link3-collision.stl": "47b7a9ecf30a5afa59350659eda73f2c54ccc71a654ca8ddf9a515773e419f85",
+      "file:///mnt/c/vscode_files/robot/teleop-platform/src/e6_phosphobot/assets/workspace/e6-Link4.stl": "c0fc74fa6b4e75a5f745059058804fb9d64f762281849112eb7943ba329ca8de",
+      "file:///mnt/c/vscode_files/robot/teleop-platform/src/e6_phosphobot/assets/workspace/e6-Link4-collision.stl": "63a6c63de56aa387c740fc6dda15ca7bf83b96a2c302ff398c197b155123233d",
+      "file:///mnt/c/vscode_files/robot/teleop-platform/src/e6_phosphobot/assets/workspace/e6-Link5.stl": "3031735f29c441d6fefd45c6931494b645cb0d2bad39fe38de280a4eec7afb8a",
+      "file:///mnt/c/vscode_files/robot/teleop-platform/src/e6_phosphobot/assets/workspace/e6-Link5-collision.stl": "b2e7bc94a80c7970c08db0ffd94dc6967ff4921c600d5123fbb3fc2150dd8002",
+      "file:///mnt/c/vscode_files/robot/teleop-platform/src/e6_phosphobot/assets/workspace/e6-Link6.stl": "a2678c97b6e1e2db975938abdb6ae24de127cb6ef8220237571f58378522b0ee",
+      "file:///mnt/c/vscode_files/robot/teleop-platform/src/e6_phosphobot/assets/workspace/e6-Link6-collision.stl": "a78147a09dd32c5f2d43a15c422028ab6f6384e871155227cc04421e6b43fe9b",
+      "file:///mnt/c/vscode_files/robot/teleop-platform/src/e6_phosphobot/assets/workspace/r4-plate.stl": "57c48ad62a6275d4de03220a84def71f179f8d9365416634738b68991857506b",
+      "file:///mnt/c/vscode_files/robot/teleop-platform/src/e6_phosphobot/assets/workspace/gripper-base_link.stl": "fa361b2b4b49574f7d731bf04bd730e390601af98df2f2480360795c82934fb0",
+      "file:///mnt/c/vscode_files/robot/teleop-platform/src/e6_phosphobot/assets/workspace/op_hand_narrow1_Link.stl": "98a59f86cd6fb5fc94ede970fbc2b79b8f41f6783223a5b15aa2a07039ac03b0",
+      "file:///mnt/c/vscode_files/robot/teleop-platform/src/e6_phosphobot/assets/workspace/op_hand_narrow2_Link.stl": "0f7b545d03ce33739910c4a4602824e0fd8b5d3608577cae158122f6beccaced",
+      "file:///mnt/c/vscode_files/robot/teleop-platform/src/e6_phosphobot/assets/workspace/op_hand_narrow3_Link.stl": "cf2422028b6dc28f1b7c9283d386593363e2bc5b7b92ad7eac35d125781c86b7",
+      "file:///mnt/c/vscode_files/robot/teleop-platform/src/e6_phosphobot/assets/workspace/op_hand_narrow_loop_Link.stl": "dea43f23780029c283ede7e41e33e2a6fc741b4044cbfb7857fd4451fb5201f0",
+      "file:///mnt/c/vscode_files/robot/teleop-platform/src/e6_phosphobot/assets/workspace/op_hand_wide1_Link.stl": "759fc26b8627ab7abf6fd092567d85abede99b194d62bfa3f6c1612a4ce039a3",
+      "file:///mnt/c/vscode_files/robot/teleop-platform/src/e6_phosphobot/assets/workspace/op_hand_wide2_Link.stl": "988af69106476fa42861fed2ab37ea9cbbf17057875e9aaae3f97b8f86a25af2",
+      "file:///mnt/c/vscode_files/robot/teleop-platform/src/e6_phosphobot/assets/workspace/op_hand_wide3_Link.stl": "d13de17d8ac833bad0294cd7c63ca45a8ad3205450947cbc98c06e34aa737591",
+      "file:///mnt/c/vscode_files/robot/teleop-platform/src/e6_phosphobot/assets/workspace/op_hand_wide_loop_Link.stl": "a5560875eab4ccd33686b0f7ded13f1d22d4b541c49f1cde853834702e5772b9"
+    }
+  },
+  "model_id": "3b4003e47dc241273476c7a01a7102963d06ed59767ddd010afdaeeba72a72d7"
+}

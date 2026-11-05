@@ -1,0 +1,153 @@
+{
+  "lerobot_native_qualification": {
+    "url": "https://github.com/huggingface/lerobot",
+    "commit": "8c920c4270460851cedd2737657584586d3dc66f",
+    "version": "0.6.2",
+    "license": "Apache-2.0",
+    "lock": "../teleop/uv.lock",
+    "runtime": "../teleop/.venv (Python 3.12; PC offline only)",
+    "role": "Official LeRobotDataset.create/add_frame/save_episode/finalize and PyAV/DataLoader readback for native command-event qualification; no upstream patch, not policy-ready, no real combined episode qualified"
+  },
+  "launcher_transport": {
+    "name": "Paramiko",
+    "version": "4.0.0",
+    "url": "https://www.paramiko.org/",
+    "license": "LGPL-2.1",
+    "lock": "locks/launcher.txt",
+    "role": "SSH host verification, authentication and independent TCP forwarding; no replacement SSH implementation"
+  },
+  "launcher_process_inventory": {
+    "name": "psutil",
+    "version": "7.1.3",
+    "url": "https://github.com/giampaolo/psutil",
+    "license": "BSD-3-Clause",
+    "lock": "locks/launcher.txt",
+    "role": "Identify existing local listener processes before explicit reuse; never global process-name termination"
+  },
+  "phosphobot": {
+    "url": "https://github.com/phospho-app/phosphobot.git",
+    "commit": "a5de051197c879e3c685d1362f649ce54ee47a3c",
+    "version": "0.3.134",
+    "license": "MIT",
+    "path": "upstream/phosphobot",
+    "role": "Complete dashboard, input pages, application and robot extension interface"
+  },
+  "mediamtx": {
+    "url": "https://github.com/bluenviron/mediamtx",
+    "commit": "048255986f7e04b859b4c4efe651448ec785ecd4",
+    "version": "v1.21.1",
+    "license": "MIT",
+    "windows_amd64_sha256": "faa97974861eb75a68b5aa326c78e7e7a6f670b5ef191bace78e715130381f23",
+    "reader_upstream_path": "internal/servers/webrtc/reader.js",
+    "reader_local_path": "frontend/vendor/mediamtx-reader.js",
+    "reader_patch": "Replace final window assignment with ESM export only",
+    "role": "Local RTSP ingest, WebRTC delivery, official WHEP browser reader"
+  },
+  "dobot_sdk": {
+    "url": "https://github.com/Dobot-Arm/TCP-IP-Python-V4.git",
+    "commit": "55ec1ec82201aaf2e6d54aa47b6272bbaa14c815",
+    "license": "MIT",
+    "path": "upstream/dobot-sdk",
+    "role": "Official E6 motion API, feedback data types and parser"
+  },
+  "jsqr": {
+    "url": "https://github.com/cozmo/jsQR",
+    "version": "1.4.0",
+    "license": "Apache-2.0",
+    "integrity": "sha512-dxLob7q65Xg2DvstYkRpkYtmKm2sPJ9oFhrhmudT1dZvNFFTlroai3AWSpLey/w5vMcLBXRgOJsbXpdN9HzU/A==",
+    "role": "Decode diagnostic frame QR from the actual browser video, no media transport replacement"
+  },
+  "ruckig": {
+    "version": "0.19.4",
+    "artifacts": [
+      {
+        "sha256": "4d70b25314d26f8740b7c350f0707ce4d322a108bc559c8b30091d207d4f4812",
+        "filename": "ruckig-0.19.4-cp310-cp310-win_amd64.whl"
+      },
+      {
+        "sha256": "71d003bf0ff9aa0031d4520b0290a5ffa6458149f5afce8be3ed6d6fba49ea64",
+        "filename": "ruckig-0.19.4.tar.gz"
+      }
+    ],
+    "license": "MIT",
+    "role": "VelocityTrajectory uses the official velocity interface and zero-velocity stop trajectory, local state-to-state only",
+    "commit": "a8db97a4e9c55e5160a3855f739fa3b270df8e4c",
+    "url": "https://github.com/pantor/ruckig"
+  },
+  "dobot_ros2": {
+    "url": "https://github.com/Dobot-Arm/DOBOT_6Axis_ROS2_V4.git",
+    "commit": "0f21e9839888f188ac06b0a9fea622d13a29a74f",
+    "license": "MIT (repository root); plugin files also declare BSD",
+    "path": "upstream/dobot-ros2",
+    "role": "Official E6 URDF/SRDF/meshes; controller-equivalent serial geometry derived and independently audited; physical accessory geometry not calibrated"
+  },
+  "moveit_servo_jazzy": {
+    "url": "https://github.com/moveit/moveit2.git",
+    "commit": "1ade0e9dcf50dbbbc3a984b995c786cf12736235",
+    "version": "2.12.4",
+    "license": "BSD-3-Clause",
+    "path": "upstream/moveit2-jazzy/moveit_ros/moveit_servo",
+    "debian_arm64": "2.12.4-1noble.20261006.043301",
+    "role": "Official ServoNode, traced trajectory and isolated production bridge; virtual lag/speed and formal real-feedback shadow qualified; real motion not yet qualified",
+    "patches": [
+      "patches/moveit/0002-acceleration-fine-input.patch",
+      "patches/moveit/0003-jazzy-trajectory-provenance.patch"
+    ]
+  },
+  "moveit_servo": {
+    "url": "https://github.com/moveit/moveit2.git",
+    "commit": "c283a36186a6f7a5985360e6674bf8fd0790e485",
+    "version": "2.5.10",
+    "license": "BSD-3-Clause",
+    "path": "upstream/moveit2/moveit_ros/moveit_servo",
+    "debian_arm64": "2.5.10-1jammy.20260910.035247",
+    "role": "Historical 2.5.10 bridge; actual direction passed but sustained speed failed. Preserved evidence, superseded by Jazzy qualification",
+    "patches": [
+      "patches/moveit/0001-input-provenance.patch"
+    ]
+  },
+  "workspace_viewer": {
+    "url": "https://github.com/gkjohnson/urdf-loaders",
+    "version": "0.13.1",
+    "commit": "24feef2c267496d22d17bbbb5c1bf5b86dcf174f",
+    "license": "Apache-2.0",
+    "path": "frontend/vendor/urdf-viewer-element.js",
+    "patch": "patches/viewer/0001-lifecycle.patch",
+    "adapter": "frontend/workspaceRenderer.ts",
+    "reproduce": "scripts/prepare_workspace_viewer.py"
+  },
+  "workspace_three": {
+    "url": "https://github.com/mrdoob/three.js",
+    "version": "0.186.1",
+    "license": "MIT",
+    "path": "upstream/phosphobot/dashboard/node_modules/three",
+    "lock": "patches/0010-workspace-renderer-dependencies.patch"
+  },
+  "workspace_collision": {
+    "url": "https://github.com/colin97/CoACD",
+    "version": "1.0.14",
+    "license": "MIT",
+    "path": "scripts/rigid_collision_geometry.py",
+    "binding": "coacd.run_coacd",
+    "local_changes": "No upstream changes. Re-enclose original source triangles after partitioning to avoid approximation undercoverage.",
+    "build_requirements": "scripts/requirements-workspace-cad.txt",
+    "distributions": [
+      {
+        "filename": "coacd-1.0.14-cp39-abi3-macosx_11_0_arm64.whl",
+        "sha256": "4cd9e1f327af766f6364e79e384ebfe152780a3d8dbbd09ce0756ec14f9e1256"
+      },
+      {
+        "filename": "coacd-1.0.14-cp39-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+        "sha256": "1242941fc9d49ebcb0368c68f31c86e278b9a6f1a255d11da2f1668797e2626e"
+      },
+      {
+        "filename": "coacd-1.0.14-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+        "sha256": "6c135b717af096523bbebf1fd8d326e8950c024237fe9806ad46dedd8b4c31f0"
+      },
+      {
+        "filename": "coacd-1.0.14-cp39-abi3-win_amd64.whl",
+        "sha256": "6b548f44d9a4694cde594dc8cc8fefa678fb7c88153583be4e8b2c707de8fbbd"
+      }
+    ]
+  }
+}

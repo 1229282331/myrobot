@@ -1,0 +1,54 @@
+[
+  {
+    "file": "rear_cover_drawing_1.png",
+    "url": "https://www.agibot.com/file/ueditor/php/upload/image/20251223/1766471769482487.png",
+    "sha256": "da4d7696c8bebf1df7f7816b6eeadac35991bb1f042932d67c019b3cc2c12b96",
+    "bytes": 435088,
+    "retrieved_date": "2026-09-23"
+  },
+  {
+    "file": "rear_cover_drawing_2.png",
+    "url": "https://www.agibot.com/file/ueditor/php/upload/image/20251223/1766471774128744.png",
+    "sha256": "6655630ae3f83c40a1b4f2a3e05b214bfa44407bfca3014a5be6d0d2bd6b2af0",
+    "bytes": 279960,
+    "retrieved_date": "2026-09-23"
+  },
+  {
+    "file": "mount_step1.png",
+    "url": "https://www.agibot.com/file/ueditor/php/upload/image/20251223/1766471672429754.png",
+    "sha256": "3fe4f202a0b4fd2c9c7ac001c1602037649ed670a9b543bbd4dede5048cb1de9",
+    "bytes": 492177,
+    "retrieved_date": "2026-09-23"
+  },
+  {
+    "file": "mount_step2.png",
+    "url": "https://www.agibot.com/file/ueditor/php/upload/image/20251223/1766471679872423.png",
+    "sha256": "fa522f4cc62d69e9aadfdd6fafaa139efd42333e5be516ad54b1d72fc20d63ec",
+    "bytes": 182394,
+    "retrieved_date": "2026-09-23"
+  },
+  {
+    "file": "mount_step3.png",
+    "url": "https://www.agibot.com/file/ueditor/php/upload/image/20251223/1766471687365334.png",
+    "sha256": "d81974be9c7ea6080c3fb05d51eb83b9a88f11fc92395ff56a77c7a72ada8fd9",
+    "bytes": 315239,
+    "retrieved_date": "2026-09-23"
+  },
+  {
+    "file": "mount_step4.png",
+    "url": "https://www.agibot.com/file/ueditor/php/upload/image/20251223/1766471695156081.png",
+    "sha256": "874b50693e2179853563ccf25441db6aadaa15076c175cfcf3c45877f96b8537",
+    "bytes": 356004,
+    "retrieved_date": "2026-09-23"
+  },
+  {
+    "file": "official_cover.step",
+    "url": "https://www.agibot.com/file/ueditor/php/upload/file/20260804/1785824210732112.zip",
+    "source_archive": "../omnipicker_integration_2026-09-20/rear_cover_3d.zip",
+    "archive_member": "230000166201_后端盖机加 (1).STEP",
+    "sha256": "87f4f41dea151b185adbb2297bca9ff5d4728273b6d94528e43fa80abab17061",
+    "bytes": 489047,
+    "archived_date": "2026-09-26",
+    "note": "从 tmp/cad_mount 归档；与已保存官方 ZIP 中的原始 STEP 逐字节一致，供 R1/R2 CAD 脚本读取。"
+  }
+]

@@ -1,0 +1,166 @@
+{
+  "schema_version": 1,
+  "complete": true,
+  "control_scope": "arm-only",
+  "full_stage_three_complete": false,
+  "robot_ip": "192.168.1.4",
+  "camera_serial": "AY4A1520111",
+  "tool": 0,
+  "user": 0,
+  "source_sha256": {
+    "device_gateway/e6_observer/control_core.py": "adc8a8584ad9090dbc2819b0042393c72e2ac73d844a9fce62a371a967a9bcad",
+    "device_gateway/e6_observer/control_guardian.py": "5f76acf3ede673b883466a55d7983c61b92263ab1ccea645f13bb5a5073d39b0",
+    "device_gateway/e6_observer/gripper_profile.py": "38aa5f59185c0610e95e1f0f4d846f30903f0fbf475bc91c6983d39c695b80a5",
+    "src/e6_teleop/gripper_profile.py": "2da37f4baf475fba9ce620d9d4e327b43d1d454748020b1a18b98e6e4f960413",
+    "config/gripper_profiles.json": "ead91aa4c3aee7dd2d3093babf6f80a43e99f647d90445c7c4a72d0eea5f11aa",
+    "src/e6_teleop/operator_launcher.py": "76f3eb6fee34ed4deb07f59f5877ea8499678f3887333fbfcfb77ff89bef9c44",
+    "device_gateway/e6_observer/recovery.py": "6773f26fd934fa0ac0d70e164da74b6e092b6a331d17dd39a946a703b1a8908c",
+    "device_gateway/e6_observer/control_math.py": "e813af9a36269e1bc4ca660090e598ccaec15daed1881ca65161f2ee0f2ce09d",
+    "device_gateway/e6_observer/runtime.py": "6be4fea4cb27882d66bcc28f38001e4c6fecfd142fa52d75c33150bdca8c08b8",
+    "device_gateway/e6_observer/local_kinematics.py": "178b9c630475d894660f3fae6d0db457f675c39f55f1df2aee8fcdba78f44744",
+    "device_gateway/e6_observer/kinematics_profile.py": "357a24b3a593d07064ba653859cdaf28c41e95ff135024bcdbe2b779b4127870",
+    "device_gateway/e6_observer/protocol.py": "469e67d7225f1cfc69df8f5722f3bcf17f4c8f7a8af2018e5e0838df762e7ba5",
+    "device_gateway/e6_observer/__main__.py": "ae7d499b74369bd77840a658c5589bda93db774b8a1e69f9608cf90481359617",
+    "device_gateway/e6_observer/feedback_diagnostics.py": "38f1c918b7e79836fbebd9d011a5468c317bb1ba9a37255a41c6f5148b96b537",
+    "device_gateway/e6_observer/wifi_latency.py": "2d5ddce672065ab32db7bebba6c2d9fdb6cb6bdb5216c368486ea55967ad8951",
+    "device_gateway/e6_observer/camera_frames.py": "1f2b31fadb1567e652bb45ad251e71a2c21a496d322c13f51604b8fd33dfbe1a",
+    "device_gateway/e6_observer/process_lifecycle.py": "9f4257c67822b2e1f38c20cd2844247d9657074e33581a4cd711faa08629d38b",
+    "device_gateway/e6_observer/ssh_socket_qos.py": "f1672b22ac7e3535bced8c721b5375424db4fea4aac9ef002f4204f78103eb1b",
+    "device_gateway/e6_observer/ssh_tcp_latency.py": "285a890be353e3982ec394eaf79ce243e4d40eb9a3b81786d62ace32dabdc4ad",
+    "device_gateway/e6_observer/tcp_latency.py": "bb3ad055f61f3050aa0bd2e64febdd33aa7919ffcb819924d07c3fea67d70141",
+    "web/src/input.ts": "c26be73c74fdbb17a83da9a61d895914feb9ec502bfa3d99e8bfc09f6a400125",
+    "web/src/HardwareControlPanel.tsx": "90a999cbc2740677ad6ad7eac172c40009ec25c1905fd8ecfa61b6f1d2c6b85f",
+    "web/src/hardwareCapabilities.ts": "4acc9274bd8737b1011ed0f95a7333999e112612714d0ecdbdeeb1df4abbedbc",
+    "src/e6_teleop/observation_service.py": "f3fe6a7df74115395c7cdbbd954ebf0968170ac5c432cde584667f8fedb6ba70",
+    "src/e6_teleop/observation_recording.py": "93302048fc0089825a5bad129ef5ec4f1ce1d6dbc3e58b61a4a184f730d495eb",
+    "src/e6_teleop/service.py": "2c2e7a7cf0883d471b4afdb38b0b8409f738bda13c3f57099e24981953253478",
+    "src/e6_teleop/tunnel.py": "ee2d8814d6c81b9edca76811ab74e1d5378d4962650f6a35f504f0fc8aeee240",
+    "src/e6_teleop/control_transport.py": "df7ace4f980d87a41bc4b037a9fb40e9ec47a13945c826377c0de75452a590fc",
+    "src/e6_teleop/socket_qos.py": "c83511826ca1b6b5d755f30e4f4ccc120041730f8317c49b846d462be66f3678",
+    "src/e6_teleop/ssh_endpoints.py": "864f2d97c863ecefa5c7aa6111f9c96b6128dfcf343fb6b4e101662cb95dcc1d",
+    "src/e6_teleop/pc_tcp_latency.py": "ad0de7bcfed06b0d260b37f92309367a58499452fef03176872eebe45ec33981",
+    "src/e6_teleop/observation_clock.py": "78df6af84fb6ab02a4157dbd6efb16b819e07a02de208e386e644a8a5f1c641f",
+    "src/e6_teleop/wsl_tunnel.py": "027284a844053b11f3a9303e92a88fef03dec4b2ff07be959158fa1fd4538bd4",
+    "src/e6_teleop/ssh_runtime.py": "23d6822a2044c25cfeaa4ad4957df5496d9f06e412b586a4a06244490c06659b",
+    "scripts/configure_pc_peer_route.py": "a23087e0dde2887a144582b68cb032026d01661a7754f5da2963df5ab6f9acf0",
+    "src/e6_teleop/kinematics.py": "a543398c32781c57e0d2d8e0d83f373f7e53c316ba479ee0c3f68c9dc354bc75",
+    "src/e6_teleop/cli.py": "f6e5e441afc77ba3b64179e931caf1eb5d62f37bcf22c7a9770ac62a935509f8",
+    "src/e6_teleop/acceptance_profile.py": "91c88fd02c431406c13d980c000fe11081aca4f4cfda3dbc2b01a65b3a9b1c1d",
+    "assets/e6/manifest.json": "f2eabccf084a40c9839002c69aced0dc868fae60b595afe09e3c43cc696cab21",
+    "web/src/HardwareApp.tsx": "dc2c16fdab44d81c54b1da306b6b2ca5ed9b2400070902f5bb64b3850637536d",
+    "web/src/style.css": "3f5bed513aa32bb548f82f631840ab937736bf7542a128a7297a9d961c9ca13e"
+  },
+  "can_driver_sha256": "44c99deed1a9159406147307619acfe0fd61f4f2a8602f0cb386c61b933dbc7b",
+  "checks": {
+    "shadow_600s": {
+      "passed": true,
+      "file": "../../docs/evidence/teleop_local_integration_20261005/delivery_arm_v59/shadow_600s.json",
+      "sha256": "5822e97772266742070e42b64c5139976fda04cd4cf9c030df6071dcbf4c6bc7"
+    },
+    "zero_servoj": {
+      "passed": true,
+      "file": "../../docs/evidence/teleop_local_integration_20261005/delivery_arm_v59/zero_servoj.json",
+      "sha256": "5f6f54e7b8d49f1cf62b5e9c915b81bb4520d0f941ee55da0bf59566a9a6070f"
+    },
+    "j6_return": {
+      "passed": true,
+      "file": "../../docs/evidence/teleop_local_integration_20261005/delivery_arm_v59/j6_return.json",
+      "sha256": "2c1be8e665049455f29fc8becaf1bb2949d0de7134cd809a564b35b940f6b4c4"
+    },
+    "cartesian_axes_return": {
+      "passed": true,
+      "file": "../../docs/evidence/teleop_local_integration_20261005/delivery_arm_v59/cartesian_axes_return.json",
+      "sha256": "57d74bb1c8263aca609ee8c8080a4f00e579a1e286170f2d1c57ee4b5be76f85"
+    },
+    "frames_multi_fine": {
+      "passed": true,
+      "file": "../../docs/evidence/teleop_local_integration_20261005/delivery_arm_v59/frames_multi_fine.json",
+      "sha256": "f3010377694afa4075fa9a1cb45386ba47c0bcbc9d298c123110002f689fcddf"
+    },
+    "bounded_recovery": {
+      "passed": true,
+      "file": "../../docs/evidence/teleop_local_integration_20261005/delivery_arm_v59/bounded_recovery.json",
+      "sha256": "16d9bdb35f756d53375012691deda9b8169dfb091f5a7d29cf4c25e8a63be1cf"
+    },
+    "faults": {
+      "passed": true,
+      "file": "../../docs/evidence/teleop_local_integration_20261005/delivery_arm_v59/faults.json",
+      "sha256": "ea17d8c7ee042edf5c77e4013318b36773d29a71be0a9c0c86ea923bd7c360a8"
+    },
+    "gamepad_30s": {
+      "passed": true,
+      "file": "../../docs/evidence/teleop_local_integration_20261005/delivery_arm_v59/gamepad_30s.json",
+      "sha256": "0af00143ddf844d2de59c2bdd171ff7c70841084b22e5b9847143e42850227ca"
+    },
+    "keyboard_30s": {
+      "passed": true,
+      "file": "../../docs/evidence/teleop_local_integration_20261005/delivery_arm_v59/keyboard_30s.json",
+      "sha256": "ec8ddd876811f213ddccf0bd574b7e1a1344c2dfa24b2fbf3311620d50244d2b"
+    },
+    "raw_media_readback": {
+      "passed": true,
+      "file": "../../docs/evidence/teleop_local_integration_20261005/delivery_arm_v59/raw_media_readback.json",
+      "sha256": "61f690e1e3ccc8c995c09bff8fff2f68289fa2478b7f3b4caf4b52b08544dbc8"
+    },
+    "gripper_disabled": {
+      "passed": true,
+      "file": "../../docs/evidence/teleop_local_integration_20261005/delivery_arm_v59/gripper_disabled.json",
+      "sha256": "761d38ec61123654276b7e7508ba5f51df3fc30811a4bce44f946dae900c8bb4"
+    },
+    "offline": {
+      "passed": true,
+      "file": "../../docs/evidence/teleop_local_integration_20261005/delivery_arm_v59/offline.json",
+      "sha256": "8e89a9fd4e087da3f660a08f1666756818aaf00eb89488c67d8e0d5ba77aa1ba"
+    },
+    "browser_input_gate": {
+      "passed": true,
+      "file": "../../docs/evidence/teleop_local_integration_20261005/browser_input_review_v60.json",
+      "sha256": "56bc496e5331a9a0b806372f5664260ee5a934a492b6a4ea6376cfa9a1850ac6"
+    }
+  },
+  "limits": {
+    "translation_m_s": 0.002,
+    "rotation_rad_s": 0.017453292519943295,
+    "gripper_s": 0.05,
+    "radius_m": 0.05,
+    "orientation_rad": 0.17453292519943295,
+    "joint_window_rad": 0.17453292519943295,
+    "joint_velocity_rad_s": 0.03490658503988659,
+    "joint_accel_rad_s2": 0.06981317007977318
+  },
+  "kinematics_kind": "controller-local",
+  "kinematics_profile_file": "../../docs/evidence/teleop_local_integration_20261005/enabled_calibration_chord_v16/profile.json",
+  "kinematics_profile_sha256": "0f2440d160f0390f80b175eb58898faf4257f29c77c17cf63587dc5be2c837e1",
+  "feedback_framing": "length-envelope",
+  "recovery_policy": "bounded",
+  "gripper_command_profile": "disabled",
+  "wifi_driver_ps_on": "Y",
+  "wifi_low_latency": true,
+  "wifi_reorder_ms": 10,
+  "ssh_rto_min_ms": 20,
+  "e6_rto_min_ms": null,
+  "pc_transport": {
+    "platform": "win32-wsl-ssh",
+    "requested_min_rto_ms": 20,
+    "effective_min_rto_ms": 20,
+    "interface": "eth0",
+    "preview_renderer": null
+  },
+  "e6_network": {
+    "robot_ip": "192.168.1.4",
+    "interface": "eth0",
+    "source": "192.168.1.14",
+    "gateway": null,
+    "direct_ethernet": true
+  },
+  "media_hz": 5,
+  "physical_gamepad_acceptance_required": true,
+  "physical_gamepad_live_acceptance": "pending",
+  "real_lerobot_action_export": false,
+  "fixed_servoj": {
+    "t": 0.05,
+    "aheadtime": 50,
+    "gain": 500
+  },
+  "browser_input_fix_version": "v60"
+}

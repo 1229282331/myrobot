@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "period_ms": 50,
+  "callback_budget_ms": 55,
+  "request_timeout_ms": 70,
+  "retreat_budget_ms": 50,
+  "geometry_budget_ms": 48
+}

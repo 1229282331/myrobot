@@ -1,0 +1,36 @@
+--- a/dashboard/src/pages/control/GamepadComponents.tsx
++++ b/dashboard/src/pages/control/GamepadComponents.tsx
+@@ -1,6 +1,7 @@
+ // GamepadComponents.tsx - UI Components and Custom Hooks
+ 
+ import React, { useEffect, useState, useRef } from "react";
++import {clearMissingGamepads} from '@/e6/gamepadSelection';
+ import { toast } from "sonner";
+ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+ import { Progress } from "@/components/ui/progress";
+@@ -49,6 +50,18 @@
+       const available = getAvailableGamepads();
+       setAvailableGamepads(available);
+       setGamepadConnected(available.length > 0);
++
++      // A receiver can reconnect in a different browser slot between polls.
++      // Clear missing assignments even when other controllers remain present.
++      // Reassignment happens on the next render; E6 requires explicit Prepare.
++      const validPairs=clearMissingGamepads(controllerArmPairs,available);
++      const validGroups=clearMissingGamepads(multiArmGroups,available);
++      if(validPairs!==controllerArmPairs||validGroups!==multiArmGroups) {
++        if(validPairs!==controllerArmPairs)setControllerArmPairs(validPairs);
++        if(validGroups!==multiArmGroups)setMultiArmGroups(validGroups);
++        setHasUserMadeSelection(false);
++        return;
++      }
+       
+       // Auto-select logic
+       const hasAnyControllerAssigned = controllerArmPairs.some(pair => pair.controller_index !== null) ||
+@@ -701,4 +714,4 @@
+       </div>
+     </Card>
+   );
+-}
+\ No newline at end of file
++}

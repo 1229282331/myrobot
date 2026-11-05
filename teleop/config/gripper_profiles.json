@@ -1,0 +1,5 @@
+{
+  "plan32": {"velocity": 10, "force": 32, "acceleration": 25, "deceleration": 25, "gripper_s": 0.05},
+  "empty64-medium": {"velocity": 25, "force": 64, "acceleration": 25, "deceleration": 25, "gripper_s": 0.10, "minimum_target_delta_counts": 4},
+  "disabled": {"enabled": false, "velocity": 25, "force": 64, "acceleration": 25, "deceleration": 25, "gripper_s": 0.05, "minimum_target_delta_counts": 4}
+}

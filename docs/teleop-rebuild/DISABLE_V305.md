@@ -1,0 +1,3 @@
+# v305 按用户要求下使能
+
+v305 用户取消修复并要求下使能，自行关机重启（2026-10-19，覆盖当前）：修复回合仅阅读源码，未修改或发布生产控制代码；v304已定位缺陷仍未修复。唯一owner20261019-030318-54e30db2/exec5944经stopfile正常clean退出，camera/gateway0、CPU恢复schedutil/WiFi省电on，PC app0/media1且cleanup错误空保留。独立互斥锁内重新确认稳定/无队列后，仅官方Stop与DisableRobot各一次0回包。990原始SDK帧无缺号，末98帧Mode11 Enable0 Error0 Collision1、无运行队列、ID23209；碰撞标记保留未清错。下使能后关节变化[-0.003899,-0.404213,+0.467041,-5.362015,+4.158325,+9.814224]°后稳定，末800ms峰峰max0.006180°，原数据保留。CAN DOWN/无E6连接，PC8765/8776/8777/8889/8766无监听。未再使能/清错/改参/停放/主动运动/夹爪指令，未发送RDK poweroff；设备关机及重启由用户操作。当前无控制owner，重启不能视为v304软件问题已修复。下一次须新回读boot/使能/负载/姿态和画面，不沿用旧状态。Goal paused、自主抓杯取消、未Git提交。证据evidence/disable-v305，诊断继续保留evidence/collision-recurrence-v304。

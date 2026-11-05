@@ -1,0 +1,18 @@
+[
+  {
+    "filename": "coacd-1.0.14-cp39-abi3-macosx_11_0_arm64.whl",
+    "sha256": "4cd9e1f327af766f6364e79e384ebfe152780a3d8dbbd09ce0756ec14f9e1256"
+  },
+  {
+    "filename": "coacd-1.0.14-cp39-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+    "sha256": "1242941fc9d49ebcb0368c68f31c86e278b9a6f1a255d11da2f1668797e2626e"
+  },
+  {
+    "filename": "coacd-1.0.14-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+    "sha256": "6c135b717af096523bbebf1fd8d326e8950c024237fe9806ad46dedd8b4c31f0"
+  },
+  {
+    "filename": "coacd-1.0.14-cp39-abi3-win_amd64.whl",
+    "sha256": "6b548f44d9a4694cde594dc8cc8fefa678fb7c88153583be4e8b2c707de8fbbd"
+  }
+]

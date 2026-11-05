@@ -1,0 +1,10 @@
+--- a/dashboard/src/pages/control/KeyboardControlPage.tsx
++++ b/dashboard/src/pages/control/KeyboardControlPage.tsx
+@@ -368,7 +368,6 @@
+     ]),
+     {key:'f',description:'Open gripper',icon:<ChevronsLeftRight className="size-5"/>},
+     {key:'r',description:'Close gripper',icon:<ChevronsRightLeft className="size-5"/>},
+-    {key:' ',description:'Hold to move',icon:<Space className="size-5"/>},
+   ] : [
+     {
+       key: "ArrowUp",

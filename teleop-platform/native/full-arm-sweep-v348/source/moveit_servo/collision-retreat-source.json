@@ -1,0 +1,13 @@
+{
+  "upstream": "https://github.com/moveit/moveit2",
+  "commit": "1ade0e9dcf50dbbbc3a984b995c786cf12736235",
+  "original_sha256": "35db0297387a7bb2bfac3077733a4d09f68ccd55b644353e8ef03b12028d7f0a",
+  "patched_sha256": "90523027b9bc288094cd8355bb5846d987f1fb418864e899149649922515826c",
+  "scope": "Distance-only exclusion of joint-group invariant pairs; original ACM still detects actual collisions; directional singularity patch retained",
+  "collision_original_sha256": "c849a7873c42b6a7f1dfb72b0fcee448e9c7a36888a8c6b2c0d9069249a178c7",
+  "collision_patched_sha256": "92ec7b1be146ee96d9e569258f43232341424ae03d2e1a7ec87973db884c3168",
+  "helper_sha256": "65db493c27b96f1370ea49adc1085c3310069a7065dea89372cff8187b44d53c",
+  "retreat_servo_sha256": "6081bd719e12a49b9a7578b1e6b4c73a67f8833e01ebd5e2a3aed8b565ec2ae3",
+  "retreat_header_sha256": "ec167639e10caa6a0109eb72ebe246967cf872e366d0c5fb9b09f4a18ae00a13",
+  "retreat_scope": "One final acceleration-smoothed candidate proof; rejected trials restore committed smoother state and use original scaled candidate; collision halt/IK/joint limits retained"
+}

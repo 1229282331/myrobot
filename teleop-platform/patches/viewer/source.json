@@ -1,0 +1,10 @@
+{
+  "package": "urdf-loader",
+  "version": "0.13.1",
+  "commit": "24feef2c267496d22d17bbbb5c1bf5b86dcf174f",
+  "license": "Apache-2.0",
+  "upstream": "https://github.com/gkjohnson/urdf-loaders",
+  "path": "javascript/src/urdf-viewer-element.js",
+  "upstream_sha256": "22e7a186c860e874c5cc3b349be03ad9fefbdcbb6170060e3d00799bcac5b6f2",
+  "local_sha256": "cef4932c0158d938e2740ebc7a0f67789fcb40bc1b9adcb79b86f6c35b31632f"
+}
