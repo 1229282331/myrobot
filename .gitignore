@@ -33,6 +33,7 @@ runtime/
 /docs/teleop-rebuild/evidence/
 /dcw/docs/evidence/
 /omnipicker/research/
+/omnipicker/docs/evidence/
 /teleop-platform/evidence/
 /teleop-platform/src/e6_phosphobot/assets/workspace-before-*/
 *.log
